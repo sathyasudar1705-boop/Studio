@@ -1,0 +1,88 @@
+.signup-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #4c1d95);
+}
+
+
+.signup-card {
+  padding: 40px 30px;
+  border-radius: 20px !important;
+  backdrop-filter: blur(15px);
+  background: rgba(72, 0, 121, 0.08) !important;
+  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.5) !important;
+  color: white;
+  text-align: center;
+}
+
+
+.signup-title {
+  font-weight: bold !important;
+  color: #e9d5ff;
+}
+
+.signup-subtitle {
+  color: #c4b5fd;
+  margin-bottom: 20px;
+}
+
+
+.label {
+  text-align: left;
+  color: #d8b4fe;
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+
+.input-field {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-radius: 10px !important;
+  color: white !important;
+}
+
+
+.role-toggle {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.role-btn {
+  color: #e9d5ff !important;
+  border: 1px solid rgba(167, 139, 250, 0.4) !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+.role-btn.Mui-selected {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa) !important;
+  color: white !important;
+}
+
+
+.signup-btn {
+  border-radius: 25px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 12px !important;
+  background: linear-gradient(90deg, #7c3aed, #c084fc) !important;
+}
+
+.signup-btn:hover {
+  background: linear-gradient(90deg, #6d28d9, #a855f7) !important;
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+}
+
+
+.login-text {
+  color: #ddd;
+  font-size: 14px;
+}
+
+.login-text span {
+  color: #c084fc;
+  font-weight: 600;
+  cursor: pointer;
+}

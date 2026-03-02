@@ -1,0 +1,82 @@
+.navbar {
+  background: linear-gradient(90deg, #1e1b4b, #312e81, #4c1d95)!important;
+  backdrop-filter: blur(10px);
+}
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logo-icon {
+  color: #9e73b5;
+}
+
+.logo-text {
+  font-weight: 600;
+  background: linear-gradient(to right, #9152cd, #9b8cad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+  
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-right {
+  display: flex;
+  gap: 15px;
+}
+
+
+.nav-btn {
+  color: #e0e0ff !important;
+  font-weight: 500 !important;
+  position: relative;
+}
+
+.nav-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 20%;
+  width: 60%;
+  height: 2px;
+  background: #c084fc;
+  border-radius: 2px;
+}
+
+
+.nav-btn:hover {
+  color: #c084fc !important;
+}
+
+
+.get-started-btn {
+  background: linear-gradient(45deg, #7c3aed, #a855f7) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+  padding: 6px 18px !important;
+}
+
+.get-started-btn:hover {
+  background: linear-gradient(45deg, #6d28d9, #9333ea) !important;
+}
+
+.active-btn {
+  box-shadow: 0 0 12px #a855f7;
+}
