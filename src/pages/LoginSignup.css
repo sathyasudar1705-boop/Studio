@@ -1,0 +1,67 @@
+/* ── Role Selector Page ───────────────────────── */
+.role-container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background: #0d0d0d;
+}
+
+/* ── Heading ─────────────────────────────────── */
+.role-title {
+    font-family: 'Cinzel', serif !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    letter-spacing: 6px !important;
+    color: #d4a84b !important;
+    text-align: center;
+}
+
+/* ── Button Row ──────────────────────────────── */
+.role-btns {
+    display: flex;
+    gap: 20px;
+}
+
+/* ── Role Button Base ────────────────────────── */
+.role-btn {
+    width: 160px !important;
+    padding: 14px 10px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 6px !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+.role-btn:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* ── Primary (Photographer) ──────────────────── */
+.primary {
+    background: #d4a84b !important;
+    color: #0a0805 !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(212, 168, 75, 0.30) !important;
+}
+
+.primary:hover {
+    background: #e8c97a !important;
+    box-shadow: 0 4px 24px rgba(212, 168, 75, 0.50) !important;
+}
+
+/* ── Secondary (User) ────────────────────────── */
+.role-btn:not(.primary) {
+    background: transparent !important;
+    border: 1px solid #d4a84b !important;
+    color: #d4a84b !important;
+}
+
+.role-btn:not(.primary):hover {
+    background: rgba(212, 168, 75, 0.08) !important;
+}
