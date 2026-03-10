@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
 
@@ -7,31 +6,34 @@ const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <Box className="role-container">
+    <div className="role-page">
+      <div className="role-page-content">
+        <p className="role-page-tag">LENSORIA STUDIO</p>
+        <h1 className="role-page-title">LOGIN AS</h1>
+        <p className="role-page-desc">Choose your portal to continue</p>
 
-      <Typography variant="h4" className="role-title">
-        Login As
-      </Typography>
+        <div className="role-cards">
+          <div className="role-choice-card" onClick={() => navigate("/user-login")}>
+            <div className="role-choice-icon">📷</div>
+            <h3>CUSTOMER</h3>
+            <p>Book photography sessions and view your upcoming shoots</p>
+            <button className="role-choice-btn">CONTINUE</button>
+          </div>
 
-      <Box className="role-btns">
-        <Button
-          variant="contained"
-          className="role-btn primary"
-          onClick={() => navigate("/photographer-login")}
-        >
-          Photographer
-        </Button>
+          <div className="role-choice-card photographer" onClick={() => navigate("/photographer-login")}>
+            <div className="role-choice-icon">🎞</div>
+            <h3>PHOTOGRAPHER</h3>
+            <p>Manage your assignments and showcase your portfolio</p>
+            <button className="role-choice-btn">CONTINUE</button>
+          </div>
+        </div>
 
-        <Button
-          variant="outlined"
-          className="role-btn"
-          onClick={() => navigate("/user-login")}
-        >
-          User
-        </Button>
-      </Box>
-
-    </Box>
+        <p className="role-page-switch">
+          Don't have an account?{" "}
+          <span onClick={() => navigate("/signup")}>Sign up here</span>
+        </p>
+      </div>
+    </div>
   );
 };
 

@@ -1,23 +1,31 @@
-/* ─── Google Fonts Import ─────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap');
+/* ─── Premium Fonts ─────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap');
 
-/* ─── Keyframe Animations ─────────────────────────────── */
-@keyframes heroFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(1.08);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+:root {
+  --primary-gold: #e8c97a;
+  --dark-bg: #080808;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --text-main: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.6);
 }
 
-@keyframes contentRise {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ─── Animations ─────────────────────────────── */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(36px);
+    transform: translateY(20px);
   }
 
   to {
@@ -26,287 +34,103 @@
   }
 }
 
-@keyframes shimmerText {
-  0% {
-    background-position: -200% center;
-  }
-
-  100% {
-    background-position: 200% center;
-  }
-}
-
-@keyframes dividerExpand {
+@keyframes heroScale {
   from {
-    width: 0;
-    opacity: 0;
+    transform: scale(1.1);
   }
 
   to {
-    width: 72px;
-    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@keyframes lightLeakSweep {
-  0% {
-    opacity: 0;
-    left: -40%;
-  }
-
-  15%,
-  35% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    left: 110%;
-  }
-}
-
-/* ─── Hero Wrapper ────────────────────────────────────── */
-.hero {
-  position: relative;
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #080808;
-
-  /* Cinematic hard vignette via inset box-shadow */
-  box-shadow: inset 0 0 160px 60px rgba(0, 0, 0, 0.85);
-}
-
-/* ─── Layer 1 · Background Photo (Camera RAW style) ──── */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -5%;
-  background-image: url("../assets/pexels-jibarofoto-1787220.jpg");
-  background-size: cover;
-  background-position: center 30%;
-
-  /*
-   * Photoshop "Camera Raw" equivalent:
-   *   contrast(1.14) → Clarity / Texture bump
-   *   saturate(1.10)  → Vibrance boost
-   *   brightness(0.76)→ Exposure -0.4 stops
-   */
-  filter: contrast(1.14) saturate(1.10) brightness(0.76);
-  animation: heroFadeIn 2s cubic-bezier(0.22, 1, 0.36, 1) both;
-  z-index: 0;
-}
-
-/* ─── Layer 2 · Cinematic Colour-Grade + Light-Leak ───── */
-/*
- *  Teal-Orange cross-process grade (Hollywood blockbuster look):
- *    Bottom-left  → warm amber shadows
- *    Top-right    → cool teal highlights
- *    Center sweep → faint golden light-leak beam
- */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    /* ① Light-leak beam — amber diagonal sweep */
-    linear-gradient(108deg,
-      transparent 0%,
-      transparent 28%,
-      rgba(255, 190, 80, .07) 38%,
-      rgba(255, 160, 50, .11) 50%,
-      rgba(255, 190, 80, .07) 62%,
-      transparent 72%,
-      transparent 100%),
-    /* ② Warm amber shadow push (bottom-left) */
-    radial-gradient(ellipse 130% 110% at 0% 105%,
-      rgba(90, 42, 6, 0.60) 0%,
-      transparent 55%),
-    /* ③ Cool teal highlight lift (top-right) */
-    radial-gradient(ellipse 110% 90% at 105% -5%,
-      rgba(0, 60, 90, 0.52) 0%,
-      transparent 50%),
-    /* ④ Deep blue-black midtone fog (centre) */
-    radial-gradient(ellipse 70% 70% at 50% 42%,
-      rgba(8, 4, 22, 0.22) 0%,
-      transparent 65%),
-    /* ⑤ Overall tonal base */
-    linear-gradient(170deg,
-      rgba(4, 4, 14, 0.28) 0%,
-      rgba(0, 0, 0, 0.58) 100%);
-  animation: heroFadeIn 2.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
-  z-index: 1;
-}
-
-/* ─── Hero Content ────────────────────────────────────── */
-.hero-content {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  color: #fff;
-  animation: contentRise 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
-  padding: 0 24px;
-}
-
-/* ── Golden rule ABOVE brand name ── */
-.hero-content::before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 210, 110, 0.95),
-      transparent);
-  margin: 0 auto 20px;
-  animation: dividerExpand 1.2s ease 1.5s forwards;
-}
-
-/* ── Golden rule BELOW title ── */
-.hero-content::after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 210, 110, 0.65),
-      transparent);
-  margin: 0 auto 20px;
-  animation: dividerExpand 1.2s ease 1.8s forwards;
-}
-
-/* ─── Brand Tag · LENSORIA ────────────────────────────── */
-.small-text {
-  display: block;
-  font-size: 10.5px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  letter-spacing: 9px;
-  text-transform: uppercase;
-  color: rgba(255, 210, 118, 0.90);
-  margin-bottom: 14px;
-  text-shadow:
-    0 0 24px rgba(255, 175, 50, 0.45),
-    0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* ─── Main Title · VISUAL STORIES ────────────────────── */
-.hero-title {
-  font-size: clamp(52px, 8.5vw, 108px);
-  font-weight: 700;
-  font-family: 'Cinzel', serif;
-  line-height: 1.0;
-  letter-spacing: 7px;
-  margin: 6px 0 0;
-
-  /*
-   * Photoshop metallic-gold sheen:
-   * Simulates a "Bevel & Emboss" + "Gradient Overlay" layer style
-   */
-  background: linear-gradient(105deg,
-      #b8924a 0%,
-      #e8c97a 22%,
-      #fdf6d8 44%,
-      #ffe9a0 50%,
-      #fdf6d8 56%,
-      #e8c97a 78%,
-      #b8924a 100%);
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  animation: shimmerText 5s linear 2s infinite;
-
-  /* drop-shadow mimics Photoshop "Drop Shadow" layer effect */
-  filter: drop-shadow(0 3px 24px rgba(190, 135, 40, 0.40));
-}
-
-/* ─── Subtitle ────────────────────────────────────────── */
-.hero-subtitle {
-  display: block;
-  font-size: 12px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.58);
-  margin-top: 6px;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Hero Section Styles */
+/* ─── Hero Section ─────────────────────────────── */
 .hero {
   height: 100vh;
-  background-size: cover;
-  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  animation: heroScale 2s ease-out;
 }
 
-.hero-content .small-text {
-  letter-spacing: 5px;
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: fadeIn 1.5s ease-out;
+}
+
+.small-text {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 8px;
   font-size: 14px;
+  color: var(--primary-gold);
+  text-transform: uppercase;
 }
 
 .hero-title {
-  font-size: 80px;
-  line-height: 1;
-  margin: 20px 0;
-  font-weight: bold;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(40px, 10vw, 100px);
+  margin: 10px 0;
+  background: linear-gradient(to right, #b8924a, #fdf6d8, #b8924a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
-/* Gallery Section Styles */
-.gallery-wrapper {
-  background-image: url(../assets/background2.jpg);
-  background-size: cover;
-  background-position: center;
-  /* filter: blur(0.5); */
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.hero-subtitle {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 4px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+/* ─── Common Section Styles ─────────────────────────── */
+.section-title-area {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  letter-spacing: 5px;
+  color: var(--primary-gold);
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .section-header {
-  color: white;
-  letter-spacing: 4px;
-  margin-bottom: 40px;
-  font-size: 25px;
-  font-family: 'Cinzel', serif !important;
-  color: rgba(255, 210, 118, 0.90);
-  margin-bottom: 14px;
-  text-shadow:
-    0 0 24px rgba(255, 175, 50, 0.45),
-    0 1px 4px rgba(0, 0, 0, 0.7);
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  letter-spacing: 3px;
+  color: var(--text-main);
+}
+
+/* ─── Gallery Section ────────────────────────────── */
+.gallery-wrapper {
+  padding: 100px 5%;
+  background: #0a0a0a;
 }
 
 .gallery-grid {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .left-grid {
@@ -315,58 +139,142 @@
   gap: 20px;
 }
 
-/* Card Individual Styling */
 .card-container {
   position: relative;
   overflow: hidden;
-  background-color: #000;
+  border-radius: 4px;
+  background: #111;
+  aspect-ratio: 1/1;
 }
 
-.square { width: 340px; height: 340px; }
-.portrait { width: 400px; height: 700px; }
+.card-container.portrait {
+  aspect-ratio: 4/7;
+}
 
 .bg-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.6;
-  transition: transform 0.6s ease;
+  transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+  opacity: 0.7;
 }
 
 .card-container:hover .bg-image {
-  transform: scale(1.6);
+  transform: scale(1.1);
+  opacity: 0.9;
 }
 
 .overlay-content {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content:flex-end;
+  justify-content: flex-end;
+  padding: 30px;
   z-index: 2;
-  color: rgb(253, 253, 253);
-  padding: 20px;
-}
-
-
-.book-box {
-  background-color: white;
-  color: black;
-  padding: 4px 10px;
-  font-weight: bold;
-  font-size: 12px;
-  margin: 10px 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
 }
 
 .card-title {
-  font-family: serif;
-  font-size: 22px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: var(--text-main);
+}
+
+.book-box {
+  display: inline-block;
+  color: var(--primary-gold);
+  text-decoration: none;
+  font-size: 12px;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--primary-gold);
+  width: fit-content;
+  margin-bottom: 10px;
+  padding-bottom: 2px;
 }
 
 .card-description {
-  font-size: 10px;
-  opacity: 0.8;
-  max-width: 80%;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* ─── Photographers Section ────────────────────────── */
+.photographers-wrapper {
+  padding: 100px 5%;
+  background: #080808;
+}
+
+.photographers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.photographer-card {
+  text-align: center;
+  transition: transform 0.4s ease;
+}
+
+.photographer-card:hover {
+  transform: translateY(-10px);
+}
+
+.ph-img-container {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--primary-gold);
+  padding: 8px;
+}
+
+.ph-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: grayscale(20%);
+  transition: filter 0.4s ease;
+}
+
+.photographer-card:hover .ph-image {
+  filter: grayscale(0%);
+}
+
+.ph-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.ph-role {
+  font-family: 'Inter', sans-serif;
+  color: var(--primary-gold);
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ─── Responsiveness ────────────────────────────── */
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .left-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 60px;
+  }
 }

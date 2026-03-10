@@ -1,121 +1,110 @@
-/* ── Footer Shell ────────────────────────────── */
+/* ── Footer ──────────────────────────────────── */
 .footer {
-  background: #0d0d0d;
-  border-top: 1px solid #1e1e1e;
-  padding: 60px 0 24px;
-  color: rgba(255, 255, 255, 0.55);
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 40px 5% 0;
+  font-family: 'Outfit', sans-serif;
 }
 
-/* ── Brand Row ───────────────────────────────── */
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding-bottom: 32px;
+}
+
+/* ── Brand Column ─────────────────────────────── */
+.footer-brand {
+  max-width: 260px;
+}
+
 .footer-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.footer-logo-icon {
+  color: #d4a84b !important;
+  font-size: 22px !important;
+}
+
+.footer-brand-name {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: #d4a84b;
+}
+
+.footer-tagline {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.7;
   margin-bottom: 14px;
 }
 
-.brand-name {
-  font-family: 'Cinzel', serif !important;
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  letter-spacing: 3px !important;
-  color: #d4a84b !important;
-}
-
-/* ── Description ─────────────────────────────── */
-.footer-desc {
-  font-size: 13px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.42);
-  margin-bottom: 20px;
-  max-width: 300px;
-}
-
-/* ── Headings ────────────────────────────────── */
-.footer-heading {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  letter-spacing: 4px !important;
-  text-transform: uppercase !important;
-  color: #d4a84b !important;
-  margin-bottom: 18px !important;
-}
-
-/* ── Links ───────────────────────────────────── */
-.footer-link {
-  font-size: 13px;
-  font-weight: 300;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.45);
-  transition: color 0.2s;
-}
-
-.footer-link:hover {
-  color: #d4a84b;
-}
-
-/* ── Social Icons ─────────────────────────────── */
-.social-icons {
+.footer-socials {
   display: flex;
+  gap: 14px;
+}
+
+.social-icon {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 18px !important;
+  cursor: pointer;
+  transition: color 0.2s !important;
+}
+
+.social-icon:hover {
+  color: #d4a84b !important;
+}
+
+/* ── Info Columns ─────────────────────────────── */
+.footer-col {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  margin-top: 12px;
+  min-width: 130px;
 }
 
-.icon-btn {
-  color: rgba(255, 255, 255, 0.45) !important;
-  border: 1px solid #2a2a2a !important;
-  border-radius: 6px !important;
-  width: 36px !important;
-  height: 36px !important;
-  transition: color 0.2s, border-color 0.2s !important;
+.footer-col-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #d4a84b;
+  margin-bottom: 4px;
+  font-weight: 600;
 }
 
-.icon-btn:hover {
-  color: #d4a84b !important;
-  border-color: #d4a84b !important;
-  background: rgba(212, 168, 75, 0.06) !important;
-}
-
-/* ── Contact Row ─────────────────────────────── */
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.contact-icon {
-  color: #d4a84b !important;
-}
-
-/* ── Bottom Bar ──────────────────────────────── */
-.footer-bottom {
-  margin-top: 40px;
-  padding-top: 18px;
-  border-top: 1px solid #1e1e1e;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.25);
-}
-
-.bottom-links {
-  display: flex;
-  gap: 20px;
-}
-
-.bottom-links span {
+.footer-col span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: color 0.2s;
+  line-height: 1.6;
 }
 
-.bottom-links span:hover {
-  color: #d4a84b;
+.footer-col span:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Bottom Bar ───────────────────────────────── */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 0;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 1px;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+    gap: 28px;
+  }
 }

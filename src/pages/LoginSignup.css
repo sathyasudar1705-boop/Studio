@@ -1,67 +1,139 @@
-/* ── Role Selector Page ───────────────────────── */
-.role-container {
-    min-height: 80vh;
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600&display=swap');
+
+/* ── Role Selector Full Page ─────────────────── */
+.role-page {
+    min-height: 100vh;
+    background: #080808;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 40px;
-    background: #0d0d0d;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
-/* ── Heading ─────────────────────────────────── */
-.role-title {
-    font-family: 'Cinzel', serif !important;
-    font-size: 28px !important;
-    font-weight: 700 !important;
-    letter-spacing: 6px !important;
-    color: #d4a84b !important;
+.role-page-content {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+.role-page-tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    letter-spacing: 7px;
+    color: #e8c97a;
+    margin-bottom: 16px;
+}
+
+.role-page-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    color: #fff;
+    letter-spacing: 5px;
+    margin-bottom: 12px;
+}
+
+.role-page-desc {
+    font-family: 'Outfit', sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+
+/* ── Cards ────────────────────────────────────── */
+.role-cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.role-choice-card {
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.4s ease;
     text-align: center;
 }
 
-/* ── Button Row ──────────────────────────────── */
-.role-btns {
-    display: flex;
-    gap: 20px;
+.role-choice-card:hover {
+    transform: translateY(-8px);
+    border-color: #e8c97a;
+    background: rgba(232, 201, 122, 0.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Role Button Base ────────────────────────── */
-.role-btn {
-    width: 160px !important;
-    padding: 14px 10px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    letter-spacing: 2.5px !important;
-    text-transform: uppercase !important;
-    border-radius: 6px !important;
-    transition: transform 0.2s, box-shadow 0.2s !important;
+.role-choice-card.photographer:hover {
+    border-color: #7ab8e8;
+    background: rgba(122, 184, 232, 0.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-.role-btn:hover {
-    transform: translateY(-2px) !important;
+.role-choice-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
 }
 
-/* ── Primary (Photographer) ──────────────────── */
-.primary {
-    background: #d4a84b !important;
-    color: #0a0805 !important;
-    border: none !important;
-    box-shadow: 0 4px 16px rgba(212, 168, 75, 0.30) !important;
+.role-choice-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    color: #fff;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
 }
 
-.primary:hover {
-    background: #e8c97a !important;
-    box-shadow: 0 4px 24px rgba(212, 168, 75, 0.50) !important;
+.role-choice-card p {
+    font-family: 'Outfit', sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 24px;
 }
 
-/* ── Secondary (User) ────────────────────────── */
-.role-btn:not(.primary) {
-    background: transparent !important;
-    border: 1px solid #d4a84b !important;
-    color: #d4a84b !important;
+.role-choice-btn {
+    background: transparent;
+    border: 1px solid #e8c97a;
+    color: #e8c97a;
+    padding: 10px 24px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
 }
 
-.role-btn:not(.primary):hover {
-    background: rgba(212, 168, 75, 0.08) !important;
+.role-choice-card:hover .role-choice-btn {
+    background: #e8c97a;
+    color: #000;
+}
+
+.role-choice-card.photographer .role-choice-btn {
+    border-color: #7ab8e8;
+    color: #7ab8e8;
+}
+
+.role-choice-card.photographer:hover .role-choice-btn {
+    background: #7ab8e8;
+    color: #000;
+}
+
+/* ── Switch Link ──────────────────────────────── */
+.role-page-switch {
+    font-family: 'Outfit', sans-serif;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+}
+
+.role-page-switch span {
+    color: #e8c97a;
+    cursor: pointer;
+    text-decoration: underline;
 }

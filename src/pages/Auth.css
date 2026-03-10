@@ -79,3 +79,42 @@
     background: #e8c97a !important;
     box-shadow: 0 4px 24px rgba(212, 168, 75, 0.50) !important;
 }
+
+/* ── Brand ───────────────────────────────────── */
+.auth-brand {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 10px !important;
+    letter-spacing: 6px !important;
+    color: rgba(212, 168, 75, 0.6) !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+}
+
+/* ── Switch / Back Links ─────────────────────── */
+.auth-switch {
+    margin-top: 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+}
+
+.auth-switch span {
+    color: #d4a84b;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.auth-back {
+    margin-top: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.25s;
+}
+
+.auth-back:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
