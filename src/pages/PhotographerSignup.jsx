@@ -1,33 +1,33 @@
 import React from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import "./Auth.css";
 
 const PhotographerSignup = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="auth-bg">
-
       <Box className="auth-card">
-
-        <Typography className="auth-title">
-          Photographer Signup
+        <Typography className="auth-brand">
+          <CameraAltIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+          LENSORIA STUDIO
         </Typography>
+        <Typography variant="h4" className="auth-title">Photographer Signup</Typography>
 
-        <TextField label="Full Name" fullWidth margin="normal" />
+        <TextField label="Full Name" fullWidth margin="normal" className="auth-input" />
+        <TextField label="Studio Name" fullWidth margin="normal" className="auth-input" />
+        <TextField label="Email" fullWidth margin="normal" className="auth-input" />
+        <TextField label="Password" type="password" fullWidth margin="normal" className="auth-input" />
 
-        <TextField label="Studio Name" fullWidth margin="normal" />
-
-        <TextField label="Email" fullWidth margin="normal" />
-
-        <TextField label="Phone" fullWidth margin="normal" />
-
-        <TextField label="Password" type="password" fullWidth margin="normal" />
-
-        <Button variant="contained" fullWidth className="auth-btn">
+        <Button variant="contained" fullWidth className="auth-btn" onClick={() => navigate("/photographer-dashboard")}>
           Register
         </Button>
 
+        <p className="auth-switch">Already have an account? <span onClick={() => navigate("/photographer-login")}>Login here</span></p>
+        <p className="auth-back" onClick={() => navigate("/")}>← Back to home</p>
       </Box>
-
     </div>
   );
 };

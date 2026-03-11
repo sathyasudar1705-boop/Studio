@@ -171,3 +171,81 @@
         grid-template-columns: 1fr;
     }
 }
+
+.ph-user-profile-badge {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #151515;
+    padding: 6px 15px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.ph-avatar-mini {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b0b0b;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.view-all-link {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.ph-stats-row {
+    display: flex;
+    padding: 30px;
+}
+
+.ph-stat-item {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.ph-stat-val {
+    color: var(--accent);
+    font-size: 24px;
+}
+
+.ph-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.ph-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ph-activity-item {
+    font-size: 13px;
+    display: flex;
+    gap: 12px;
+}
+
+.activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+}
+
+.activity-dot.green { background: #10b981; }
+.activity-dot.gold { background: var(--accent); }
+
+.activity-time {
+    opacity: 0.4;
+    font-size: 11px;
+}

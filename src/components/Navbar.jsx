@@ -8,7 +8,7 @@ import {
   Container
 } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import LinkedCameraIcon from "@mui/icons-material/LinkedCamera";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -32,8 +32,8 @@ const Navbar = () => {
 
           {/* Logo */}
           <Box className="logo-container" onClick={() => navigate("/user-dashboard")}>
-            <LinkedCameraIcon className="logo-icon" />
-            <Typography className="logo">Lensoria</Typography>
+            <CameraAltIcon className="logo-icon" />
+            <Typography className="logo">LENSORIA</Typography>
           </Box>
 
           {/* Center Menu */}

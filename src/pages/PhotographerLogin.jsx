@@ -1,38 +1,30 @@
 import React from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import "./Auth.css";
 
 const PhotographerLogin = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="auth-bg">
-
       <Box className="auth-card">
-
-        <Typography variant="h4" className="auth-title">
-          Photographer Login
+        <Typography className="auth-brand">
+          <CameraAltIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+          LENSORIA STUDIO
         </Typography>
+        <Typography variant="h4" className="auth-title">Photographer Login</Typography>
 
-        <TextField
-          label="Email"
-          fullWidth
-          margin="normal"
-          className="auth-input"
-        />
+        <TextField label="Email" fullWidth margin="normal" className="auth-input" />
+        <TextField label="Password" type="password" fullWidth margin="normal" className="auth-input" />
 
-        <TextField
-          label="Password"
-          type="password"
-          fullWidth
-          margin="normal"
-          className="auth-input"
-        />
-
-        <Button className="auth-btn" fullWidth>
+        <Button className="auth-btn" fullWidth onClick={() => navigate("/photographer-dashboard")}>
           Login
         </Button>
 
+        <p className="auth-back" onClick={() => navigate("/")}>← Back to home</p>
       </Box>
-
     </div>
   );
 };
