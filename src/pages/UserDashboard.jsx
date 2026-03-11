@@ -31,6 +31,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 /* ─── Static Data ─── */
 const SHOOT_STYLES = [
@@ -82,17 +83,17 @@ const STATS = [
 ];
 
 const RECENT_BOOKINGS = [
-    { id: 1, service: "Wedding Shoot", photographer: "Alexander Ray", date: "Feb 10, 2026", status: "Confirmed", amount: "₹15,000" },
-    { id: 2, service: "Baby Portrait", photographer: "Elena Sophia", date: "Feb 15, 2026", status: "Pending", amount: "₹8,000" },
-    { id: 3, service: "Fashion Shoot", photographer: "Marcus Vane", date: "Jan 28, 2026", status: "Completed", amount: "₹12,000" },
+    { id: 1, service: "Wedding Shoot", photographer: "Alexander Ray", date: "Feb 10, 2026", status: "Confirmed", amount: "₹15,000", workStatus: "Editing", progress: 75 },
+    { id: 2, service: "Baby Portrait", photographer: "Elena Sophia", date: "Feb 15, 2026", status: "Pending", amount: "₹8,000", workStatus: "Raw Selection", progress: 20 },
+    { id: 3, service: "Fashion Shoot", photographer: "Marcus Vane", date: "Jan 28, 2026", status: "Completed", amount: "₹12,000", workStatus: "Delivered", progress: 100 },
 ];
 
 const MY_PHOTOS = [
-    { id: 1, src: Wedding1, title: "Wedding Day", date: "Feb 10, 2026" },
-    { id: 2, src: BabyPhoto, title: "Baby Memories", date: "Feb 15, 2026" },
-    { id: 3, src: TravelPhoto, title: "Travel Moments", date: "Jan 20, 2026" },
-    { id: 4, src: BirthdayPhoto, title: "Birthday Bash", date: "Jan 28, 2026" },
-    { id: 5, src: ProductPhoto, title: "Product Shoot", date: "Dec 10, 2025" },
+    { id: 1, title: "Wedding Day Album", photographer: "Alexander Ray", date: "Feb 10, 2026", link: "https://drive.google.com/drive/folders/1" },
+    { id: 2, title: "Baby Shoot Portfolio", photographer: "Elena Sophia", date: "Feb 15, 2026", link: "https://drive.google.com/drive/folders/2" },
+    { id: 3, title: "Travel Chronicles", photographer: "Marcus Vane", date: "Jan 20, 2026", link: "https://drive.google.com/drive/folders/3" },
+    { id: 4, title: "Birthday Bash High-Res", photographer: "Marcus Vane", date: "Jan 28, 2026", link: "https://drive.google.com/drive/folders/4" },
+    { id: 5, title: "Product Commercials", photographer: "Alexander Ray", date: "Dec 10, 2025", link: "https://drive.google.com/drive/folders/5" },
 ];
 
 const NAV_ITEMS = [
@@ -306,24 +307,66 @@ const UserDashboard = () => {
             case "bookings":
                 return (
                     <div className="tab-page-container fadeIn">
-                        <div className="tab-page-header"><h1>Reservations</h1><p>Your upcoming and past sessions</p></div>
-                        <table className="bookings-table">
-                            <thead><tr><th>Service</th><th>Pro</th><th>Date</th><th>Status</th></tr></thead>
-                            <tbody>
-                                {RECENT_BOOKINGS.map(b => (
-                                    <tr key={b.id}>
-                                        <td>{b.service}</td><td>{b.photographer}</td><td>{b.date}</td>
-                                        <td><span className={`status-pill ${b.status.toLowerCase()}`}>{b.status}</span></td>
-                                    </tr>
-                                ))}
-                                {selectedDate && (
-                                    <tr>
-                                        <td>{selectedCategory}</td><td>{selectedPg?.name}</td><td>{selectedDate}, 2026</td>
-                                        <td><span className="status-pill confirmed">Confirmed</span></td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <div className="tab-page-header">
+                            <h1>My Bookings</h1>
+                            <p>Track the live status of your ongoing and past photography sessions</p>
+                        </div>
+                        <div className="booking-status-grid">
+                            {RECENT_BOOKINGS.map(b => (
+                                <div key={b.id} className="booking-status-card">
+                                    <div className="booking-card-top">
+                                        <div className="service-info">
+                                            <h3>{b.service}</h3>
+                                            <p>{b.photographer} • {b.date}</p>
+                                        </div>
+                                        <span className={`status-pill ${b.status.toLowerCase()}`}>{b.status}</span>
+                                    </div>
+                                    
+                                    <div className="work-status-section">
+                                        <div className="status-label-row">
+                                            <label>Current Stage:</label>
+                                            <span className={`work-status-tag ${b.workStatus.toLowerCase().replace(" ", "-")}`}>
+                                                {b.workStatus}
+                                            </span>
+                                        </div>
+                                        <div className="progress-container">
+                                            <div className="progress-bar-bg">
+                                                <div className="progress-bar-fill" style={{ width: `${b.progress}%` }}></div>
+                                            </div>
+                                            <span className="progress-percent">{b.progress}%</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="booking-card-footer">
+                                        <span className="booking-amount">{b.amount}</span>
+                                        <button className="view-details-btn">Details</button>
+                                    </div>
+                                </div>
+                            ))}
+                            {selectedDate && (
+                                <div className="booking-status-card new-booking highlight-card">
+                                    <div className="booking-card-top">
+                                        <div className="service-info">
+                                            <h3>{selectedCategory}</h3>
+                                            <p>{selectedPg?.name} • {selectedDate}, 2026</p>
+                                        </div>
+                                        <span className="status-pill confirmed">Confirmed</span>
+                                    </div>
+                                    <div className="work-status-section">
+                                        <div className="status-label-row">
+                                            <label>Current Stage:</label>
+                                            <span className="work-status-tag scheduled">Scheduled</span>
+                                        </div>
+                                        <div className="progress-container">
+                                            <div className="progress-bar-bg">
+                                                <div className="progress-bar-fill" style={{ width: `5%` }}></div>
+                                            </div>
+                                            <span className="progress-percent">5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 );
             case "payments":
@@ -339,15 +382,24 @@ const UserDashboard = () => {
             case "photos":
                 return (
                     <div className="tab-page-container fadeIn">
-                        <div className="tab-page-header"><h1>Gallery</h1><p>Your delivered masterpieces</p></div>
-                        <div className="my-photos-grid">
+                        <div className="tab-page-header">
+                            <h1>My Deliveries</h1>
+                            <p>Access your high-resolution photos via secure drive links</p>
+                        </div>
+                        <div className="deliveries-list">
                             {MY_PHOTOS.map(p => (
-                                <div key={p.id} className="my-photo-card">
-                                    <img src={p.src} alt={p.title} />
-                                    <div className="my-photo-overlay">
-                                        <h4>{p.title}</h4><p>{p.date}</p>
-                                        <button className="mini-book"><DownloadIcon fontSize="small" /> Get</button>
+                                <div key={p.id} className="delivery-card">
+                                    <div className="delivery-icon-box"><PhotoLibraryIcon /></div>
+                                    <div className="delivery-info">
+                                        <h4>{p.title}</h4>
+                                        <p>{p.photographer} • {p.date}</p>
                                     </div>
+                                    <button 
+                                        className="open-link-btn" 
+                                        onClick={() => window.open(p.link, "_blank")}
+                                    >
+                                        <LaunchIcon fontSize="small" /> Open Link
+                                    </button>
                                 </div>
                             ))}
                         </div>

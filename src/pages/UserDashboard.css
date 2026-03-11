@@ -1300,6 +1300,214 @@ input:checked+.toggle-slider:before {
     margin-bottom: 30px;
 }
 
+/* ── Deliveries Section ── */
+.deliveries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.delivery-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.delivery-card:hover {
+    border-color: var(--accent);
+    transform: translateX(5px);
+}
+
+.delivery-icon-box {
+    width: 50px;
+    height: 50px;
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.delivery-info {
+    flex: 1;
+}
+
+.delivery-info h4 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.delivery-info p {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.open-link-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.open-link-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* ── Booking Status Section ── */
+.booking-status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.booking-status-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: var(--transition);
+}
+
+.booking-status-card:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateY(-3px);
+}
+
+.highlight-card {
+    border: 1px solid var(--accent);
+    background: rgba(212, 175, 55, 0.03);
+}
+
+.booking-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.service-info h3 {
+    font-size: 18px;
+    font-family: var(--font-display);
+    margin-bottom: 4px;
+}
+
+.service-info p {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.work-status-section {
+    background: var(--bg-deep);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.status-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-label-row label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+}
+
+.work-status-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.work-status-tag.editing { color: #2196F3; background: rgba(33, 150, 243, 0.1); }
+.work-status-tag.raw-selection { color: #FF9800; background: rgba(255, 152, 0, 0.1); }
+.work-status-tag.delivered { color: #4CAF50; background: rgba(76, 175, 80, 0.1); }
+.work-status-tag.scheduled { color: var(--accent); background: rgba(212, 175, 55, 0.1); }
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.progress-percent {
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 30px;
+}
+
+.booking-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+.booking-amount {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-main);
+}
+
+.view-details-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-details-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
 @media (max-width: 1400px) {
     .profile-body-grid {
         grid-template-columns: 1fr;
