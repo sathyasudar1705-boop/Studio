@@ -1,89 +1,23 @@
-/* ─── Premium Fonts ─────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap');
+/* ── Home Page Specialized Styles ── */
 
-:root {
-  --primary-gold: #e8c97a;
-  --dark-bg: #080808;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --text-main: #ffffff;
-  --text-dim: rgba(255, 255, 255, 0.6);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--dark-bg);
-  color: var(--text-main);
-  font-family: 'Inter', sans-serif;
-}
-
-/* ─── Animations ─────────────────────────────── */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroScale {
-  from {
-    transform: scale(1.1);
-  }
-
-  to {
-    transform: scale(1);
-  }
-}
-
-/* ─── Hero Section ─────────────────────────────── */
 .hero {
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('../assets/pexels-jibarofoto-1787220.jpg');
   background-size: cover;
   background-position: center;
-  animation: heroScale 2s ease-out;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  animation: fadeIn 1.5s ease-out;
-}
-
-.small-text {
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: 8px;
-  font-size: 14px;
-  color: var(--primary-gold);
-  text-transform: uppercase;
+  padding: 0 5%;
 }
 
 .hero-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(40px, 10vw, 100px);
-  margin: 10px 0;
-  background: linear-gradient(to right, #b8924a, #fdf6d8, #b8924a);
+  font-family: var(--font-display);
+  font-size: clamp(40px, 10vw, 90px);
+  margin-bottom: 25px;
+  background: linear-gradient(to right, #d4af37, #f6d776, #d4af37);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -91,146 +25,80 @@ body {
 }
 
 .hero-subtitle {
-  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
   letter-spacing: 4px;
-  font-size: 14px;
   color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 10px;
 }
 
-/* ─── Common Section Styles ─────────────────────────── */
-.section-title-area {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.section-subtitle {
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  letter-spacing: 5px;
-  color: var(--primary-gold);
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.section-header {
-  font-family: 'Cinzel', serif;
-  font-size: 32px;
-  letter-spacing: 3px;
-  color: var(--text-main);
-}
-
-/* ─── Gallery Section ────────────────────────────── */
+/* Gallery Alignment */
 .gallery-wrapper {
-  padding: 100px 5%;
-  background: #0a0a0a;
+  padding: 120px 5%;
+  background: var(--bg-deep);
 }
 
 .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 400px;
-  gap: 30px;
-  max-width: 1400px;
+  gap: 40px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 .left-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 25px;
 }
 
 .card-container {
-  position: relative;
-  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 4px;
-  background: #111;
+  overflow: hidden;
   aspect-ratio: 1/1;
 }
 
 .card-container.portrait {
-  aspect-ratio: 4/7;
+  aspect-ratio: 1/1.6;
 }
 
 .bg-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
   opacity: 0.7;
+  transition: var(--transition);
 }
 
 .card-container:hover .bg-image {
-  transform: scale(1.1);
+  transform: scale(1.05);
   opacity: 0.9;
 }
 
-.overlay-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
-  z-index: 2;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-}
-
-.card-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 20px;
-  margin-bottom: 5px;
-  color: var(--text-main);
-}
-
-.book-box {
-  display: inline-block;
-  color: var(--primary-gold);
-  text-decoration: none;
-  font-size: 12px;
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: 2px;
-  border-bottom: 1px solid var(--primary-gold);
-  width: fit-content;
-  margin-bottom: 10px;
-  padding-bottom: 2px;
-}
-
-.card-description {
-  font-size: 13px;
-  color: var(--text-dim);
-  line-height: 1.4;
-}
-
-/* ─── Photographers Section ────────────────────────── */
+/* Photographer Cards Alignment */
 .photographers-wrapper {
-  padding: 100px 5%;
-  background: #080808;
+  padding: 120px 5%;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
 }
 
 .photographers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.photographer-card {
-  text-align: center;
-  transition: transform 0.4s ease;
-}
-
-.photographer-card:hover {
-  transform: translateY(-10px);
-}
-
 .ph-img-container {
-  width: 250px;
-  height: 250px;
-  margin: 0 auto 20px;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 25px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--primary-gold);
+  border: 2px solid var(--accent);
   padding: 8px;
 }
 
@@ -239,30 +107,20 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  filter: grayscale(20%);
-  transition: filter 0.4s ease;
-}
-
-.photographer-card:hover .ph-image {
-  filter: grayscale(0%);
 }
 
 .ph-name {
-  font-family: 'Outfit', sans-serif;
-  font-size: 22px;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
+  font-size: 20px;
+  margin-bottom: 8px;
 }
 
 .ph-role {
-  font-family: 'Inter', sans-serif;
-  color: var(--primary-gold);
-  font-size: 14px;
-  letter-spacing: 2px;
+  font-size: 13px;
+  color: var(--accent);
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* ─── Responsiveness ────────────────────────────── */
 @media (max-width: 1024px) {
   .gallery-grid {
     grid-template-columns: 1fr;
@@ -272,9 +130,5 @@ body {
 @media (max-width: 768px) {
   .left-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-title {
-    font-size: 60px;
   }
 }

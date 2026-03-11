@@ -1,18 +1,20 @@
-/* ── Navbar ───────────────────────────────────── */
+/* ── Navbar Specialized Styles ── */
+
 .navbar {
-  background: #0d0d0d !important;
-  border-bottom: 1px solid #1e1e1e !important;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.50) !important;
+  background: #1A123D !important;
+  backdrop-filter: var(--blur) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  padding: 10px 0 !important;
 }
 
-/* ── Toolbar Layout ──────────────────────────── */
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
-/* ── Logo ────────────────────────────────────── */
 .logo-container {
   display: flex;
   align-items: center;
@@ -21,83 +23,65 @@
 }
 
 .logo-icon {
-  font-size: 26px !important;
-  color: #d4a84b !important;
+  color: var(--accent) !important;
+  font-size: 24px !important;
 }
 
 .logo {
-  font-family: 'Cinzel', serif !important;
-  font-size: 22px !important;
+  font-family: var(--font-display) !important;
+  font-size: 20px !important;
+  letter-spacing: 4px !important;
+  color: var(--accent) !important;
   font-weight: 700 !important;
-  letter-spacing: 3px !important;
-  color: #d4a84b !important;
+  margin: 0 !important;
 }
 
-/* ── Nav Menu ────────────────────────────────── */
 .nav-menu {
   display: flex;
-  gap: 4px;
+  gap: 30px;
+  align-items: center;
 }
 
 .nav-btn {
-  font-family: 'Montserrat', sans-serif !important;
-  color: rgba(255, 255, 255, 0.65) !important;
-  text-transform: uppercase !important;
+  font-family: var(--font-sans) !important;
   font-size: 11px !important;
   letter-spacing: 2px !important;
-  font-weight: 500 !important;
-  padding: 6px 14px !important;
-  border-radius: 4px !important;
-  transition: color 0.2s, background 0.2s !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-transform: uppercase !important;
 }
 
-.nav-btn:hover {
-  color: #d4a84b !important;
-  background: rgba(212, 168, 75, 0.08) !important;
-}
-
+.nav-btn:hover,
 .nav-btn.active {
-  color: #d4a84b !important;
+  color: var(--accent) !important;
+  background: var(--accent-soft) !important;
 }
 
-/* ── Right Side ──────────────────────────────── */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .login-btn {
-  font-family: 'Montserrat', sans-serif !important;
-  color: rgba(255, 255, 255, 0.60) !important;
-  text-transform: uppercase !important;
+  font-family: var(--font-sans) !important;
   font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   letter-spacing: 2px !important;
-  font-weight: 500 !important;
-  transition: color 0.2s !important;
 }
 
 .login-btn:hover {
-  color: #d4a84b !important;
-  background: transparent !important;
+  color: var(--accent) !important;
 }
 
-/* ── CTA Button ──────────────────────────────── */
 .signup-btn {
-  font-family: 'Montserrat', sans-serif !important;
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  padding: 8px 22px !important;
+  font-weight: 700 !important;
   font-size: 11px !important;
-  font-weight: 600 !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-  padding: 7px 20px !important;
-  border-radius: 4px !important;
-  background: #d4a84b !important;
-  color: #0a0805 !important;
-  box-shadow: 0 2px 14px rgba(212, 168, 75, 0.30) !important;
-  transition: background 0.2s, box-shadow 0.2s !important;
+  letter-spacing: 1px !important;
 }
 
 .signup-btn:hover {
-  background: #e8c97a !important;
-  box-shadow: 0 2px 22px rgba(212, 168, 75, 0.50) !important;
+  background: var(--accent-light) !important;
 }

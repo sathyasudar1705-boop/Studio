@@ -8,101 +8,22 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 
 
-import LandingBg from "../assets/pexels-jibarofoto-1787220.jpg";
-import Wedding1 from "../assets/Wedding_photo.jpg";
-import BabyPhoto from "../assets/Baby.jpg";
-import ProductPhoto from "../assets/Product.jpg";
-import BirthdayPhoto from "../assets/Birthday.jpg";
-import TravelPhoto from "../assets/Outdoor_photoshoot.jpg";
 
-const services = [
-    {
-        id: 1, title: "Wedding Photography",
-        tag: "WEDDINGS",
-        desc: "Capture every tear, laugh and vow of your most special day with cinematic precision.",
-        price: "₹25,000 onwards",
-        img: Wedding1,
-        gallery: [Wedding1, Wedding1, Wedding1],
-        color: "#e8c97a",
-    },
-    {
-        id: 2, title: "Baby Shoot",
-        tag: "NEWBORNS",
-        desc: "Precious little moments captured softly — milestones your family will treasure forever.",
-        price: "₹8,000 onwards",
-        img: BabyPhoto,
-        gallery: [BabyPhoto, BabyPhoto, BabyPhoto],
-        color: "#f4a7c0",
-    },
-    {
-        id: 3, title: "Product Photography",
-        tag: "COMMERCIAL",
-        desc: "High-impact product images that tell your brand story and drive conversions.",
-        price: "₹12,000 onwards",
-        img: ProductPhoto,
-        gallery: [ProductPhoto, ProductPhoto, ProductPhoto],
-        color: "#7ab8e8",
-    },
-    {
-        id: 4, title: "Birthday Celebrations",
-        tag: "EVENTS",
-        desc: "Fun, vibrant and candid shots that bottle up the joy of your celebration.",
-        price: "₹6,000 onwards",
-        img: BirthdayPhoto,
-        gallery: [BirthdayPhoto, BirthdayPhoto, BirthdayPhoto],
-        color: "#a0e87a",
-    },
-    {
-        id: 5, title: "Travel & Outdoor",
-        tag: "LIFESTYLE",
-        desc: "Adventure, wanderlust and landscapes — beautifully documented as you explore.",
-        price: "₹10,000 onwards",
-        img: TravelPhoto,
-        gallery: [TravelPhoto, TravelPhoto, TravelPhoto],
-        color: "#e8a07a",
-    },
+
+
+
+
+const testimonials = [
+    { name: "Priya Sharma", role: "Wedding Client", text: "The cinematic quality of the photos is just breathtaking. They captured our day perfectly." },
+    { name: "Rahul Verma", role: "Product Owner", text: "Professionalism at its best. The product shots significantly boosted our brand image." },
+    { name: "Sneha Kapur", role: "Maternity Client", text: "Such a comfortable and luxurious experience. The baby shoot photos are our favorite memories." }
 ];
 
-const ServiceModal = ({ service, onClose, onBook }) => (
-    <div className="modal-backdrop" onClick={onClose}>
-        <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={onClose}><CloseIcon fontSize="small" /></button>
 
-            <div className="modal-gallery">
-                {service.gallery.map((img, i) => (
-                    <img key={i} src={img} alt={service.title} className="modal-img" />
-                ))}
-            </div>
-            <div className="modal-info">
-                <p className="modal-tag">{service.tag}</p>
-                <h2 className="modal-title">{service.title}</h2>
-                <p className="modal-desc">{service.desc}</p>
-                <p className="modal-price" style={{ color: service.color }}>{service.price}</p>
-                <button
-                    className="modal-book-btn"
-                    style={{ background: service.color, color: "#000" }}
-                    onClick={onBook}
-                >
-                    BOOK THIS SESSION
-                </button>
-            </div>
-        </div>
-    </div>
-);
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    const [activeService, setActiveService] = useState(null);
 
-    const scrollTo = (id) => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-    };
-
-    const handleBook = () => {
-        setActiveService(null);
-        navigate("/user-login");
-    };
 
     return (
         <div className="landing-root">
@@ -111,8 +32,7 @@ const LandingPage = () => {
             <nav className="landing-navbar">
                 <span className="landing-logo">LENSORIA</span>
                 <div className="landing-nav-links">
-                    <span onClick={() => scrollTo("moments-section")}>Gallery</span>
-                    <span onClick={() => scrollTo("moments-section")}>Services</span>
+                    <span onClick={() => navigate("/login")}>Login</span>
                     <span onClick={() => scrollTo("contact-landing")}>Contact</span>
                 </div>
                 <div className="landing-nav-auth">
@@ -122,19 +42,15 @@ const LandingPage = () => {
 
 
             {/* ── Hero ── */}
-            <div className="landing-hero" style={{ backgroundImage: `url(${LandingBg})` }}>
+            <div className="landing-hero">
                 <div className="landing-hero-overlay">
-                    <p className="landing-eyebrow">PREMIUM PHOTOGRAPHY STUDIO</p>
-                    <h1 className="landing-title">Capture Every<br />Perfect Moment</h1>
+                    <h1 className="landing-title">Capture Your Perfect Moments</h1>
                     <p className="landing-subtitle">
-                        Book award-winning photographers for your most cherished moments.
+                        Professional photography for weddings, birthdays, baby shoots, and more.
                     </p>
                     <div className="landing-cta-group">
-                        <button className="landing-cta primary-cta" onClick={() => navigate("/user-login")}>
-                            Book As Customer
-                        </button>
-                        <button className="landing-cta secondary-cta" onClick={() => navigate("/photographer-login")}>
-                            Join As Photographer
+                        <button className="landing-cta primary-cta" onClick={() => navigate("/login")}>
+                            Book a Shoot
                         </button>
                     </div>
                     <div className="landing-stats">
@@ -146,6 +62,27 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+
+
+
+            {/* ── Testimonials ── */}
+            <section className="testimonials-section">
+                <div className="section-title-area">
+                    <p className="section-eyebrow">CLIENT LOVE</p>
+                    <h2 className="section-main-title">TESTIMONIALS</h2>
+                </div>
+                <div className="testimonials-grid">
+                    {testimonials.map((t, i) => (
+                        <div key={i} className="testimonial-card">
+                            <p className="testimonial-text">"{t.text}"</p>
+                            <h4 className="testimonial-name">{t.name}</h4>
+                            <p className="testimonial-role">{t.role}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+
 
 
             {/* ── Contact ── */}

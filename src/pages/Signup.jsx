@@ -1,38 +1,46 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import "./LoginSignup.css";
 
 const Signup = () => {
   const navigate = useNavigate();
 
   return (
-    <Box className="role-container">
+    <div className="role-page">
+      <div className="role-page-content">
+        <p className="role-page-tag">LENSORIA STUDIO</p>
+        <h1 className="role-page-title">SIGNUP AS</h1>
+        <p className="role-page-desc">Choose your role to get started</p>
 
-      <Typography variant="h4" className="role-title">
-        Signup As
-      </Typography>
+        <div className="role-cards">
+          <div className="role-choice-card" onClick={() => navigate("/user-signup")}>
+            <div className="role-choice-icon">
+              <PersonIcon fontSize="inherit" />
+            </div>
+            <h3>CUSTOMER</h3>
+            <p>Join as a customer to find and book your favorite photographers</p>
+            <button className="role-choice-btn">GET STARTED</button>
+          </div>
 
-      <Box className="role-btns">
-        <Button
-          variant="contained"
-          className="role-btn primary"
-          onClick={() => navigate("/photographer-signup")}
-        >
-          Photographer
-        </Button>
+          <div className="role-choice-card photographer" onClick={() => navigate("/photographer-signup")}>
+            <div className="role-choice-icon">
+              <CameraAltIcon fontSize="inherit" />
+            </div>
+            <h3>PHOTOGRAPHER</h3>
+            <p>Join as a professional to showcase your work and get bookings</p>
+            <button className="role-choice-btn">JOIN NOW</button>
+          </div>
+        </div>
 
-        <Button
-          variant="outlined"
-          className="role-btn"
-          onClick={() => navigate("/user-signup")}
-        >
-          User
-        </Button>
-      </Box>
-
-    </Box>
+        <p className="role-page-switch">
+          Already have an account?{" "}
+          <span onClick={() => navigate("/login")}>Login here</span>
+        </p>
+      </div>
+    </div>
   );
 };
 
-export default Signup;
+export default Signup;

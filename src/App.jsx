@@ -10,6 +10,10 @@ import UserSignup from "./pages/UserSignup";
 import PhotographerSignup from "./pages/PhotographerSignup";
 import LandingPage from "./pages/LandingPage";
 import UserDashboard from "./pages/UserDashboard";
+import Booking from "./pages/Booking";
+import PhotographerDashboard from "./pages/PhotographerDashboard";
+
+
 
 function App() {
   return (
@@ -29,6 +33,10 @@ function App() {
             </>
           }
         />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/photographer-dashboard" element={<PhotographerDashboard />} />
+
+
 
         {/* Other Routes */}
         <Route path="/home" element={<><Home /><Footer /></>} />
