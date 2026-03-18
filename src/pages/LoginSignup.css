@@ -116,7 +116,7 @@
 
 .role-choice-card:hover .role-choice-btn {
     background: var(--accent);
-    color: #fff;
+    color: var(--text-on-accent);
 }
 
 .role-choice-card.photographer .role-choice-btn {
@@ -126,7 +126,7 @@
 
 .role-choice-card.photographer:hover .role-choice-btn {
     background: var(--accent);
-    color: #fff;
+    color: var(--text-on-accent);
 }
 
 /* ── Switch Link ──────────────────────────────── */

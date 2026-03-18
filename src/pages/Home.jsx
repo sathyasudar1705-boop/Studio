@@ -9,7 +9,7 @@ import TravelPhoto from "../assets/Outdoor_photoshoot.jpg";
 import Photographer1 from "../assets/ph1.png";
 import Photographer2 from "../assets/ph2.png";
 import Photographer3 from "../assets/ph3.png";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
 
 const WEDDING_DATA = [
     { id: 1, title: "WEDDING PHOTOGRAPHY", date: "BOOK NOW", size: "portrait", img: Wedding1, des: "Capturing every beautiful moment of your special day." },
@@ -52,7 +52,7 @@ const Home = () => {
         <div className="home-page">
             <div className="hero" style={{ backgroundImage: `url(${MainPhoto})` }}>
                 <div className="hero-content">
-                    <p className="small-text"><CameraAltIcon fontSize="inherit" style={{ verticalAlign: 'middle', marginRight: '8px' }} />LENSORIA</p>
+                    <p className="small-text"><CameraOutlinedIcon fontSize="inherit" style={{ verticalAlign: 'middle', marginRight: '8px' }} />LENSORIA</p>
                     <h1 className="hero-title">VISUAL <br /> STORIES</h1>
                     <p className="hero-subtitle">Every picture tells a beautiful story</p>
                 </div>

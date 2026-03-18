@@ -1,0 +1,221 @@
+/* ── Dashboard Base Styles (Editorial Minimal) ── */
+
+.ub-dashboard-root {
+    min-height: 100vh;
+    background-color: var(--bg-deep);
+    display: flex;
+    flex-direction: column;
+    padding-top: 100px; /* Branding Header height on mobile */
+}
+
+/* ── Top Header & Branding ── */
+.ub-branding-header {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.ub-brand-title {
+    font-family: var(--font-brand);
+    font-size: 36px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-main);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ── Top Navigation (Desktop) ── */
+.ub-top-nav {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: none; /* Hidden on mobile by default */
+}
+
+@media (min-width: 769px) {
+    .ub-top-nav {
+        display: block;
+    }
+    .ub-dashboard-root {
+        padding-top: 160px; /* Space for Header (100) + Nav (60) */
+    }
+}
+
+.ub-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.ub-nav-links {
+    display: flex;
+    gap: 40px;
+}
+
+.ub-nav-item {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    padding: 24px 0;
+}
+
+.ub-nav-item:hover {
+    color: var(--accent);
+}
+
+.ub-nav-item.active {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.ub-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--text-main);
+}
+
+/* ── Main Content Area ── */
+.ub-main-content {
+    flex: 1;
+    padding: 60px 5%;
+    padding-bottom: 100px; 
+}
+
+.ub-content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeInFade 0.4s ease forwards;
+}
+
+@keyframes fadeInFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Bottom Navigation (Mobile) ── */
+.ub-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 769px) {
+    .ub-bottom-nav {
+        display: none;
+    }
+    .ub-main-content {
+        padding-bottom: 60px;
+    }
+}
+
+.ub-mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-sans);
+}
+
+.ub-mobile-nav-item span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ub-mobile-nav-item.active {
+    color: var(--text-main);
+}
+
+/* ── Common Utilities for Dashboard Components ── */
+.ub-section-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    color: var(--text-main);
+    margin-bottom: 30px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.ub-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.ub-btn-primary {
+    background: var(--text-main);
+    color: var(--color-white);
+    padding: 14px 30px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid var(--text-main);
+    transition: var(--transition);
+    border-radius: var(--radius);
+}
+
+.ub-btn-primary:hover {
+    background: transparent;
+    color: var(--text-main);
+}
+
+.ub-btn-outline {
+    background: transparent;
+    color: var(--text-main);
+    padding: 14px 30px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    border-radius: var(--radius);
+}
+
+.ub-btn-outline:hover {
+    border-color: var(--text-main);
+}

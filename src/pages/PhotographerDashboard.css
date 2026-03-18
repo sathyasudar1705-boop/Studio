@@ -137,7 +137,7 @@
 
 .action-btn:hover {
     background: var(--accent);
-    color: #000;
+    color: var(--text-main);
     border-color: var(--accent);
 }
 

@@ -1,38 +1,44 @@
-@import url('https://api.fontshare.com/v2/css?f[]=bespoke-stencil@400,500,700&f[]=kola@400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;700&family=Cinzel:wght@400;700&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Cinzel:wght@400;700&family=Paytone+One&family=Great+Vibes&display=swap');
+@import url('https://fonts.cdnfonts.com/css/sauce-tomato');
 
 :root {
-  /* ── Core Palette (High Contrast) ── */
-  --bg-deep: #EDF7BD;
-  --bg-card: #ffffff;
-  --bg-sidebar: #2D5A64;
+  /* ── Core Palette (Editorial Elegance) ── */
+  --bg-deep: #FDFBFA; /* Extremely light cream, almost white but warm */
+  --bg-card: #FFFFFF; /* Pure white for cards */
+  --bg-sidebar: #FFFFFF;
 
-  /* ── High Contrast Accents ── */
-  --accent: #6ab081;
-  --accent-light: #8DEAB1;
-  --accent-dark: #1A123D;
-  --accent-soft: rgba(45, 90, 100, 0.1);
-  --accent-glow: rgba(106, 176, 129, 0.4);
+  /* ── Accents (Dark Olive / Minimalist) ── */
+  --accent: #1A1A1A; /* Sharper black/grey */
+  --accent-light: #404040;
+  --accent-dark: #000000;
+  --accent-soft: rgba(0, 0, 0, 0.03);
+  --accent-glow: rgba(0, 0, 0, 0.05);
 
-  /* ── Text (Midnight & Indigo) ── */
-  --text-main: #1A123D;
-  --text-dim: #2D5A64;
-  --text-muted: #4e4e4e;
-  --text-on-accent: #ffffff;
+  /* ── Additional Palette Colors ── */
+  --color-olive: #2C2F28;
+  --color-cream: #FDFBFA;
+  --color-taupe: #EEEAE5;
+  --color-white: #FFFFFF;
+
+  /* ── Text (High Contrast) ── */
+  --text-main: #1A1A1A; /* Deepest grey/black for readability */
+  --text-dim: #454545; /* Clearly visible secondary text */
+  --text-muted: #757575; /* Legible meta info */
+  --text-on-accent: #FFFFFF;
 
   /* ── Borders & Utilities ── */
-  --border: rgba(26, 18, 61, 0.18);
-  --border-bright: rgba(26, 18, 61, 0.3);
-  --radius: 8px;
-  --blur: blur(20px);
-  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --border: #E8E4E0; 
+  --border-bright: rgba(0, 0, 0, 0.1);
+  --radius: 0px; 
+  --radius-lg: 0px; /* Editorial style usually looks better with sharp edges */
+  --blur: blur(10px);
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ── Typography ── */
   --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Poppins', sans-serif;
+  --font-sans: 'Outfit', sans-serif;
   --font-display: 'Cinzel', serif;
+  --font-brand: 'Paytone One', sans-serif;
 }
 
 
@@ -114,4 +120,198 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+    /* Add font for the cursive labels */
+    --font-cursive: 'Great Vibes', cursive;
+}
+
+/* ── Packages Section (Refined UI) ── */
+.ub-packages-section {
+    padding: 100px 0;
+    text-align: center;
+    background: var(--bg-deep);
+    overflow: hidden;
+}
+
+.ub-packages-title {
+    font-family: var(--font-brand);
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--text-main);
+    margin-bottom: 80px;
+    font-weight: 400;
+}
+
+.ub-carousel-wrapper {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.ub-carousel-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 100;
+    color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.ub-carousel-btn:hover {
+    background: var(--accent);
+    color: var(--color-white);
+    transform: scale(1.1);
+    border-color: var(--accent);
+}
+
+.ub-carousel-btn.prev {
+    position: absolute;
+    left: 20px;
+}
+
+.ub-carousel-btn.next {
+    position: absolute;
+    right: 20px;
+}
+
+.ub-packages-carousel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 40px;
+    flex: 1;
+    overflow-x: auto;
+    padding: 20px 20px 40px; /* Extra bottom padding for CTA */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    scroll-behavior: smooth;
+    min-height: 480px; 
+}
+
+.ub-package-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    flex-shrink: 0;
+    cursor: pointer;
+    width: 200px;
+    position: relative; /* Anchor for absolute CTA */
+}
+
+.ub-package-card img {
+    width: 200px;
+    height: 280px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    margin-bottom: 25px;
+    filter: grayscale(40%) contrast(0.9);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ub-package-card:hover img {
+    filter: none;
+    transform: translateY(-5px);
+}
+
+.ub-package-card.focus {
+    width: 260px;
+}
+
+.ub-package-card.focus img {
+    width: 260px;
+    height: 360px;
+    filter: none;
+    border-color: var(--accent);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.ub-package-label {
+    font-family: var(--font-brand);
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.ub-package-card:hover .ub-package-label,
+.ub-package-card.focus .ub-package-label {
+    color: var(--text-main);
+}
+
+.ub-package-card.focus .ub-package-label {
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+.ub-package-cta {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 10px 24px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    color: var(--color-white);
+    position: absolute;
+    bottom: -35px; /* Stay outside the normal document flow so resizing doesn't shake */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+}
+
+.ub-package-card.focus .ub-package-cta {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ub-package-cta:hover {
+    background: transparent;
+    color: var(--accent);
+}
+
+@media (max-width: 1024px) {
+    .ub-packages-carousel {
+        min-height: 400px;
+        gap: 30px;
+    }
+    .ub-package-card {
+        width: 180px;
+    }
+    .ub-package-card img {
+        width: 180px;
+        height: 250px;
+    }
+    .ub-package-card.focus {
+        width: 220px;
+    }
+    .ub-package-card.focus img {
+        width: 220px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ub-carousel-wrapper {
+        padding: 0 20px;
+    }
+    .ub-carousel-btn {
+        display: none; /* Swipe on mobile */
+    }
+    .ub-packages-carousel {
+        padding-left: 20px;
+    }
 }

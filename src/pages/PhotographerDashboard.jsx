@@ -7,7 +7,7 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
 
 const UPCOMING_SHOOTS = [
     { id: 1, client: "Sarah Mitchell", service: "Wedding Shoot", date: "March 15, 2026", time: "09:00 AM", status: "CONFIRMED" },
@@ -29,7 +29,7 @@ const PhotographerDashboard = () => {
     return (
         <div className="ph-dashboard-root">
             <aside className="ph-sidebar">
-                <div className="ph-logo"><CameraAltIcon style={{ marginRight: '10px' }} />LENSORIA</div>
+                <div className="ph-logo"><CameraOutlinedIcon style={{ marginRight: '10px' }} />LENSORIA</div>
                 <nav className="ph-nav">
                     {NAV_ITEMS.map(item => (
                         <div key={item.id} className={`ph-nav-item ${activeTab === item.id ? "active" : ""}`} onClick={() => setActiveTab(item.id)}>
@@ -37,7 +37,7 @@ const PhotographerDashboard = () => {
                         </div>
                     ))}
                 </nav>
-                <div className="ph-nav-item logout" style={{ marginTop: 'auto', color: '#ff4d4d' }}>
+                <div className="ph-nav-item logout" style={{ marginTop: 'auto', color: 'var(--color-red)' }}>
                     <LogoutIcon fontSize="small" /><span>Logout</span>
                 </div>
             </aside>

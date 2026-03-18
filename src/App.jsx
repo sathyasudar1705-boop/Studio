@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -9,16 +9,17 @@ import PhotographerLogin from "./pages/PhotographerLogin";
 import UserSignup from "./pages/UserSignup";
 import PhotographerSignup from "./pages/PhotographerSignup";
 import LandingPage from "./pages/LandingPage";
-import UserDashboard from "./pages/UserDashboard";
+import UserDashboard from "./pages/UserDashboard/index.jsx";
 import Booking from "./pages/Booking";
 import PhotographerDashboard from "./pages/PhotographerDashboard";
 
+function AppContent() {
+  const location = useLocation();
+  const isDashboard = location.pathname === "/user-dashboard";
 
-
-function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!isDashboard && <Navbar />}
       <Routes>
         {/* Landing selection page */}
         <Route path="/" element={<LandingPage />} />
@@ -36,8 +37,6 @@ function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/photographer-dashboard" element={<PhotographerDashboard />} />
 
-
-
         {/* Other Routes */}
         <Route path="/home" element={<><Home /><Footer /></>} />
         <Route path="/login" element={<><Login /><Footer /></>} />
@@ -47,6 +46,14 @@ function App() {
         <Route path="/user-signup" element={<UserSignup />} />
         <Route path="/photographer-signup" element={<PhotographerSignup />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

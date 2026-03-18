@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -17,7 +17,7 @@ const Footer = () => {
         {/* Brand */}
         <div className="footer-brand">
           <div className="footer-logo">
-            <CameraAltIcon className="footer-logo-icon" />
+            <CameraOutlinedIcon className="footer-logo-icon" />
             <span className="footer-brand-name">LENSORIA</span>
           </div>
           <p className="footer-tagline">

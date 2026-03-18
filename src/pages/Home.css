@@ -17,7 +17,7 @@
   font-family: var(--font-display);
   font-size: clamp(40px, 10vw, 90px);
   margin-bottom: 25px;
-  background: linear-gradient(to right, #d4af37, #f6d776, #d4af37);
+  background: linear-gradient(to right, var(--color-mustard), var(--color-cream), var(--color-mustard));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

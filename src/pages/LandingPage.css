@@ -6,72 +6,10 @@
     overflow-x: hidden;
 }
 
-/* Navbar Alignment */
-.landing-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 5%;
-    background: #1A123D;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.landing-logo {
-    font-family: 'Kola', sans-serif;
-    font-size: 24px;
-    letter-spacing: 4px;
-    color: var(--accent);
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.landing-nav-links {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-}
-
-.landing-nav-links span {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.landing-nav-links span:hover {
-    color: var(--accent);
-}
-
-.ln-login {
-    color: #ffffff;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    transition: var(--transition);
-}
-
-.ln-login:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-/* Hero Section Alignment */
+/* Hero Section */
 .landing-hero {
     height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url('https://images.pexels.com/photos/12999526/pexels-photo-12999526.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url('../assets/al-khaff-vEqPy0BVQTM-unsplash.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -87,69 +25,56 @@
     max-width: 900px;
 }
 
-.landing-eyebrow {
-    color: var(--accent);
-    letter-spacing: 8px;
-    font-size: 11px;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-    font-weight: 600;
-}
-
 .landing-title {
-    font-family: 'Bespoke Stencil', sans-serif;
-    font-size: clamp(35px, 7vw, 75px);
+    font-family: 'Sauce Tomato', sans-serif;
+    font-size: clamp(35px, 7vw, 100px);
     line-height: 1.1;
     margin-bottom: 25px;
-    font-weight: 700;
-    color: var(--accent);
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    color: var(--color-white);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    letter-spacing: -2px;
 }
 
 .landing-subtitle {
-    font-family: 'Bespoke Stencil', sans-serif;
+    font-family: var(--font-sans);
     font-size: 20px;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.9);
     max-width: 650px;
     margin: 0 auto 45px;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 1px;
-}
-
-.landing-cta-group {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
+    line-height: 1.6;
 }
 
 .landing-cta {
-    padding: 18px 45px;
-    border-radius: 4px;
+    padding: 20px 50px;
+    border-radius: 0px; /* Sharp edges for luxury feel */
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 13px;
     transition: var(--transition);
+    border: 1px solid transparent;
 }
 
 .primary-cta {
-    background: var(--accent);
-    color: #1A123D;
+    background: var(--color-white);
+    color: var(--accent);
 }
 
 .primary-cta:hover {
-    background: var(--accent-light);
-    transform: translateY(-2px);
+    background: transparent;
+    color: var(--color-white);
+    border-color: var(--color-white);
 }
-
-
 
 .landing-stats {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
-    margin-top: 60px;
+    gap: 60px;
+    margin-top: 80px;
 }
 
 .stat-item {
@@ -161,184 +86,247 @@
 .stat-num {
     font-family: var(--font-display);
     font-size: 32px;
-    color: var(--accent);
+    color: var(--color-white);
 }
 
 .stat-label {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .stat-divider {
     width: 1px;
     height: 40px;
-    background: var(--border);
+    background: rgba(255, 255, 255, 0.2);
 }
 
-/* Section Common Alignment */
-.testimonials-section {
-    padding: 120px 5%;
-}
-
+/* Section Common Styles */
 .section-title-area {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
 }
 
 .section-eyebrow {
-    color: var(--accent);
-    letter-spacing: 6px;
+    color: var(--text-muted);
+    letter-spacing: 10px;
     font-size: 11px;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-weight: 600;
 }
 
 .section-main-title {
     font-family: var(--font-display);
-    font-size: min(42px, 10vw);
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    font-size: clamp(30px, 5vw, 48px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
-.section-main-desc {
-    color: var(--text-dim);
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 15px;
-}
-
-
-
-/* Testimonials Section */
-.testimonials-section {
+/* Section 1: How It Works */
+.how-it-works {
+    padding: 80px 10%;
     background: var(--bg-deep);
-    text-align: center;
 }
 
-.testimonials-grid {
+.steps-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 50px;
     max-width: 1200px;
-    margin: 50px auto 0;
+    margin: 0 auto;
 }
 
-.testimonial-card {
-    background: #ffffff;
-    padding: 60px 40px;
-    border-radius: 4px;
+.step-card {
+    text-align: center;
+    padding: 40px;
+    transition: var(--transition);
+}
+
+.step-icon-wrapper {
+    margin-bottom: 30px;
+    color: var(--accent);
+}
+
+.step-icon {
+    font-size: 48px !important;
+    stroke-width: 1px;
+}
+
+.step-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.step-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Section 2: Why Choose Us */
+.why-choose-us {
+    padding: 80px 10%;
+    background: var(--color-white);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
     border: 1px solid var(--border);
     transition: var(--transition);
 }
 
-.testimonial-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--accent-glow);
-    transform: translateY(-10px);
+.feature-card:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    background: var(--bg-deep);
+    border-color: var(--accent);
+}
+
+.feature-icon-wrapper {
+    color: var(--accent);
+}
+
+.feature-icon {
+    font-size: 32px !important;
+}
+
+.feature-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.feature-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Section 3: Testimonials */
+.testimonials-section {
+    padding: 80px 5%;
+    background: var(--bg-deep);
+}
+
+.testimonials-grid-new {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.testimonial-card-new {
+    background: var(--color-white);
+    padding: 50px;
+    border: 1px solid var(--border);
+}
+
+.stars {
+    margin-bottom: 25px;
+    color: var(--accent);
+}
+
+.star-icon {
+    font-size: 16px !important;
 }
 
 .testimonial-text {
     font-family: var(--font-serif);
     font-style: italic;
-    color: var(--text-dim);
-    margin-bottom: 30px;
     font-size: 16px;
     line-height: 1.8;
+    color: var(--text-main);
+    margin-bottom: 40px;
+}
+
+.testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.testimonial-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(100%);
 }
 
 .testimonial-name {
-    color: var(--accent);
     font-family: var(--font-display);
-    font-size: 18px;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-}
-
-.testimonial-role {
-    font-size: 10px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* Contact Section Alignment */
-.contact-landing {
-    padding: 100px 5%;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.contact-landing-info {
-    display: flex;
-    gap: 80px;
-    margin-top: 50px;
-}
-
-.contact-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    color: var(--text-dim);
-    transition: var(--transition);
-}
-
-.contact-item:hover {
-    color: var(--accent);
-}
-
-.contact-icon {
-    color: var(--accent) !important;
-    font-size: 32px !important;
-}
-
-.contact-item span {
     font-size: 14px;
     letter-spacing: 1px;
 }
 
+.testimonial-role {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
+
+
+/* Contact Section */
+.contact-landing {
+    padding: 80px 10%;
+    background: var(--color-white);
+}
+
+.contact-landing-info {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.contact-item {
+    text-align: center;
+    color: var(--text-dim);
+}
+
+.contact-icon {
+    font-size: 32px !important;
+    margin-bottom: 20px;
+    color: var(--accent) !important;
+}
 
 @media (max-width: 1024px) {
-
-    .testimonials-grid {
+    .testimonials-grid-new {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-
-    .testimonials-grid {
+    .steps-container, .testimonials-grid-new {
         grid-template-columns: 1fr;
     }
-
-    .landing-nav-links {
-        display: none;
-    }
-
     .contact-landing-info {
         flex-direction: column;
-        gap: 40px;
-        text-align: center;
+        gap: 50px;
     }
-
-    .landing-title {
-        font-size: 40px;
-    }
-
     .landing-stats {
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
     }
-
     .stat-divider {
-        width: 40px;
-        height: 1px;
+        display: none;
     }
 }

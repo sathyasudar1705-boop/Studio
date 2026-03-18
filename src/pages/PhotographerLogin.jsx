@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
 import "./Auth.css";
 
 const PhotographerLogin = () => {
@@ -11,7 +11,7 @@ const PhotographerLogin = () => {
     <div className="auth-bg">
       <Box className="auth-card">
         <Typography className="auth-brand">
-          <CameraAltIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
+          <CameraOutlinedIcon style={{ verticalAlign: 'middle', marginRight: '8px' }} />
           LENSORIA STUDIO
         </Typography>
         <Typography variant="h4" className="auth-title">Photographer Login</Typography>
