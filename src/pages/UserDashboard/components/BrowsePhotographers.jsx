@@ -3,48 +3,7 @@ import StarIcon from '@mui/icons-material/Star';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import SearchIcon from '@mui/icons-material/Search';
 
-const PHOTOGRAPHERS = [
-    { 
-        id: 1, 
-        name: "Evelyn Harper", 
-        role: "Editorial Wedding Photographer", 
-        img: "https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg", 
-        rating: 4.9,
-        reviews: 124,
-        price: "₹45,000/day",
-        category: "Wedding"
-    },
-    { 
-        id: 2, 
-        name: "Julian Cross", 
-        role: "Luxury Lifestyle & Portrait", 
-        img: "https://images.pexels.com/photos/1580274/pexels-photo-1580274.jpeg", 
-        rating: 4.8,
-        reviews: 89,
-        price: "₹30,000/day",
-        category: "Portrait"
-    },
-    { 
-        id: 3, 
-        name: "Clara Vance", 
-        role: "Commercial & Product Editor", 
-        img: "https://images.pexels.com/photos/1484799/pexels-photo-1484799.jpeg", 
-        rating: 4.7,
-        reviews: 56,
-        price: "₹25,000/day",
-        category: "Commercial"
-    },
-    { 
-        id: 4, 
-        name: "Marcus Thorne", 
-        role: "Fine Art & Elopements", 
-        img: "https://images.pexels.com/photos/2553653/pexels-photo-2553653.jpeg", 
-        rating: 4.9,
-        reviews: 210,
-        price: "₹50,000/day",
-        category: "Wedding"
-    }
-];
+import { PHOTOGRAPHERS } from '../../../data/mockData';
 
 const BrowsePhotographers = ({ onSelectPhotographer }) => {
     const [searchTerm, setSearchTerm] = useState('');

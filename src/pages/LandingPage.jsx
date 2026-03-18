@@ -14,67 +14,7 @@ import FlashOnIcon from "@mui/icons-material/FlashOn";
 import GroupsIcon from "@mui/icons-material/Groups";
 import StarIcon from "@mui/icons-material/Star";
 
-const STEPS = [
-    { 
-        icon: <SearchIcon className="step-icon" />, 
-        title: "Discover Photographers", 
-        desc: "Browse through our elite roster of visual storytellers." 
-    },
-    { 
-        icon: <CalendarTodayIcon className="step-icon" />, 
-        title: "Choose Your Date", 
-        desc: "Select the perfect timing for your bespoke session." 
-    },
-    { 
-        icon: <TaskAltIcon className="step-icon" />, 
-        title: "Book & Relax", 
-        desc: "Secure your reservation and let us handle the artistic details." 
-    }
-];
-
-const FEATURES = [
-    { 
-        icon: <WorkspacePremiumIcon className="feature-icon" />, 
-        title: "Handpicked Professionals", 
-        desc: "Only the top 1% of photographers join our exclusive platform." 
-    },
-    { 
-        icon: <HighQualityIcon className="feature-icon" />, 
-        title: "Premium Quality", 
-        desc: "High-end post-processing and cinematic delivery for every shot." 
-    },
-    { 
-        icon: <FlashOnIcon className="feature-icon" />, 
-        title: "Easy Booking", 
-        desc: "A seamless, intuitive interface designed for modern luxury." 
-    },
-    { 
-        icon: <GroupsIcon className="feature-icon" />, 
-        title: "Trusted by 500+ Clients", 
-        desc: "Delivering exceptional visual experiences across the globe." 
-    }
-];
-
-const TESTIMONIALS = [
-    { 
-        name: "Priya Sharma", 
-        role: "Wedding Client", 
-        text: "The cinematic quality of the photos is just breathtaking. They captured our day with such sophistication.",
-        img: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"
-    },
-    { 
-        name: "Rahul Verma", 
-        role: "Product Owner", 
-        text: "Professionalism at its best. The product shots significantly boosted our brand image.",
-        img: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
-    },
-    { 
-        name: "Sneha Kapur", 
-        role: "Maternity Client", 
-        text: "Such a comfortable and luxurious experience. The baby shoot photos are our favorite memories.",
-        img: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg"
-    }
-];
+// Simplified Landing Page - Arrays removed for easier reading
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -106,13 +46,26 @@ const LandingPage = () => {
                     <h2 className="section-main-title">HOW IT WORKS</h2>
                 </div>
                 <div className="steps-container">
-                    {STEPS.map((step, i) => (
-                        <div key={i} className="step-card">
-                            <div className="step-icon-wrapper">{step.icon}</div>
-                            <h4 className="step-title">{step.title}</h4>
-                            <p className="step-desc">{step.desc}</p>
-                        </div>
-                    ))}
+                    {/* Step 1 */}
+                    <div className="step-card">
+                        <div className="step-icon-wrapper"><SearchIcon className="step-icon" /></div>
+                        <h4 className="step-title">Discover Photographers</h4>
+                        <p className="step-desc">Browse through our elite roster of visual storytellers.</p>
+                    </div>
+
+                    {/* Step 2 */}
+                    <div className="step-card">
+                        <div className="step-icon-wrapper"><CalendarTodayIcon className="step-icon" /></div>
+                        <h4 className="step-title">Choose Your Date</h4>
+                        <p className="step-desc">Select the perfect timing for your bespoke session.</p>
+                    </div>
+
+                    {/* Step 3 */}
+                    <div className="step-card">
+                        <div className="step-icon-wrapper"><TaskAltIcon className="step-icon" /></div>
+                        <h4 className="step-title">Book & Relax</h4>
+                        <p className="step-desc">Secure your reservation and let us handle the artistic details.</p>
+                    </div>
                 </div>
             </section>
 
@@ -123,13 +76,33 @@ const LandingPage = () => {
                     <h2 className="section-main-title">WHY CHOOSE US</h2>
                 </div>
                 <div className="features-grid">
-                    {FEATURES.map((feature, i) => (
-                        <div key={i} className="feature-card">
-                            <div className="feature-icon-wrapper">{feature.icon}</div>
-                            <h4 className="feature-title">{feature.title}</h4>
-                            <p className="feature-desc">{feature.desc}</p>
-                        </div>
-                    ))}
+                    {/* Feature 1 */}
+                    <div className="feature-card">
+                        <div className="feature-icon-wrapper"><WorkspacePremiumIcon className="feature-icon" /></div>
+                        <h4 className="feature-title">Handpicked Professionals</h4>
+                        <p className="feature-desc">Only the top 1% of photographers join our exclusive platform.</p>
+                    </div>
+
+                    {/* Feature 2 */}
+                    <div className="feature-card">
+                        <div className="feature-icon-wrapper"><HighQualityIcon className="feature-icon" /></div>
+                        <h4 className="feature-title">Premium Quality</h4>
+                        <p className="feature-desc">High-end post-processing and cinematic delivery for every shot.</p>
+                    </div>
+
+                    {/* Feature 3 */}
+                    <div className="feature-card">
+                        <div className="feature-icon-wrapper"><FlashOnIcon className="feature-icon" /></div>
+                        <h4 className="feature-title">Easy Booking</h4>
+                        <p className="feature-desc">A seamless, intuitive interface designed for modern luxury.</p>
+                    </div>
+
+                    {/* Feature 4 */}
+                    <div className="feature-card">
+                        <div className="feature-icon-wrapper"><GroupsIcon className="feature-icon" /></div>
+                        <h4 className="feature-title">Trusted by 500+ Clients</h4>
+                        <p className="feature-desc">Delivering exceptional visual experiences across the globe.</p>
+                    </div>
                 </div>
             </section>
 
@@ -140,21 +113,50 @@ const LandingPage = () => {
                     <h2 className="section-main-title">TESTIMONIALS</h2>
                 </div>
                 <div className="testimonials-grid-new">
-                    {TESTIMONIALS.map((t, i) => (
-                        <div key={i} className="testimonial-card-new">
-                            <div className="stars">
-                                {[...Array(5)].map((_, idx) => <StarIcon key={idx} className="star-icon" />)}
-                            </div>
-                            <p className="testimonial-text">"{t.text}"</p>
-                            <div className="testimonial-footer">
-                                <img src={t.img} alt={t.name} className="testimonial-img" />
-                                <div className="testimonial-info">
-                                    <h4 className="testimonial-name">{t.name}</h4>
-                                    <p className="testimonial-role">{t.role}</p>
-                                </div>
+                    {/* Testimonial 1 */}
+                    <div className="testimonial-card-new">
+                        <div className="stars">
+                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
+                        </div>
+                        <p className="testimonial-text">"The cinematic quality of the photos is just breathtaking. They captured our day with such sophistication."</p>
+                        <div className="testimonial-footer">
+                            <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" alt="Priya Sharma" className="testimonial-img" />
+                            <div className="testimonial-info">
+                                <h4 className="testimonial-name">Priya Sharma</h4>
+                                <p className="testimonial-role">Wedding Client</p>
                             </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Testimonial 2 */}
+                    <div className="testimonial-card-new">
+                        <div className="stars">
+                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
+                        </div>
+                        <p className="testimonial-text">"Professionalism at its best. The product shots significantly boosted our brand image."</p>
+                        <div className="testimonial-footer">
+                            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg" alt="Rahul Verma" className="testimonial-img" />
+                            <div className="testimonial-info">
+                                <h4 className="testimonial-name">Rahul Verma</h4>
+                                <p className="testimonial-role">Product Owner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Testimonial 3 */}
+                    <div className="testimonial-card-new">
+                        <div className="stars">
+                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
+                        </div>
+                        <p className="testimonial-text">"Such a comfortable and luxurious experience. The baby shoot photos are our favorite memories."</p>
+                        <div className="testimonial-footer">
+                            <img src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" alt="Sneha Kapur" className="testimonial-img" />
+                            <div className="testimonial-info">
+                                <h4 className="testimonial-name">Sneha Kapur</h4>
+                                <p className="testimonial-role">Maternity Client</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

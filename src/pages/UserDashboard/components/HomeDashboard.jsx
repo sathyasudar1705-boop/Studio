@@ -3,13 +3,7 @@ import './DashboardComponents.css';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-const PACKAGES = [
-    { id: 'baby', label: 'Baby Shoot', img: 'https://images.pexels.com/photos/325690/pexels-photo-325690.jpeg' },
-    { id: 'travel', label: 'Travel Shoot', img: 'https://images.pexels.com/photos/2087391/pexels-photo-2087391.jpeg' },
-    { id: 'wedding', label: 'Wedding & Elopements', img: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg' },
-    { id: 'product', label: 'Product Shoot', img: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg' },
-    { id: 'birthday', label: 'Birthday Shoot', img: 'https://images.pexels.com/photos/1543762/pexels-photo-1543762.jpeg' },
-];
+import { PACKAGES } from '../../../data/mockData';
 
 const HomeDashboard = ({ onNavigate }) => {
     const scrollRef = useRef(null);

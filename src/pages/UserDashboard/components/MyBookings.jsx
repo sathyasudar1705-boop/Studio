@@ -1,10 +1,6 @@
 import React from 'react';
 
-const MOCK_BOOKINGS = [
-    { id: 'BK-001', photographer: 'Evelyn Harper', category: 'Wedding', date: 'Mar 24, 2026', time: '09:00 AM', status: 'Confirmed', price: '₹45,000' },
-    { id: 'BK-002', photographer: 'Julian Cross', category: 'Portrait', date: 'Feb 12, 2026', time: '02:00 PM', status: 'Completed', price: '₹30,000' },
-    { id: 'BK-003', photographer: 'Marcus Thorne', category: 'Elopement', date: 'Apr 05, 2026', time: '11:00 AM', status: 'Pending', price: '₹50,000' }
-];
+import { MOCK_BOOKINGS } from '../../../data/mockData';
 
 const MyBookings = ({ onSelectBooking }) => {
     return (
