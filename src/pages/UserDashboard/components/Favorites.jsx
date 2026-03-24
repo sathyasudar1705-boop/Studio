@@ -1,4 +1,5 @@
 import React from 'react';
+import StarIcon from '@mui/icons-material/Star';
 
 const MOCK_FAVS = [
     { 
@@ -18,11 +19,18 @@ const Favorites = ({ onSelectPhotographer }) => {
             <div className="ub-pg-grid">
                 {MOCK_FAVS.map(pg => (
                     <div key={pg.id} className="ub-pg-card">
-                        <img src={pg.img} alt={pg.name} className="ub-pg-img" />
+                        <div className="ub-pg-img-container">
+                            <img src={pg.img} alt={pg.name} className="ub-pg-img" />
+                            <div className="ub-pg-badge rating">
+                                <StarIcon fontSize="inherit" /> {pg.rating}
+                            </div>
+                        </div>
                         <div className="ub-pg-info">
-                            <h3>{pg.name}</h3>
-                            <p>{pg.role}</p>
-                            <button className="ub-btn-outline" style={{ width: '100%', marginTop: '15px' }} onClick={() => onSelectPhotographer(pg)}>
+                            <div className="ub-pg-header">
+                                <h3>{pg.name}</h3>
+                            </div>
+                            <p className="ub-pg-role">{pg.role}</p>
+                            <button className="ub-btn-primary ub-btn-view" onClick={() => onSelectPhotographer(pg)}>
                                 View Portfolio
                             </button>
                         </div>

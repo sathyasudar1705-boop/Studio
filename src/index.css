@@ -3,28 +3,24 @@
 
 :root {
   /* ── Core Palette (Editorial Elegance) ── */
-  --bg-deep: #FDFBFA; /* Extremely light cream, almost white but warm */
-  --bg-card: #FFFFFF; /* Pure white for cards */
+  --bg-deep: #F7F3EF; /* Warm Main Background */
+  --bg-alt: #FDF6F0;  /* Lighter Alternate Section */
+  --bg-card: #FFFFFF; /* Pure White for Cards */
   --bg-sidebar: #FFFFFF;
 
   /* ── Accents (Dark Olive / Minimalist) ── */
-  --accent: #1A1A1A; /* Sharper black/grey */
-  --accent-light: #404040;
+  --accent: #1A1A1A; 
+  --accent-light: #555555;
   --accent-dark: #000000;
   --accent-soft: rgba(0, 0, 0, 0.03);
   --accent-glow: rgba(0, 0, 0, 0.05);
 
-  /* ── Additional Palette Colors ── */
-  --color-olive: #2C2F28;
-  --color-cream: #FDFBFA;
-  --color-taupe: #EEEAE5;
-  --color-white: #FFFFFF;
-
   /* ── Text (High Contrast) ── */
-  --text-main: #1A1A1A; /* Deepest grey/black for readability */
-  --text-dim: #454545; /* Clearly visible secondary text */
-  --text-muted: #757575; /* Legible meta info */
+  --text-main: #1A1A1A; /* Primary Text */
+  --text-dim: #555555;  /* Secondary Text */
+  --text-muted: #757575; 
   --text-on-accent: #FFFFFF;
+  --color-white: #FFFFFF;
 
   /* ── Borders & Utilities ── */
   --border: #E8E4E0; 
@@ -120,25 +116,51 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
-    /* Add font for the cursive labels */
-    --font-cursive: 'Great Vibes', cursive;
 }
 
-/* ── Packages Section (Refined UI) ── */
+/* ── Packages Section (Premium Refined UI) ── */
 .ub-packages-section {
-    padding: 100px 0;
+    padding: 120px 0;
     text-align: center;
     background: var(--bg-deep);
     overflow: hidden;
+    position: relative;
+}
+
+/* Subtle background accent */
+.ub-packages-section::before {
+    content: 'LENSORIA';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20vw;
+    font-family: var(--font-brand);
+    color: var(--accent);
+    opacity: 0.02;
+    pointer-events: none;
+    letter-spacing: 50px;
+    z-index: 0;
 }
 
 .ub-packages-title {
-    font-family: var(--font-brand);
-    font-size: 32px;
-    letter-spacing: 4px;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    letter-spacing: 12px;
     color: var(--text-main);
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     font-weight: 400;
+    text-transform: uppercase;
+}
+
+.ub-packages-subtitle {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 80px;
+    display: block;
 }
 
 .ub-carousel-wrapper {
@@ -153,8 +175,8 @@ button {
 .ub-carousel-btn {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -163,155 +185,166 @@ button {
     transition: var(--transition);
     z-index: 100;
     color: var(--accent);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
 .ub-carousel-btn:hover {
-    background: var(--accent);
-    color: var(--color-white);
+    background: #FFFFFF;
+    color: var(--accent);
     transform: scale(1.1);
     border-color: var(--accent);
+    box-shadow: 0 15px 45px rgba(0,0,0,0.1);
 }
 
 .ub-carousel-btn.prev {
     position: absolute;
-    left: 20px;
+    left: 10px;
 }
 
 .ub-carousel-btn.next {
     position: absolute;
-    right: 20px;
+    right: 10px;
 }
 
 .ub-packages-carousel {
     display: flex;
     justify-content: flex-start;
-    align-items: flex-end;
-    gap: 40px;
+    align-items: center;
+    gap: 30px;
     flex: 1;
     overflow-x: auto;
-    padding: 20px 20px 40px; /* Extra bottom padding for CTA */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    padding: 40px 20px 100px; /* Space for labels and hover effects */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     scroll-behavior: smooth;
-    min-height: 480px; 
+    min-height: 550px;
 }
 
 .ub-package-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
     flex-shrink: 0;
+    width: 320px;
+    height: 480px;
     cursor: pointer;
-    width: 200px;
-    position: relative; /* Anchor for absolute CTA */
+    overflow: hidden;
+    background: #000;
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.1);
+    z-index: 1;
 }
 
 .ub-package-card img {
-    width: 200px;
-    height: 280px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 1px solid var(--border);
-    margin-bottom: 25px;
-    filter: grayscale(40%) contrast(0.9);
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    opacity: 0.85;
+    filter: grayscale(20%);
 }
 
 .ub-package-card:hover img {
-    filter: none;
-    transform: translateY(-5px);
+    transform: scale(1.08);
+    opacity: 0.6;
+    filter: grayscale(0%);
 }
 
-.ub-package-card.focus {
-    width: 260px;
-}
-
-.ub-package-card.focus img {
-    width: 260px;
-    height: 360px;
-    filter: none;
-    border-color: var(--accent);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-}
-
-.ub-package-label {
-    font-family: var(--font-brand);
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
+.ub-package-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: var(--color-white);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     transition: var(--transition);
 }
 
-.ub-package-card:hover .ub-package-label,
-.ub-package-card.focus .ub-package-label {
-    color: var(--text-main);
+.ub-package-label {
+    font-family: var(--font-display);
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: var(--color-white);
+    transform: translateY(20px);
+    transition: var(--transition);
 }
 
-.ub-package-card.focus .ub-package-label {
-    font-size: 20px;
+.ub-package-tag {
+    font-family: var(--font-sans);
+    font-size: 10px;
     letter-spacing: 3px;
-    margin-bottom: 5px;
+    text-transform: uppercase;
+    color: var(--color-white);
+    opacity: 0.6;
+    margin-bottom: 8px;
+    transform: translateY(20px);
+    transition: var(--transition);
 }
 
 .ub-package-cta {
-    background: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 10px 24px;
-    font-size: 9px;
+    background: var(--color-white);
+    color: var(--accent);
+    padding: 12px 24px;
+    font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    color: var(--color-white);
-    position: absolute;
-    bottom: -35px; /* Stay outside the normal document flow so resizing doesn't shake */
+    font-weight: 600;
+    width: fit-content;
     opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
+    transform: translateY(30px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ub-package-card.focus .ub-package-cta {
+.ub-package-card:hover .ub-package-label,
+.ub-package-card:hover .ub-package-tag {
+    transform: translateY(0);
+}
+
+.ub-package-card:hover .ub-package-cta {
     opacity: 1;
-    visibility: visible;
     transform: translateY(0);
 }
 
 .ub-package-cta:hover {
-    background: transparent;
-    color: var(--accent);
+    background: var(--accent);
+    color: var(--color-white);
+}
+
+/* Specific Focus state if requested to keep it */
+.ub-package-card.focus {
+    width: 380px;
+    border-color: var(--accent);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
 }
 
 @media (max-width: 1024px) {
-    .ub-packages-carousel {
-        min-height: 400px;
-        gap: 30px;
-    }
     .ub-package-card {
-        width: 180px;
-    }
-    .ub-package-card img {
-        width: 180px;
-        height: 250px;
-    }
-    .ub-package-card.focus {
-        width: 220px;
-    }
-    .ub-package-card.focus img {
-        width: 220px;
-        height: 300px;
+        width: 280px;
+        height: 400px;
     }
 }
 
 @media (max-width: 768px) {
-    .ub-carousel-wrapper {
-        padding: 0 20px;
+    .ub-packages-section {
+        padding: 60px 0;
+    }
+    .ub-packages-title {
+        letter-spacing: 6px;
     }
     .ub-carousel-btn {
-        display: none; /* Swipe on mobile */
+        display: none;
     }
     .ub-packages-carousel {
         padding-left: 20px;
+        gap: 20px;
+    }
+    .ub-package-card {
+        width: 250px;
+        height: 350px;
     }
 }

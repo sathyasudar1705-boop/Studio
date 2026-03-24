@@ -28,29 +28,40 @@ const HomeDashboard = ({ onNavigate }) => {
                 </button>
             </div>
 
-            {/* Stats Area */}
-            <div className="ub-stats-grid">
-                <div className="ub-stat-card">
-                    <h3>12</h3>
-                    <p>Total Bookings</p>
-                </div>
-                <div className="ub-stat-card">
-                    <h3>3</h3>
-                    <p>Upcoming Sessions</p>
-                </div>
-                <div className="ub-stat-card">
-                    <h3>7</h3>
-                    <p>Saved Creatives</p>
-                </div>
-                <div className="ub-stat-card">
-                    <h3>24</h3>
-                    <p>Gallery Deliveries</p>
-                </div>
-            </div>
 
-            {/* Packages / Categories Section */}
+            {/* Why Choose Us Section */}
+            <section className="ub-why-us-section">
+                <div className="ub-section-intro">
+                    <h2 className="ub-why-us-title">Why Choose Us</h2>
+                    <p className="ub-why-us-subtitle">Where excellence meets experience</p>
+                </div>
+                
+                <div className="ub-features-grid">
+                    <div className="ub-feature-card">
+                        <div className="ub-feature-icon">✦</div>
+                        <h3>Curated Talent</h3>
+                        <p>Only the finest photographers, selected for their unique style and quality</p>
+                    </div>
+                    <div className="ub-feature-card">
+                        <div className="ub-feature-icon">❈</div>
+                        <h3>Exceptional Craftsmanship</h3>
+                        <p>Every shot is thoughtfully captured to reflect timeless beauty</p>
+                    </div>
+                    <div className="ub-feature-card">
+                        <div className="ub-feature-icon">❖</div>
+                        <h3>Effortless Experience</h3>
+                        <p>From discovery to booking, everything is designed for simplicity</p>
+                    </div>
+                    <div className="ub-feature-card">
+                        <div className="ub-feature-icon">❦</div>
+                        <h3>Proven Trust</h3>
+                        <p>A growing community of happy clients who value quality</p>
+                    </div>
+                </div>
+            </section>
             <section className="ub-packages-section">
-                <h2 className="ub-packages-title">PACKAGES</h2>
+                <h2 className="ub-packages-title">CURATED EXPERIENCES</h2>
+                <span className="ub-packages-subtitle">Handpicked collections for every milestone</span>
                 
                 <div className="ub-carousel-wrapper">
                     <button className="ub-carousel-btn prev" onClick={() => scrollCarousel('prev')}>
@@ -65,13 +76,16 @@ const HomeDashboard = ({ onNavigate }) => {
                                 onClick={() => setFocusedId(pkg.id)}
                             >
                                 <img src={pkg.img} alt={pkg.label} />
-                                <span className="ub-package-label">{pkg.label}</span>
-                                <button className="ub-package-cta" onClick={(e) => {
-                                    e.stopPropagation();
-                                    onNavigate('browse');
-                                }}>
-                                    GET THE DETAILS
-                                </button>
+                                <div className="ub-package-info">
+                                    <span className="ub-package-tag">Session</span>
+                                    <span className="ub-package-label">{pkg.label}</span>
+                                    <button className="ub-package-cta" onClick={(e) => {
+                                        e.stopPropagation();
+                                        onNavigate('browse');
+                                    }}>
+                                        EXPLORE
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>

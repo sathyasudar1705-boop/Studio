@@ -1,3 +1,8 @@
+import Baby from '../assets/Baby.jpg';
+import Birthday from '../assets/Birthday.jpg';
+import Wedding from '../assets/Wedding_photo.jpg';
+import Product from '../assets/cierra-henderson-LWIQp-0_b98-unsplash.jpg';
+
 export const PHOTOGRAPHERS = [
     { 
         id: 1, 
@@ -42,17 +47,19 @@ export const PHOTOGRAPHERS = [
 ];
 
 export const PACKAGES = [
-    { id: 'baby', label: 'Baby Shoot', img: 'https://images.pexels.com/photos/325690/pexels-photo-325690.jpeg' },
+    { id: 'baby', label: 'Baby Shoot', img: Baby },
     { id: 'travel', label: 'Travel Shoot', img: 'https://images.pexels.com/photos/2087391/pexels-photo-2087391.jpeg' },
-    { id: 'wedding', label: 'Wedding & Elopements', img: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg' },
-    { id: 'product', label: 'Product Shoot', img: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg' },
-    { id: 'birthday', label: 'Birthday Shoot', img: 'https://images.pexels.com/photos/1543762/pexels-photo-1543762.jpeg' },
+    { id: 'wedding', label: 'Wedding & Elopements', img: Wedding },
+    { id: 'product', label: 'Product Shoot', img: Product },
+    { id: 'birthday', label: 'Birthday Shoot', img: Birthday },
 ];
 
 export const MOCK_BOOKINGS = [
-    { id: 'BK-001', photographer: 'Evelyn Harper', category: 'Wedding', date: 'Mar 24, 2026', time: '09:00 AM', status: 'Confirmed', price: '₹45,000' },
-    { id: 'BK-002', photographer: 'Julian Cross', category: 'Portrait', date: 'Feb 12, 2026', time: '02:00 PM', status: 'Completed', price: '₹30,000' },
-    { id: 'BK-003', photographer: 'Marcus Thorne', category: 'Elopement', date: 'Apr 05, 2026', time: '11:00 AM', status: 'Pending', price: '₹50,000' }
+    { id: 'BK-001', photographer: 'Evelyn Harper', category: 'Wedding', date: 'Mar 24, 2026', time: '09:00 AM', status: 'Confirmed', price: '₹45,000', location: 'Grand Oak Ballroom' },
+    { id: 'BK-002', photographer: 'Julian Cross', category: 'Portrait', date: 'Feb 12, 2026', time: '02:00 PM', status: 'Completed', price: '₹30,000', rating: 5, review: 'Amazing session!' },
+    { id: 'BK-003', photographer: 'Marcus Thorne', category: 'Elopement', date: 'Apr 05, 2026', time: '11:00 AM', status: 'Pending', price: '₹50,000' },
+    { id: 'BK-004', photographer: 'Clara Vance', category: 'Product', date: 'Mar 20, 2026', time: '10:00 AM', status: 'ShootDay', price: '₹25,000', location: 'Studio 4, Arts District' },
+    { id: 'BK-005', photographer: 'Evelyn Harper', category: 'Couple', date: 'Jan 15, 2026', time: '03:00 PM', status: 'Delivered', price: '₹20,000', driveLink: 'https://drive.google.com/lensoria/BK-005' },
 ];
 
 export const NAV_LINKS = [

@@ -48,15 +48,18 @@ const BrowsePhotographers = ({ onSelectPhotographer }) => {
             <div className="ub-pg-grid">
                 {filtered.map(pg => (
                     <div key={pg.id} className="ub-pg-card">
-                        <img src={pg.img} alt={pg.name} className="ub-pg-img" />
-                        <div className="ub-pg-info">
-                            <h3>{pg.name}</h3>
-                            <p>{pg.role}</p>
-                            <div className="ub-pg-meta">
-                                <span><StarIcon fontSize="small" style={{ color: 'var(--text-main)' }}/> {pg.rating} ({pg.reviews})</span>
-                                <span>{pg.price}</span>
+                        <div className="ub-pg-img-container">
+                            <img src={pg.img} alt={pg.name} className="ub-pg-img" />
+                            <div className="ub-pg-badge rating">
+                                <StarIcon fontSize="inherit" /> {pg.rating}
                             </div>
-                            <button className="ub-btn-outline" style={{ width: '100%' }} onClick={() => onSelectPhotographer(pg)}>
+                        </div>
+                        <div className="ub-pg-info">
+                            <div className="ub-pg-header">
+                                <h3>{pg.name}</h3>
+                            </div>
+                            <p className="ub-pg-role">{pg.role}</p>
+                            <button className="ub-btn-primary ub-btn-view" onClick={() => onSelectPhotographer(pg)}>
                                 View Portfolio
                             </button>
                         </div>
