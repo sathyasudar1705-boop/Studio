@@ -2,176 +2,178 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Footer from "../components/Footer";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import HighQualityIcon from "@mui/icons-material/HighQuality";
-import FlashOnIcon from "@mui/icons-material/FlashOn";
-import GroupsIcon from "@mui/icons-material/Groups";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
-
-// Simplified Landing Page - Arrays removed for easier reading
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { PHOTOGRAPHERS, PACKAGES } from "../data/mockData";
 
 const LandingPage = () => {
     const navigate = useNavigate();
 
     return (
         <div className="landing-root">
-            {/* The global Navbar is used here */}
-
-            {/* Hero Section */}
+            {/* ── Hero Section ── */}
             <div className="landing-hero">
                 <div className="landing-hero-overlay">
-                    <h1 className="landing-title">Where Every Moment Becomes Art</h1>
-                    <p className="landing-subtitle">Curated photography experiences designed to capture your story with sophistication</p>
-                    <button className="landing-cta primary-cta" onClick={() => navigate("/login")}>Reserve Your Session</button>
+                    <span className="hero-eyebrow">ESTABLISHED 2026</span>
+                    <h1 className="landing-title">
+                        Memories Defined by <em>Precision</em>
+                    </h1>
+                    <p className="landing-subtitle">
+                        Curated photography experiences designed to capture your story with sophisticated cinematic elegance.
+                    </p>
+
+                    {/* Image-Style Search Bar */}
+                    <div className="hero-search-wrapper">
+                        <div className="search-input-group">
+                            <SearchIcon className="search-icon-small" />
+                            <input type="text" placeholder="Search for a photographer..." />
+                        </div>
+                        <div className="search-input-group">
+                            <LocationOnIcon className="search-icon-small" />
+                            <input type="text" placeholder="Location..." defaultValue="Chennai, India" />
+                        </div>
+                        <button className="hero-search-btn" onClick={() => navigate("/login")}>
+                            Find a Photographer
+                        </button>
+                    </div>
+
                     <div className="landing-stats">
-                        <div className="stat-item"><span className="stat-num">500+</span><span className="stat-label">Satisfied Clients</span></div>
-                        <div className="stat-divider" />
-                        <div className="stat-item"><span className="stat-num">50+</span><span className="stat-label">Handpicked Photographers</span></div>
-                        <div className="stat-divider" />
-                        <div className="stat-item"><span className="stat-num">1200+</span><span className="stat-label">Stories Captured</span></div>
+                        <div className="stat-item">
+                            <span className="stat-num">500+</span>
+                            <span className="stat-label">Satisfied Clients</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-num">50+</span>
+                            <span className="stat-label">Handpicked Artists</span>
+                        </div>
+                        <div className="stat-item">
+                            <span className="stat-num">1.2K</span>
+                            <span className="stat-label">Stories Captured</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Section 1: How It Works */}
-            <section className="how-it-works">
-                <div className="section-title-area">
-                    <p className="section-eyebrow">COORDINATION</p>
-                    <h2 className="section-main-title">HOW IT WORKS</h2>
+            {/* ── Discover by Specialty ── */}
+            <section className="landing-section specialty-section">
+                <div className="section-header">
+                    <div className="section-titles">
+                        <span className="section-eyebrow">DIFFERENCE</span>
+                        <h2 className="section-main-title">Discover by Specialty</h2>
+                    </div>
+                    <a href="#" className="view-all-link" onClick={(e) => { e.preventDefault(); navigate("/login"); }}>
+                        Browse all Categories
+                    </a>
                 </div>
-                <div className="steps-container">
-                    {/* Step 1 */}
-                    <div className="step-card">
-                        <div className="step-icon-wrapper"><SearchIcon className="step-icon" /></div>
-                        <h4 className="step-title">Discover Photographers</h4>
-                        <p className="step-desc">Browse through our elite roster of visual storytellers.</p>
-                    </div>
 
-                    {/* Step 2 */}
-                    <div className="step-card">
-                        <div className="step-icon-wrapper"><CalendarTodayIcon className="step-icon" /></div>
-                        <h4 className="step-title">Choose Your Date</h4>
-                        <p className="step-desc">Select the perfect timing for your bespoke session.</p>
-                    </div>
-
-                    {/* Step 3 */}
-                    <div className="step-card">
-                        <div className="step-icon-wrapper"><TaskAltIcon className="step-icon" /></div>
-                        <h4 className="step-title">Book & Relax</h4>
-                        <p className="step-desc">Secure your reservation and let us handle the artistic details.</p>
-                    </div>
+                <div className="specialty-grid">
+                    {PACKAGES.map((pkg) => (
+                        <div key={pkg.id} className="specialty-card" onClick={() => navigate("/login")}>
+                            <img src={pkg.img} alt={pkg.label} />
+                            <div className="specialty-overlay">
+                                <h4 className="specialty-name">{pkg.label}</h4>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
 
-            {/* Section 2: Why Choose Us */}
-            <section className="why-choose-us">
-                <div className="section-title-area">
-                    <p className="section-eyebrow">DIFFERENCE</p>
-                    <h2 className="section-main-title">WHY CHOOSE US</h2>
+            {/* ── Featured Artisans ── */}
+            <section className="landing-section" style={{ background: 'var(--bg-alt)' }}>
+                <div className="section-header">
+                    <div className="section-titles">
+                        <span className="section-eyebrow">EXPERT CURATION</span>
+                        <h2 className="section-main-title">Featured Artisans</h2>
+                    </div>
+                    <a href="#" className="view-all-link" onClick={(e) => { e.preventDefault(); navigate("/login"); }}>
+                        Meet more artists
+                    </a>
                 </div>
-                <div className="features-grid">
-                    {/* Feature 1 */}
-                    <div className="feature-card">
-                        <div className="feature-icon-wrapper"><WorkspacePremiumIcon className="feature-icon" /></div>
-                        <h4 className="feature-title">Handpicked Professionals</h4>
-                        <p className="feature-desc">Only the top 1% of photographers join our exclusive platform.</p>
-                    </div>
 
-                    {/* Feature 2 */}
-                    <div className="feature-card">
-                        <div className="feature-icon-wrapper"><HighQualityIcon className="feature-icon" /></div>
-                        <h4 className="feature-title">Premium Quality</h4>
-                        <p className="feature-desc">High-end post-processing and cinematic delivery for every shot.</p>
-                    </div>
-
-                    {/* Feature 3 */}
-                    <div className="feature-card">
-                        <div className="feature-icon-wrapper"><FlashOnIcon className="feature-icon" /></div>
-                        <h4 className="feature-title">Easy Booking</h4>
-                        <p className="feature-desc">A seamless, intuitive interface designed for modern luxury.</p>
-                    </div>
-
-                    {/* Feature 4 */}
-                    <div className="feature-card">
-                        <div className="feature-icon-wrapper"><GroupsIcon className="feature-icon" /></div>
-                        <h4 className="feature-title">Trusted by 500+ Clients</h4>
-                        <p className="feature-desc">Delivering exceptional visual experiences across the globe.</p>
-                    </div>
+                <div className="artisan-grid">
+                    {PHOTOGRAPHERS.slice(0, 3).map((artisan) => (
+                        <div key={artisan.id} className="artisan-card">
+                            <div className="artisan-img-wrapper">
+                                <img src={artisan.img} alt={artisan.name} />
+                                <div className="artisan-badge">PREMIUM ARTIST</div>
+                            </div>
+                            <div className="artisan-content">
+                                <div className="artisan-header">
+                                    <h3 className="artisan-name">{artisan.name}</h3>
+                                    <div className="artisan-rating">
+                                        <StarIcon className="rating-star" />
+                                        <span>{artisan.rating}</span>
+                                    </div>
+                                </div>
+                                <p className="artisan-role">{artisan.role}</p>
+                                <div className="artisan-footer">
+                                    <div className="artisan-price">
+                                        <span>Starts from</span>
+                                        <b>{artisan.price}</b>
+                                    </div>
+                                    <button className="book-btn-small" onClick={() => navigate("/login")}>
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
 
-            {/* Section 3: Testimonials */}
-            <section className="testimonials-section">
-                <div className="section-title-area">
-                    <p className="section-eyebrow">CLIENT LOVE</p>
-                    <h2 className="section-main-title">TESTIMONIALS</h2>
+            {/* ── Your Journey Section ── */}
+            <section className="journey-section">
+                <div className="journey-image">
+                    <img src="https://images.pexels.com/photos/1580274/pexels-photo-1580274.jpeg" alt="Photography session" />
                 </div>
-                <div className="testimonials-grid-new">
-                    {/* Testimonial 1 */}
-                    <div className="testimonial-card-new">
-                        <div className="stars">
-                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
-                        </div>
-                        <p className="testimonial-text">"The cinematic quality of the photos is just breathtaking. They captured our day with such sophistication."</p>
-                        <div className="testimonial-footer">
-                            <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" alt="Priya Sharma" className="testimonial-img" />
-                            <div className="testimonial-info">
-                                <h4 className="testimonial-name">Priya Sharma</h4>
-                                <p className="testimonial-role">Wedding Client</p>
-                            </div>
+                <div className="journey-steps">
+                    <div className="section-titles">
+                        <span className="section-eyebrow">COORDINATION</span>
+                        <h2 className="section-main-title">Your journey to Perfect Moments</h2>
+                    </div>
+
+                    <div className="journey-step">
+                        <span className="step-number">01</span>
+                        <div className="step-details">
+                            <h4>Discover & Consult</h4>
+                            <p>Explore our elite roster and find the artistic style that resonates with your vision. Discuss your ideas directly with the creator.</p>
                         </div>
                     </div>
 
-                    {/* Testimonial 2 */}
-                    <div className="testimonial-card-new">
-                        <div className="stars">
-                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
-                        </div>
-                        <p className="testimonial-text">"Professionalism at its best. The product shots significantly boosted our brand image."</p>
-                        <div className="testimonial-footer">
-                            <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg" alt="Rahul Verma" className="testimonial-img" />
-                            <div className="testimonial-info">
-                                <h4 className="testimonial-name">Rahul Verma</h4>
-                                <p className="testimonial-role">Product Owner</p>
-                            </div>
+                    <div className="journey-step">
+                        <span className="step-number">02</span>
+                        <div className="step-details">
+                            <h4>Seamless Reservation</h4>
+                            <p>Select your date and customize your package. Our intuitive system handles the logistics so you can focus on the experience.</p>
                         </div>
                     </div>
 
-                    {/* Testimonial 3 */}
-                    <div className="testimonial-card-new">
-                        <div className="stars">
-                            <StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" /><StarIcon className="star-icon" />
-                        </div>
-                        <p className="testimonial-text">"Such a comfortable and luxurious experience. The baby shoot photos are our favorite memories."</p>
-                        <div className="testimonial-footer">
-                            <img src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" alt="Sneha Kapur" className="testimonial-img" />
-                            <div className="testimonial-info">
-                                <h4 className="testimonial-name">Sneha Kapur</h4>
-                                <p className="testimonial-role">Maternity Client</p>
-                            </div>
+                    <div className="journey-step">
+                        <span className="step-number">03</span>
+                        <div className="step-details">
+                            <h4>Capturing & Delivery</h4>
+                            <p>Enjoy a bespoke session led by top-tier professionals. Receive your curated gallery with hand-finished artistic processing.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-
-
-            {/* Contact Section */}
-            <section id="contact-landing" className="contact-landing">
-                <div className="section-title-area">
-                    <p className="section-eyebrow">REACH OUT</p>
-                    <h2 className="section-main-title">CONTACT US</h2>
-                </div>
-                <div className="contact-landing-info">
-                    <div className="contact-item"><EmailIcon className="contact-icon" /><span>studio@lensoria.com</span></div>
-                    <div className="contact-item"><PhoneIcon className="contact-icon" /><span>+91 98765 43210</span></div>
-                    <div className="contact-item"><LocationOnIcon className="contact-icon" /><span>Chennai, Tamil Nadu, India</span></div>
+            {/* ── Final Call to Action ── */}
+            <section className="final-cta">
+                <div className="cta-content">
+                    <h2 className="cta-title">Ready to Capture Your Next Milestone?</h2>
+                    <p style={{ opacity: 0.8, fontSize: '17px', fontWeight: 300, fontFamily: 'var(--font-sans)', lineHeight: 1.7, letterSpacing: '0.3px' }}>
+                        Unveil the beauty of your story through our lens. Join the most exclusive community of visual storytellers and creators.
+                    </p>
+                    <div className="cta-btns">
+                        <button className="cta-btn-main" onClick={() => navigate("/signup")}>Register Now</button>
+                        <button className="cta-btn-sub" onClick={() => navigate("/signup?type=photographer")}>Join as Artist</button>
+                    </div>
                 </div>
             </section>
             

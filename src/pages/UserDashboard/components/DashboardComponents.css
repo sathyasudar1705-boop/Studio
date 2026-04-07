@@ -1400,3 +1400,320 @@
     .ub-bd-main-info { padding-right: 0; border-right: none; }
 }
 
+/* ── User Profile UI V2 ── */
+.ub-profile-page {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+.ub-profile-banner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ub-profile-cover-wrap {
+    height: 200px;
+    position: relative;
+}
+
+.ub-profile-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.ub-edit-cover {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.4);
+    color: var(--color-white);
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.ub-profile-info-bar {
+    padding: 20px 40px 30px;
+    display: flex;
+    align-items: flex-end;
+    gap: 25px;
+    position: relative;
+}
+
+.ub-profile-avatar-wrap {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+    position: relative;
+    z-index: 2;
+}
+
+.ub-profile-avatar-large {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 4px solid var(--bg-card);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.ub-edit-avatar {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: var(--color-white);
+    border: 3px solid var(--bg-card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ub-profile-name-text h2 {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.ub-profile-name-text p {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.ub-profile-main-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+}
+
+.ub-profile-sidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 10px;
+    height: fit-content;
+    border-radius: 8px;
+}
+
+.ub-profile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    font-size: 14px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 4px;
+}
+
+.ub-profile-nav-item:hover, .ub-profile-nav-item.active {
+    background: var(--bg-alt);
+    color: var(--text-main);
+}
+
+.ub-profile-nav-item.active {
+    font-weight: 600;
+}
+
+.ub-profile-content-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 50px;
+    border-radius: 8px;
+    min-height: 500px;
+}
+
+.ub-card-header-premium h3 {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.ub-card-header-premium p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.ub-form-grid-premium {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.ub-form-group-premium {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ub-form-group-premium.full-width {
+    grid-column: 1 / -1;
+}
+
+.ub-form-group-premium label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.ub-input-premium {
+    padding: 15px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    outline: none;
+    transition: var(--transition);
+    color: var(--text-main);
+}
+
+.ub-input-premium:focus {
+    border-color: var(--accent);
+    background: transparent;
+}
+
+.ub-form-actions {
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.ub-btn-primary-premium {
+    background: var(--accent);
+    color: white;
+    padding: 15px 35px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.ub-btn-secondary-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 15px 30px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.ub-security-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+}
+
+.ub-security-item {
+    background: var(--bg-card);
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ub-sec-text h4 {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.ub-sec-text p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.ub-btn-text {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ub-section-anim {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+    .ub-profile-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ub-profile-content-card.single-column {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ── Danger Zone ── */
+.ub-danger-zone {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 2px dashed var(--border);
+}
+
+.ub-danger-header {
+    margin-bottom: 25px;
+}
+
+.ub-danger-header h4 {
+    color: #dc3545;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.ub-danger-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.ub-btn-danger {
+    background: transparent;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    padding: 12px 25px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.ub-btn-danger:hover {
+    background: #dc3545;
+    color: white;
+}

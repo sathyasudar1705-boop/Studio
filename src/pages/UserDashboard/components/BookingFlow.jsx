@@ -7,31 +7,31 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 const PACKAGES = [
-    { 
-        id: 'essential', 
-        name: 'Essential', 
-        price: '₹15,000', 
-        duration: '2 Hours', 
+    {
+        id: 'essential',
+        name: 'Essential',
+        price: '₹15,000',
+        duration: '2 Hours',
         images: '15 Professionally Edited Images',
-        description: 'A refined session perfect for capturing intimate and beautiful moments with professional editing.' 
+        description: 'A refined session perfect for capturing intimate and beautiful moments with professional editing.'
     },
-    { 
-        id: 'signature', 
-        name: 'Signature', 
-        price: '₹35,000', 
-        duration: '5 Hours', 
+    {
+        id: 'signature',
+        name: 'Signature',
+        price: '₹35,000',
+        duration: '5 Hours',
         images: '40 Professionally Edited Images',
         addons: 'Extra Photographer, Drone, Makeup Artist',
-        description: 'An extended session with comprehensive coverage, ensuring every moment is beautifully captured. Premium add-ons available for a fully personalized experience.' 
+        description: 'An extended session with comprehensive coverage, ensuring every moment is beautifully captured. Premium add-ons available for a fully personalized experience.'
     },
-    { 
-        id: 'bespoke', 
-        name: 'Bespoke', 
-        price: 'Custom Pricing', 
-        duration: 'Full Day', 
+    {
+        id: 'bespoke',
+        name: 'Bespoke',
+        price: 'Custom Pricing',
+        duration: 'Full Day',
         images: 'Personalized Experience',
         addons: 'Extra Photographer, Drone, Makeup Artist',
-        description: 'A fully tailored experience, crafted around your unique story and vision, with premium attention to detail. Exclusive add-ons enhance your luxury session.' 
+        description: 'A fully tailored experience, crafted around your unique story and vision, with premium attention to detail. Exclusive add-ons enhance your luxury session.'
     },
 ];
 
@@ -78,7 +78,7 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             <h3>1. Check Availability</h3>
                         </div>
                         <p className="ub-step-desc">Select a date for your session with {photographer.name}.</p>
-                        
+
                         <div className="ub-calendar-mock">
                             <div className="ub-calendar-header">MARCH 2026</div>
                             <div className="ub-calendar-grid">
@@ -86,8 +86,8 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                                     const isDisabled = disabledDates.includes(d);
                                     const isSelected = bookingData.date === d;
                                     return (
-                                        <div 
-                                            key={d} 
+                                        <div
+                                            key={d}
                                             className={`ub-cal-day ${isDisabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}`}
                                             onClick={() => !isDisabled && updateData('date', d)}
                                         >
@@ -99,9 +99,9 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             </div>
                         </div>
 
-                        <button 
-                            className="ub-btn-primary full-width" 
-                            disabled={!bookingData.date} 
+                        <button
+                            className="ub-btn-primary full-width"
+                            disabled={!bookingData.date}
                             onClick={() => setStep(2)}
                         >
                             Select Date
@@ -115,13 +115,13 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             <AccessTimeIcon className="ub-step-icon" />
                             <h3>2. Time & Package</h3>
                         </div>
-                        
+
                         <div className="ub-package-selection">
                             <h4>Choose a Package</h4>
                             <div className="ub-packages-mini-grid">
                                 {PACKAGES.map(pkg => (
-                                    <div 
-                                        key={pkg.id} 
+                                    <div
+                                        key={pkg.id}
                                         className={`ub-package-mini-card ${bookingData.package?.id === pkg.id ? 'active' : ''}`}
                                         onClick={() => updateData('package', pkg)}
                                     >
@@ -142,7 +142,7 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             <h4>Select Time Slot</h4>
                             <div className="ub-time-grid">
                                 {timeslots.map(t => (
-                                    <div 
+                                    <div
                                         key={t}
                                         className={`ub-time-pill ${bookingData.time === t ? 'active' : ''}`}
                                         onClick={() => updateData('time', t)}
@@ -153,9 +153,9 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             </div>
                         </div>
 
-                        <button 
-                            className="ub-btn-primary full-width" 
-                            disabled={!bookingData.time || !bookingData.package} 
+                        <button
+                            className="ub-btn-primary full-width"
+                            disabled={!bookingData.time || !bookingData.package}
                             onClick={() => setStep(3)}
                         >
                             Confirm Selections
@@ -172,9 +172,9 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                         <div className="ub-form-compact">
                             <div className="ub-input-group">
                                 <label>Full Name</label>
-                                <input 
-                                    type="text" 
-                                    className="ub-input-minimal" 
+                                <input
+                                    type="text"
+                                    className="ub-input-minimal"
                                     placeholder="Aura Smith"
                                     value={bookingData.name}
                                     onChange={(e) => updateData('name', e.target.value)}
@@ -182,9 +182,9 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             </div>
                             <div className="ub-input-group">
                                 <label>Phone Number</label>
-                                <input 
-                                    type="tel" 
-                                    className="ub-input-minimal" 
+                                <input
+                                    type="tel"
+                                    className="ub-input-minimal"
                                     placeholder="+91 98765 43210"
                                     value={bookingData.phone}
                                     onChange={(e) => updateData('phone', e.target.value)}
@@ -192,9 +192,9 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             </div>
                             <div className="ub-input-group">
                                 <label>Event Location</label>
-                                <input 
-                                    type="text" 
-                                    className="ub-input-minimal" 
+                                <input
+                                    type="text"
+                                    className="ub-input-minimal"
                                     placeholder="Venue or Area Name"
                                     value={bookingData.location}
                                     onChange={(e) => updateData('location', e.target.value)}
@@ -202,17 +202,17 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             </div>
                             <div className="ub-input-group">
                                 <label>Special Requirements</label>
-                                <textarea 
-                                    className="ub-input-minimal" 
+                                <textarea
+                                    className="ub-input-minimal"
                                     placeholder="Any specific requests..."
                                     value={bookingData.requirements}
                                     onChange={(e) => updateData('requirements', e.target.value)}
                                 />
                             </div>
                         </div>
-                        <button 
-                            className="ub-btn-primary full-width" 
-                            disabled={!bookingData.name || !bookingData.phone || !bookingData.location} 
+                        <button
+                            className="ub-btn-primary full-width"
+                            disabled={!bookingData.name || !bookingData.phone || !bookingData.location}
                             onClick={() => setStep(4)}
                         >
                             Review Booking
@@ -259,7 +259,7 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                             <h3>5. Secure Payment</h3>
                         </div>
                         <div className="ub-payment-options">
-                            <div 
+                            <div
                                 className={`ub-pay-pill ${bookingData.paymentType === 'advance' ? 'active' : ''}`}
                                 onClick={() => updateData('paymentType', 'advance')}
                             >
@@ -269,7 +269,7 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                                     <span className="pay-desc">Reserve with 20% (₹{(parseInt(bookingData.package.price.replace(/[^\d]/g, '')) * 0.2).toLocaleString()})</span>
                                 </div>
                             </div>
-                            <div 
+                            <div
                                 className={`ub-pay-pill ${bookingData.paymentType === 'full' ? 'active' : ''}`}
                                 onClick={() => updateData('paymentType', 'full')}
                             >
@@ -298,7 +298,7 @@ const BookingFlow = ({ photographer, onComplete, onBack }) => {
                         <h2>Booking Confirmed!</h2>
                         <span className="ub-booking-id">ID: LS-8829-2026</span>
                         <p className="ub-success-msg">Your session with {photographer.name} is successfully scheduled.</p>
-                        
+
                         <div className="ub-contact-card-success">
                             <label>Photographer Contact:</label>
                             <span className="contact-info">+91 91234 56789 | evelyn@lensoria.com</span>

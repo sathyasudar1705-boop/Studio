@@ -15,7 +15,7 @@ import PhotographerDashboard from "./pages/PhotographerDashboard";
 
 function AppContent() {
   const location = useLocation();
-  const isDashboard = location.pathname === "/user-dashboard";
+  const isDashboard = location.pathname === "/user-dashboard" || location.pathname === "/photographer-dashboard";
 
   return (
     <>

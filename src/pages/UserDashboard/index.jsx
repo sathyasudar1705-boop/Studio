@@ -47,7 +47,7 @@ const UserDashboard = () => {
     };
 
     const navLinks = [
-        { id: 'home', label: 'Dashboard', icon: <HomeOutlinedIcon /> },
+        { id: 'home', label: 'Home', icon: <HomeOutlinedIcon /> },
         { id: 'browse', label: 'Photographers', icon: <SearchOutlinedIcon /> },
         { id: 'bookings', label: 'Bookings', icon: <CalendarTodayOutlinedIcon /> },
         { id: 'messages', label: 'Messages', icon: <ChatBubbleOutlineOutlinedIcon /> },
