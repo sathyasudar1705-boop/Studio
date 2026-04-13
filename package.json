@@ -11,5 +11,8 @@
     "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   }
 }
