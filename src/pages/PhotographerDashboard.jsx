@@ -16,7 +16,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -34,7 +34,7 @@ const PhotographerDashboard = () => {
                 navigate("/photographer-login");
                 return;
             }
-            
+
             const profRes = await API.get("/photographers/profile");
             setPhotographer(profRes.data);
 
@@ -182,13 +182,13 @@ const DashboardView = ({ photographer, bookings, refreshProfile }) => {
                                     <span className="notif-time">{b.customerName || b.userId?.name || "New Client"} • {b.notes?.split('.')[0] || "Custom Package"}</span>
                                 </div>
                                 <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                                    <button 
-                                        className="ph-view-details-btn" 
+                                    <button
+                                        className="ph-view-details-btn"
                                         onClick={() => setSelectedBooking(b)}
                                     >
                                         View Details
                                     </button>
-                                    
+
                                     {b.status === 'pending' ? (
                                         <div className="booking-actions">
                                             <button className="bk-btn accept" onClick={() => handleBookingAction(b._id, 'accepted')} title="Accept Request">
@@ -199,7 +199,7 @@ const DashboardView = ({ photographer, bookings, refreshProfile }) => {
                                             </button>
                                         </div>
                                     ) : (
-                                        <select 
+                                        <select
                                             className={`status-select-minimal ${b.status}`}
                                             value={b.status}
                                             onChange={(e) => handleBookingAction(b._id, e.target.value)}
@@ -224,7 +224,7 @@ const DashboardView = ({ photographer, bookings, refreshProfile }) => {
                 <div className="ph-modal-overlay" onClick={() => setSelectedBooking(null)}>
                     <div className="ph-details-modal" onClick={e => e.stopPropagation()}>
                         <button className="ph-close-modal" onClick={() => setSelectedBooking(null)}><CloseIcon /></button>
-                        
+
                         <div className="ph-modal-header">
                             <span className="ph-tag">Booking Request</span>
                             <h2>{selectedBooking.customerName || selectedBooking.userId?.name}</h2>
@@ -371,12 +371,12 @@ const PackagesView = ({ photographer, refreshProfile }) => {
             alert("Please fill in title and price");
             return;
         }
-        
+
         // Always use the latest packages from the prop to prevent overwriting
         const currentPackages = photographer?.packages || [];
-        const updated = [...currentPackages, { 
-            title: newPkg.title, 
-            price: Number(newPkg.price), 
+        const updated = [...currentPackages, {
+            title: newPkg.title,
+            price: Number(newPkg.price),
             duration: newPkg.duration,
             deliverables: newPkg.deliverables,
             features: newPkg.features.split(',').map(f => f.trim()).filter(f => f)
@@ -395,10 +395,10 @@ const PackagesView = ({ photographer, refreshProfile }) => {
 
     const handleDelete = async (index) => {
         if (!window.confirm("Are you sure you want to delete this package?")) return;
-        
+
         const currentPackages = photographer?.packages || [];
         const updated = currentPackages.filter((_, i) => i !== index);
-        
+
         try {
             await API.put("/photographers/profile", { packages: updated });
             refreshProfile();
@@ -419,17 +419,17 @@ const PackagesView = ({ photographer, refreshProfile }) => {
                     <div className="pkg-template-row">
                         <span>Quick Templates:</span>
                         {QUICK_TEMPLATES.map((tpl, idx) => (
-                            <button key={idx} className="pkg-tpl-chip" onClick={() => setNewPkg({...tpl, price: tpl.price.toString()})}>
+                            <button key={idx} className="pkg-tpl-chip" onClick={() => setNewPkg({ ...tpl, price: tpl.price.toString() })}>
                                 {tpl.title.split(' ')[0]}
                             </button>
                         ))}
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
-                        <input className="ph-input" placeholder="Package Title" value={newPkg.title} onChange={e => setNewPkg({...newPkg, title: e.target.value})} />
-                        <input className="ph-input" placeholder="Price (₹)" type="number" value={newPkg.price} onChange={e => setNewPkg({...newPkg, price: e.target.value})} />
-                        <input className="ph-input" placeholder="Duration (e.g., 4 Hours)" value={newPkg.duration} onChange={e => setNewPkg({...newPkg, duration: e.target.value})} />
-                        <input className="ph-input" placeholder="Deliverables (e.g., 50 Photos)" value={newPkg.deliverables} onChange={e => setNewPkg({...newPkg, deliverables: e.target.value})} />
-                        <input className="ph-input" placeholder="Features (Comma separated)" value={newPkg.features} onChange={e => setNewPkg({...newPkg, features: e.target.value})} style={{ gridColumn: '1/-1' }} />
+                        <input className="ph-input" placeholder="Package Title" value={newPkg.title} onChange={e => setNewPkg({ ...newPkg, title: e.target.value })} />
+                        <input className="ph-input" placeholder="Price (₹)" type="number" value={newPkg.price} onChange={e => setNewPkg({ ...newPkg, price: e.target.value })} />
+                        <input className="ph-input" placeholder="Duration (e.g., 4 Hours)" value={newPkg.duration} onChange={e => setNewPkg({ ...newPkg, duration: e.target.value })} />
+                        <input className="ph-input" placeholder="Deliverables (e.g., 50 Photos)" value={newPkg.deliverables} onChange={e => setNewPkg({ ...newPkg, deliverables: e.target.value })} />
+                        <input className="ph-input" placeholder="Features (Comma separated)" value={newPkg.features} onChange={e => setNewPkg({ ...newPkg, features: e.target.value })} style={{ gridColumn: '1/-1' }} />
                     </div>
                     <button className="ph-save-btn" style={{ marginTop: '15px' }} onClick={handleAdd}>Confirm & Add</button>
                 </div>
@@ -532,8 +532,8 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
         e.preventDefault();
         setSaving(true);
         try {
-            const data = { 
-                ...formData, 
+            const data = {
+                ...formData,
                 camera_model: formData.camera_model.split(',').map(m => m.trim()).filter(x => x)
             };
             await API.put("/photographers/profile", data);
@@ -554,14 +554,14 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
 
     return (
         <div className="ph-view-container fadeIn">
-             <div className="ph-row-middle" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
+            <div className="ph-row-middle" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
                 <div className="ph-content-card">
                     <h3 className="card-title">Professional Profile Details</h3>
                     <form onSubmit={handleSave} style={{ marginTop: '20px' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                             <div className="ph-input-field"><label className="ph-label">Display Name</label><input className="ph-input" name="name" value={formData.name} onChange={handleChange} /></div>
                             <div className="ph-input-field"><label className="ph-label">Phone Number</label><input className="ph-input" name="phone" value={formData.phone} onChange={handleChange} /></div>
-                            
+
                             <div className="ph-input-field">
                                 <label className="ph-label">Specialty</label>
                                 <select className="ph-input" name="category" value={formData.category} onChange={handleChange}>
@@ -572,9 +572,9 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
                                     <option>Event</option>
                                 </select>
                             </div>
-                            
+
                             <div className="ph-input-field"><label className="ph-label">Starting Price (₹)</label><input className="ph-input" type="number" name="price" value={formData.price} onChange={handleChange} /></div>
-                            
+
                             <div className="ph-input-field"><label className="ph-label">Experience (Years)</label><input className="ph-input" type="number" name="experience_years" value={formData.experience_years} onChange={handleChange} /></div>
                             <div className="ph-input-field"><label className="ph-label">City</label><input className="ph-input" name="city" value={formData.city} onChange={handleChange} /></div>
                             <div className="ph-input-field"><label className="ph-label">Email (Read-only)</label><input className="ph-input" style={{ opacity: 0.6 }} value={photographer?.email} readOnly /></div>
@@ -582,10 +582,10 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
                         </div>
 
                         <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Instagram Profile URL</label><input className="ph-input" name="social_links.instagram" value={formData.social_links.instagram} onChange={handleChange} placeholder="https://instagram.com/yourprofile" /></div>
-                        
+
                         <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Camera Equipment & Models</label><input className="ph-input" name="camera_model" value={formData.camera_model} onChange={handleChange} placeholder="Sony A7IV, Canon EOS R5..." /></div>
                         <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Studio Bio / Description</label><textarea className="ph-input" style={{ height: '100px', resize: 'none' }} name="bio" value={formData.bio} onChange={handleChange} /></div>
-                        
+
                         <button type="submit" className="ph-save-btn" style={{ marginTop: '30px', width: '200px' }} disabled={saving}>
                             {saving ? "Saving to DB..." : "Update All Details"}
                         </button>
@@ -601,7 +601,7 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
                     <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>{photographer?.email}</p>
                     <div className="ph-section-divider" style={{ margin: '20px 0' }}></div>
                     <button className="ph-logout-btn" onClick={onLogout} style={{ width: '100%' }}>Logout Session</button>
-                    
+
                     <div style={{ marginTop: '30px', textAlign: 'left' }}>
                         <h4 style={{ fontSize: '13px', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Quick Tips</h4>
                         <ul style={{ fontSize: '12px', paddingLeft: '15px', color: 'var(--text-muted)', lineHeight: '1.8' }}>
@@ -611,7 +611,7 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
                         </ul>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
     );
 };
@@ -627,7 +627,7 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
     const monthName = viewDate.toLocaleString('default', { month: 'long' });
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayIndex = new Date(year, month, 1).getDay();
-    
+
     const DAYS = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const PADS = Array.from({ length: firstDayIndex }, (_, i) => i);
 
@@ -679,7 +679,7 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
                                 <ArrowForwardIosIcon style={{ fontSize: 16 }} />
                             </button>
                         </div>
-                        
+
                         <div className="ph-calendar-grid premium">
                             {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(h => (
                                 <div key={h} className="ph-day-label">{h}</div>
@@ -690,8 +690,8 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
                                 const isBlocked = blockedDates.includes(dateStr);
                                 const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
                                 return (
-                                    <div 
-                                        key={d} 
+                                    <div
+                                        key={d}
                                         className={`ph-day-cell premium ${isBlocked ? 'blocked' : 'available'} ${isToday ? 'today' : ''}`}
                                         onClick={() => !syncing && toggleDate(d)}
                                     >

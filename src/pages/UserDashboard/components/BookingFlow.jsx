@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
@@ -47,7 +47,7 @@ const BookingFlow = ({ photographer, selectedPackage, onComplete, onBack }) => {
     const monthName = viewDate.toLocaleString('default', { month: 'long' });
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayIndex = new Date(year, month, 1).getDay();
-    
+
     const DAYS = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const PADS = Array.from({ length: firstDayIndex }, (_, i) => i);
 
@@ -78,7 +78,7 @@ const BookingFlow = ({ photographer, selectedPackage, onComplete, onBack }) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
             const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${bookingData.date.toString().padStart(2, '0')}`;
-            
+
             const payload = {
                 userId: user.id || user._id,
                 photographerId: photographer._id || photographer.id,
@@ -135,7 +135,7 @@ const BookingFlow = ({ photographer, selectedPackage, onComplete, onBack }) => {
                                     const isBlocked = blockedDates.includes(d);
                                     const isSelected = bookingData.date === d;
                                     const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
-                                    
+
                                     return (
                                         <div
                                             key={d}
@@ -160,7 +160,7 @@ const BookingFlow = ({ photographer, selectedPackage, onComplete, onBack }) => {
                 );
             case 2:
                 // Package Selection (using photographer's real packages or defaults)
-                const availablePackages = (photographer.packages && photographer.packages.length > 0) 
+                const availablePackages = (photographer.packages && photographer.packages.length > 0)
                     ? photographer.packages.map(p => ({
                         id: p._id || Math.random().toString(),
                         name: p.title || 'Studio Session',
@@ -169,7 +169,7 @@ const BookingFlow = ({ photographer, selectedPackage, onComplete, onBack }) => {
                         images: p.deliverables || 'N/A',
                         description: p.description || ''
                     }))
-                    : []; 
+                    : [];
 
                 return (
                     <div className="ub-booking-step fadeIn">
