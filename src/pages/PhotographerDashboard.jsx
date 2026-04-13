@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 import "./PhotographerDashboard.css";
 
 // Icons
@@ -8,46 +9,82 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddIcon from '@mui/icons-material/Add';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import SendIcon from '@mui/icons-material/Send';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const PhotographerDashboard = () => {
     const [activeTab, setActiveTab] = useState("dashboard");
+    const [photographer, setPhotographer] = useState(null);
+    const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    const loadDashboardData = async () => {
+        try {
+            const userStr = localStorage.getItem("user");
+            if (!userStr) {
+                navigate("/photographer-login");
+                return;
+            }
+            
+            const profRes = await API.get("/photographers/profile");
+            setPhotographer(profRes.data);
+
+            const response = await API.get(`/bookings/photographer/${profRes.data._id}`);
+            setBookings(response.data);
+        } catch (err) {
+            console.error("Dashboard load error:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadDashboardData();
+    }, [navigate]);
+
+    const handleFileUpload = async (file) => {
+        const formData = new FormData();
+        formData.append("image", file);
+        try {
+            const res = await API.post("/photographers/upload-image", formData);
+            alert("Image uploaded successfully to Cloudinary!");
+            return res.data.imageUrl;
+        } catch (err) {
+            console.error("FULL UPLOAD ERROR:", err);
+            alert("Upload failed: " + (err.response?.data?.message || err.message));
+            return null;
+        }
+    };
+
     const navLinks = [
-        { id: "dashboard", label: "Dashboard", icon: <DashboardOutlinedIcon fontSize="small" /> },
-        { id: "calendar", label: "Availability", icon: <CalendarMonthOutlinedIcon fontSize="small" /> },
-        { id: "messages", label: "Messages", icon: <ChatBubbleOutlineOutlinedIcon fontSize="small" /> },
-        { id: "packages", label: "Packages", icon: <CollectionsOutlinedIcon fontSize="small" /> },
-        { id: "profile", label: "Profile & Settings", icon: <PersonOutlineOutlinedIcon fontSize="small" /> },
+        { id: "dashboard", label: "Dashboard" },
+        { id: "portfolio", label: "Portfolio" },
+        { id: "calendar", label: "Availability" },
+        { id: "messages", label: "Messages" },
+        { id: "packages", label: "Packages" },
+        { id: "profile", label: "Profile & Settings" },
     ];
 
     const renderContent = () => {
+        if (loading) return <div style={{ padding: '50px', textAlign: 'center' }}>Loading dashboard data...</div>;
+
         switch (activeTab) {
-            case "dashboard":
-                return <DashboardView />;
-            case "calendar":
-                return <AvailabilityView />;
-            case "messages":
-                return <MessagesView />;
-            case "packages":
-                return <PackagesView />;
-            case "profile":
-                return <ProfileSettingsView onLogout={() => navigate("/")} />;
-            default:
-                return <DashboardView />;
+            case "dashboard": return <DashboardView photographer={photographer} bookings={bookings} refreshProfile={loadDashboardData} />;
+            case "portfolio": return <PortfolioView photographer={photographer} onUpload={handleFileUpload} refreshProfile={loadDashboardData} />;
+            case "calendar": return <AvailabilityView photographer={photographer} refreshProfile={loadDashboardData} />;
+            case "messages": return <MessagesView />;
+            case "packages": return <PackagesView photographer={photographer} refreshProfile={loadDashboardData} />;
+            case "profile": return <ProfileSettingsView photographer={photographer} onLogout={() => { localStorage.clear(); navigate("/"); }} onUpload={handleFileUpload} refreshProfile={loadDashboardData} />;
+            default: return <DashboardView photographer={photographer} bookings={bookings} />;
         }
     };
 
@@ -62,7 +99,7 @@ const PhotographerDashboard = () => {
             </header>
 
             {/* Top Navigation */}
-            <nav className="ph-top-nav" style={{ justifyContent: 'center' }}>
+            <nav className="ph-top-nav">
                 <div className="ph-nav-links">
                     {navLinks.map((link) => (
                         <div
@@ -73,11 +110,10 @@ const PhotographerDashboard = () => {
                             {link.label}
                         </div>
                     ))}
-                    <div className="ph-nav-link logout" onClick={() => navigate("/")}>Logout</div>
+                    <div className="ph-nav-link logout" onClick={() => { localStorage.clear(); navigate("/"); }}>Logout</div>
                 </div>
             </nav>
 
-            {/* Main Content Area */}
             <main className="ph-main">
                 {renderContent()}
             </main>
@@ -85,20 +121,38 @@ const PhotographerDashboard = () => {
     );
 };
 
-// ── Dashboard View ──
-const DashboardView = () => {
+// ── Views ──
+
+const DashboardView = ({ photographer, bookings, refreshProfile }) => {
+    const [selectedBooking, setSelectedBooking] = useState(null);
+
     const stats = [
-        { label: "Total Revenue", val: "₹1,42,000", trend: "+12.5%", isUp: true },
-        { label: "Active Sessions", val: "8", trend: "+2", isUp: true },
-        { label: "New Messages", val: "5", trend: "-1", isUp: false },
-        { label: "Profile Views", val: "1,240", trend: "+18%", isUp: true },
+        { label: "Active Jobs", val: bookings.filter(b => b.status === 'accepted').length, trend: "+12%", isUp: true },
+        { label: "New Requests", val: bookings.filter(b => b.status === 'pending').length, trend: "+5%", isUp: true },
+        { label: "Profile Views", val: "1.2k", trend: "+18%", isUp: true },
+        { label: "Total Earnings", val: `₹${bookings.filter(b => b.status === 'completed').reduce((acc, b) => acc + (b.amount || 0), 0).toLocaleString()}`, trend: "+10%", isUp: true },
     ];
+
+    const handleBookingAction = async (id, status) => {
+        try {
+            await API.put(`/bookings/${id}/status`, { status });
+            refreshProfile();
+            if (selectedBooking && selectedBooking._id === id) {
+                setSelectedBooking(prev => ({ ...prev, status }));
+            }
+            alert(`Booking ${status}!`);
+        } catch (err) {
+            alert("Failed to update booking");
+        }
+    };
 
     return (
         <div className="ph-view-container fadeIn">
             <div className="ph-page-header">
-                <h2 className="ph-page-title">Welcome back, Evelyn</h2>
-                <p className="ph-page-subtitle">Here's what's happening with your studio today.</p>
+                <div>
+                    <h2 className="ph-page-title">Welcome back, {photographer?.name}</h2>
+                    <p className="ph-page-subtitle">Here's a snapshot of your studio's performance.</p>
+                </div>
             </div>
 
             <div className="ph-stats-grid">
@@ -110,7 +164,6 @@ const DashboardView = () => {
                                 <div className="stat-val">{s.val}</div>
                             </div>
                             <div className={`stat-trend ${s.isUp ? 'trend-up' : 'trend-down'}`}>
-                                {s.isUp ? <TrendingUpIcon fontSize="small" /> : <TrendingDownIcon fontSize="small" />}
                                 {s.trend}
                             </div>
                         </div>
@@ -120,232 +173,168 @@ const DashboardView = () => {
 
             <div className="ph-row-middle">
                 <div className="ph-content-card">
-                    <div className="card-header">
-                        <div>
-                            <h3 className="card-title">Earnings Overview</h3>
-                            <span className="card-subtitle">Monthly performance report</span>
-                        </div>
-                        <MoreVertIcon fontSize="small" style={{ cursor: 'pointer', opacity: 0.5 }} />
-                    </div>
-                    <div className="chart-mockup">
-                        {/* Simplified SVG Chart Mockup */}
-                        <svg className="chart-svg" viewBox="0 0 400 200">
-                            <path d="M0,180 Q50,150 100,160 T200,100 T300,120 T400,40" fill="none" stroke="var(--accent)" strokeWidth="3" />
-                            <circle cx="100" cy="160" r="4" fill="var(--accent)" />
-                            <circle cx="200" cy="100" r="4" fill="var(--accent)" />
-                            <circle cx="300" cy="120" r="4" fill="var(--accent)" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div className="ph-content-card">
-                    <div className="card-header">
-                        <h3 className="card-title">Recent Notifications</h3>
-                    </div>
-                    <div className="notif-list">
-                        {[
-                            { msg: "New booking request from Aura Doe", time: "2 mins ago" },
-                            { msg: "Payment for BK-8820 received", time: "1 hour ago" },
-                            { msg: "Julian Cross left a 5-star review", time: "4 hours ago" },
-                            { msg: "Reminder: Wedding shoot at 9 AM tomorrow", time: "1 day ago" },
-                        ].map((n, i) => (
-                            <div key={i} className="notif-item">
-                                <div className="notif-icon-circle"><NotificationsNoneOutlinedIcon fontSize="small" /></div>
+                    <div className="card-header"><h3>Recent Activity</h3></div>
+                    <div className="activity-list">
+                        {bookings.length > 0 ? bookings.slice(0, 8).map((b, i) => (
+                            <div key={i} className="activity-item">
                                 <div className="notif-content">
-                                    <p>{n.msg}</p>
-                                    <span className="notif-time">{n.time}</span>
+                                    <p>Shoot request on <strong>{new Date(b.bookingDate).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</strong></p>
+                                    <span className="notif-time">{b.customerName || b.userId?.name || "New Client"} • {b.notes?.split('.')[0] || "Custom Package"}</span>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            <div className="ph-table-wrapper">
-                <div className="ph-content-card">
-                    <div className="card-header">
-                        <h3 className="card-title">Active Booking Requests</h3>
-                    </div>
-                    <table className="ph-table">
-                        <thead>
-                            <tr>
-                                <th>Client</th>
-                                <th>Category</th>
-                                <th>Date & Time</th>
-                                <th>Amount</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[
-                                { name: "Aura Doe", cat: "Wedding", date: "Mar 24, 2026", time: "09:00 AM", val: "₹45,000" },
-                                { name: "Mark Wilson", cat: "Portrait", date: "Mar 28, 2026", time: "11:00 AM", val: "₹12,000" },
-                                { name: "Sarah J.", cat: "Commercial", date: "Apr 02, 2026", time: "02:00 PM", val: "₹30,000" },
-                            ].map((r, i) => (
-                                <tr key={i}>
-                                    <td>
-                                        <div className="client-cell">
-                                            <img src={`https://i.pravatar.cc/150?u=${r.name}`} alt="" />
-                                            <span>{r.name}</span>
+                                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                                    <button 
+                                        className="ph-view-details-btn" 
+                                        onClick={() => setSelectedBooking(b)}
+                                    >
+                                        View Details
+                                    </button>
+                                    
+                                    {b.status === 'pending' ? (
+                                        <div className="booking-actions">
+                                            <button className="bk-btn accept" onClick={() => handleBookingAction(b._id, 'accepted')} title="Accept Request">
+                                                <CheckIcon fontSize="inherit" />
+                                            </button>
+                                            <button className="bk-btn reject" onClick={() => handleBookingAction(b._id, 'rejected')} title="Reject Request">
+                                                <CloseIcon fontSize="inherit" />
+                                            </button>
                                         </div>
-                                    </td>
-                                    <td><span className="type-pill">{r.cat}</span></td>
-                                    <td>{r.date} at {r.time}</td>
-                                    <td><b>{r.val}</b></td>
-                                    <td>
-                                        <div className="action-btns">
-                                            <div className="btn-icon-action" style={{ color: '#10B981' }}><CheckIcon fontSize="small" /></div>
-                                            <div className="btn-icon-action" style={{ color: '#EF4444' }}><CloseIcon fontSize="small" /></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// ── Availability View ──
-const AvailabilityView = () => {
-    return (
-        <div className="ph-view-container fadeIn">
-            <div className="ph-page-header">
-                <h2 className="ph-page-title">Manage Availability</h2>
-                <p className="ph-page-subtitle">Set your working days and schedule major events.</p>
-            </div>
-            <div className="ph-content-card">
-                <div className="cal-header">
-                    <h3>MARCH 2026</h3>
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                        <div className="cal-nav-btn">‹</div>
-                        <div className="cal-nav-btn">›</div>
-                    </div>
-                </div>
-                <div className="cal-grid">
-                    {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(d => (
-                        <div key={d} className="cal-day-header">{d}</div>
-                    ))}
-                    {[...Array(35)].map((_, i) => {
-                        const dayNum = i - 2; // Offset for Mar 2026 starting on Sunday
-                        const isValid = dayNum > 0 && dayNum <= 31;
-                        return (
-                            <div key={i} className={`cal-cell ${!isValid ? 'empty' : ''} ${dayNum === 24 ? 'today' : ''} ${[5, 12, 19].includes(dayNum) ? 'has-event' : ''}`}>
-                                {isValid && (
-                                    <>
-                                        <span className="cal-day-num">{dayNum}</span>
-                                        {[5, 12, 19].includes(dayNum) && <span className="cal-event-tag">Shoot Scheduled</span>}
-                                    </>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// ── Messages View ──
-const MessagesView = () => {
-    return (
-        <div className="ph-view-container fadeIn">
-            <div className="ph-page-header">
-                <h2 className="ph-page-title">Client Conversations</h2>
-                <p className="ph-page-subtitle">Communicate with your clients directly.</p>
-            </div>
-            <div className="messages-layout">
-                <div className="chat-list-panel">
-                    <div className="chat-list-header">
-                        <input type="text" placeholder="Search chats..." style={{ width: '100%', padding: '10px', background: 'var(--bg-alt)', border: '1px solid var(--border)' }} />
-                    </div>
-                    {[
-                        { name: "Aura Doe", last: "I sent the advance payment.", time: "10m", unread: 2 },
-                        { name: "Mark Wilson", last: "See you on the 28th!", time: "2h", unread: 0 },
-                        { name: "Julian Cross", last: "Hi, let's discuss the edit style.", time: "1d", unread: 0 },
-                    ].map((c, i) => (
-                        <div key={i} className={`chat-list-item ${i === 0 ? 'active' : ''}`}>
-                            <img src={`https://i.pravatar.cc/150?u=${c.name}`} alt="" className="chat-avatar" />
-                            <div className="chat-list-info">
-                                <div className="chat-list-top">
-                                    <span className="chat-name">{c.name}</span>
-                                    <span className="chat-time">{c.time}</span>
-                                </div>
-                                <div className="chat-list-top">
-                                    <span className="chat-preview">{c.last}</span>
-                                    {c.unread > 0 && <span className="chat-unread">{c.unread}</span>}
+                                    ) : (
+                                        <select 
+                                            className={`status-select-minimal ${b.status}`}
+                                            value={b.status}
+                                            onChange={(e) => handleBookingAction(b._id, e.target.value)}
+                                        >
+                                            <option value="accepted">Accepted</option>
+                                            <option value="editing">Editing</option>
+                                            <option value="framing">Framing</option>
+                                            <option value="delivered">Delivered</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="cancelled">Cancelled</option>
+                                        </select>
+                                    )}
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="chat-window-panel">
-                    <div className="chat-window-header">
-                        <img src="https://i.pravatar.cc/150?u=Aura" alt="" className="chat-avatar" />
-                        <div>
-                            <h4>Aura Doe</h4>
-                            <span className="chat-online">Online</span>
-                        </div>
-                    </div>
-                    <div className="chat-messages">
-                        <div className="chat-bubble received">
-                            Hello! I noticed your portfolio and would love to book a wedding session.
-                            <span className="bubble-time">09:45 AM</span>
-                        </div>
-                        <div className="chat-bubble sent">
-                            Hello Aura! I'd be honored to capture your special day. Which date are you looking at?
-                            <span className="bubble-time">10:02 AM</span>
-                        </div>
-                        <div className="chat-bubble received">
-                            March 24th, 2026. I just sent the advance payment through the portal.
-                            <span className="bubble-time">10:15 AM</span>
-                        </div>
-                    </div>
-                    <div className="chat-input-bar">
-                        <input type="text" placeholder="Write a message..." />
-                        <button className="send-btn"><SendIcon fontSize="small" /></button>
+                        )) : <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-muted)' }}>No recent bookings yet.</p>}
                     </div>
                 </div>
             </div>
+
+            {/* Booking Details Modal */}
+            {selectedBooking && (
+                <div className="ph-modal-overlay" onClick={() => setSelectedBooking(null)}>
+                    <div className="ph-details-modal" onClick={e => e.stopPropagation()}>
+                        <button className="ph-close-modal" onClick={() => setSelectedBooking(null)}><CloseIcon /></button>
+                        
+                        <div className="ph-modal-header">
+                            <span className="ph-tag">Booking Request</span>
+                            <h2>{selectedBooking.customerName || selectedBooking.userId?.name}</h2>
+                            <p>{new Date(selectedBooking.bookingDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        </div>
+
+                        <div className="ph-modal-body">
+                            <div className="ph-info-section">
+                                <h3>Contact Information</h3>
+                                <div className="ph-info-row">
+                                    <PersonOutlineOutlinedIcon className="ph-info-icon" />
+                                    <span>{selectedBooking.customerName || selectedBooking.userId?.name || 'N/A'}</span>
+                                </div>
+                                <div className="ph-info-row">
+                                    <ChatBubbleOutlineOutlinedIcon className="ph-info-icon" />
+                                    <span>{selectedBooking.customerPhone || 'No phone provided'}</span>
+                                </div>
+                                <div className="ph-info-row">
+                                    <NotificationsNoneOutlinedIcon className="ph-info-icon" />
+                                    <span>{selectedBooking.userId?.email || 'Check user profile'}</span>
+                                </div>
+                            </div>
+
+                            <div className="ph-info-section">
+                                <h3>Shoot Details</h3>
+                                <div className="ph-info-row">
+                                    <DashboardOutlinedIcon className="ph-info-icon" />
+                                    <span>{selectedBooking.location || 'Location not specified'}</span>
+                                </div>
+                                <div className="ph-info-row">
+                                    <CalendarMonthOutlinedIcon className="ph-info-icon" />
+                                    <span>Session Date: {new Date(selectedBooking.bookingDate).toLocaleDateString()}</span>
+                                </div>
+                                <div className="ph-info-row">
+                                    <TrendingUpIcon className="ph-info-icon" />
+                                    <span>Total Value: ₹{selectedBooking.amount?.toLocaleString()}</span>
+                                </div>
+                            </div>
+
+                            {selectedBooking.requirements && (
+                                <div className="ph-info-section full">
+                                    <h3>Specific Requirements</h3>
+                                    <div className="ph-requirements-box">
+                                        {selectedBooking.requirements}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="ph-info-section full">
+                                <h3>Notes / Package Info</h3>
+                                <p className="ph-notes-text">{selectedBooking.notes}</p>
+                            </div>
+                        </div>
+
+                        <div className="ph-modal-footer">
+                            <div className="ph-current-status">
+                                Current Status: <span className={`status-tag ${selectedBooking.status}`}>{selectedBooking.status}</span>
+                            </div>
+                            {selectedBooking.status === 'pending' && (
+                                <div className="ph-footer-actions">
+                                    <button className="ph-btn-reject-large" onClick={() => { handleBookingAction(selectedBooking._id, 'rejected'); setSelectedBooking(null); }}>Reject Offer</button>
+                                    <button className="ph-btn-accept-large" onClick={() => { handleBookingAction(selectedBooking._id, 'accepted'); setSelectedBooking(null); }}>Accept Session</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-// ── Packages View ──
-const PackagesView = () => {
-    const pkgs = [
-        { title: "Standard Wedding", price: "₹45,000", desc: "8 Hours, 2 Photographers, 100 Retouched Images", popular: true },
-        { title: "Personal Portrait", price: "₹12,000", desc: "2 Hours, 1 Photographer, 15 Retouched Images", popular: false },
-        { title: "Luxury Elopement", price: "₹65,000", desc: "Full Day, Cinematic Video + Photo Elite", popular: false },
-    ];
+const PortfolioView = ({ photographer, onUpload, refreshProfile }) => {
+    const [images, setImages] = useState(photographer?.portfolio || []);
+    const [uploading, setUploading] = useState(false);
+    const fileRef = useRef();
+
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploading(true);
+        const url = await onUpload(file);
+        if (url) {
+            setImages(prev => [...prev, url]);
+            refreshProfile();
+        }
+        setUploading(false);
+    };
+
+    const removeImg = async (idx) => {
+        const updated = images.filter((_, i) => i !== idx);
+        await API.put("/photographers/profile", { portfolio: updated });
+        setImages(updated);
+        refreshProfile();
+    };
 
     return (
         <div className="ph-view-container fadeIn">
             <div className="ph-page-header">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                        <h2 className="ph-page-title">Service Packages</h2>
-                        <p className="ph-page-subtitle">Configure the offerings visible to your clients.</p>
-                    </div>
-                    <button className="btn-icon-action" style={{ width: 'auto', padding: '10px 25px', gap: '10px' }}>
-                        <AddIcon fontSize="small" /> Add Package
-                    </button>
-                </div>
+                <h2 className="ph-page-title">Portfolio Showcase</h2>
+                <button className="ph-save-btn" onClick={() => fileRef.current.click()}>
+                    {uploading ? "Uploading..." : "Add New Work"}
+                </button>
+                <input type="file" ref={fileRef} hidden onChange={handleUpload} accept="image/*" />
             </div>
-
-            <div className="packages-full-grid">
-                {pkgs.map((p, i) => (
-                    <div key={i} className="package-full-card">
-                        {p.popular && <div className="popular-badge">MOST BOOKED</div>}
-                        <h4 className="pkg-full-title">{p.title}</h4>
-                        <p className="pkg-full-details">{p.desc}</p>
-                        <div className="pkg-full-price">{p.price}</div>
-                        <div className="pkg-full-actions">
-                            <button className="pkg-edit-btn"><EditOutlinedIcon fontSize="inherit" /> Edit</button>
-                            <button className="pkg-delete-btn"><DeleteOutlineIcon fontSize="inherit" /> Remove</button>
-                        </div>
+            <div className="ph-portfolio-grid">
+                {images.map((img, i) => (
+                    <div key={i} className="ph-portfolio-item">
+                        <img src={img} alt="" />
+                        <div className="ph-portfolio-overlay" onClick={() => removeImg(i)}><DeleteOutlineIcon style={{ color: 'white' }} /></div>
                     </div>
                 ))}
             </div>
@@ -353,76 +342,398 @@ const PackagesView = () => {
     );
 };
 
-// ── Combined Profile & Settings View ──
-const ProfileSettingsView = ({ onLogout }) => {
+const QUICK_TEMPLATES = [
+    { title: "Essential Starter", duration: "2 Hours", deliverables: "15 Edited Photos", price: 8000, features: "Single Outfit, Digital Gallery, Studio/Outdoor" },
+    { title: "Elite Professional", duration: "4 Hours", deliverables: "40 Edited Photos", price: 18000, features: "3 Outfit Changes, High-End Retouching, Print Credit" },
+    { title: "Grand Premiere", duration: "Full Day", deliverables: "Unlimited Photos (80+ Edited)", price: 35000, features: "Cinematic Reel, Luxury Photo Album, Multi-location" }
+];
+
+const PackagesView = ({ photographer, refreshProfile }) => {
+    const [pkgs, setPkgs] = useState(photographer?.packages || []);
+    const [isAdding, setIsAdding] = useState(false);
+    const [newPkg, setNewPkg] = useState({ title: "", price: "", duration: "", deliverables: "", features: "" });
+    const [activeMenu, setActiveMenu] = useState(null);
+
+    // Close menu when clicking elsewhere
+    useEffect(() => {
+        const close = () => setActiveMenu(null);
+        window.addEventListener('click', close);
+        return () => window.removeEventListener('click', close);
+    }, []);
+
+    // Sync local state when photographer prop updates
+    useEffect(() => {
+        setPkgs(photographer?.packages || []);
+    }, [photographer]);
+
+    const handleAdd = async () => {
+        if (!newPkg.title || !newPkg.price) {
+            alert("Please fill in title and price");
+            return;
+        }
+        
+        // Always use the latest packages from the prop to prevent overwriting
+        const currentPackages = photographer?.packages || [];
+        const updated = [...currentPackages, { 
+            title: newPkg.title, 
+            price: Number(newPkg.price), 
+            duration: newPkg.duration,
+            deliverables: newPkg.deliverables,
+            features: newPkg.features.split(',').map(f => f.trim()).filter(f => f)
+        }];
+
+        try {
+            await API.put("/photographers/profile", { packages: updated });
+            setIsAdding(false);
+            setNewPkg({ title: "", price: "", duration: "", deliverables: "", features: "" });
+            refreshProfile();
+            alert("Package added successfully!");
+        } catch (err) {
+            alert("Failed to add package: " + (err.response?.data?.message || err.message));
+        }
+    };
+
+    const handleDelete = async (index) => {
+        if (!window.confirm("Are you sure you want to delete this package?")) return;
+        
+        const currentPackages = photographer?.packages || [];
+        const updated = currentPackages.filter((_, i) => i !== index);
+        
+        try {
+            await API.put("/photographers/profile", { packages: updated });
+            refreshProfile();
+            alert("Package deleted!");
+        } catch (err) {
+            alert("Failed to delete package");
+        }
+    };
+
     return (
         <div className="ph-view-container fadeIn">
             <div className="ph-page-header">
-                <h2 className="ph-page-title">Profile & Studio Settings</h2>
-                <p className="ph-page-subtitle">Manage your professional presence and account security here.</p>
+                <h2 className="ph-page-title">Service Packages</h2>
+                <button className="ph-save-btn" onClick={() => setIsAdding(!isAdding)}>{isAdding ? "Cancel" : "Add Package"}</button>
             </div>
+            {isAdding && (
+                <div className="ph-content-card" style={{ marginBottom: '20px' }}>
+                    <div className="pkg-template-row">
+                        <span>Quick Templates:</span>
+                        {QUICK_TEMPLATES.map((tpl, idx) => (
+                            <button key={idx} className="pkg-tpl-chip" onClick={() => setNewPkg({...tpl, price: tpl.price.toString()})}>
+                                {tpl.title.split(' ')[0]}
+                            </button>
+                        ))}
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
+                        <input className="ph-input" placeholder="Package Title" value={newPkg.title} onChange={e => setNewPkg({...newPkg, title: e.target.value})} />
+                        <input className="ph-input" placeholder="Price (₹)" type="number" value={newPkg.price} onChange={e => setNewPkg({...newPkg, price: e.target.value})} />
+                        <input className="ph-input" placeholder="Duration (e.g., 4 Hours)" value={newPkg.duration} onChange={e => setNewPkg({...newPkg, duration: e.target.value})} />
+                        <input className="ph-input" placeholder="Deliverables (e.g., 50 Photos)" value={newPkg.deliverables} onChange={e => setNewPkg({...newPkg, deliverables: e.target.value})} />
+                        <input className="ph-input" placeholder="Features (Comma separated)" value={newPkg.features} onChange={e => setNewPkg({...newPkg, features: e.target.value})} style={{ gridColumn: '1/-1' }} />
+                    </div>
+                    <button className="ph-save-btn" style={{ marginTop: '15px' }} onClick={handleAdd}>Confirm & Add</button>
+                </div>
+            )}
+            <div className="packages-full-grid">
+                {pkgs.map((p, i) => (
+                    <div key={i} className="package-full-card">
+                        <div className="pkg-card-actions" onClick={e => e.stopPropagation()}>
+                            <button className="pkg-more-btn" onClick={() => setActiveMenu(activeMenu === i ? null : i)}>
+                                <MoreVertIcon fontSize="small" />
+                            </button>
+                            {activeMenu === i && (
+                                <div className="pkg-dropdown">
+                                    <div className="pkg-dropdown-item delete" onClick={() => handleDelete(i)}>
+                                        <DeleteOutlineIcon fontSize="inherit" /> Delete Package
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="pkg-badge-info">{p.duration || "Standard"} • {p.deliverables || "High Quality"}</div>
+                        <h3>{p.title}</h3>
+                        <div className="pkg-full-price">₹{p.price?.toLocaleString()}</div>
+                        <ul>{p.features?.map((f, fi) => <li key={fi}>{f}</li>)}</ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
-            <div className="ph-row-middle" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
+const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile }) => {
+    const [formData, setFormData] = useState({
+        name: photographer?.name || "",
+        phone: photographer?.phone || "",
+        category: photographer?.category || "Wedding",
+        bio: photographer?.bio || "",
+        price: photographer?.price || 0,
+        experience_years: photographer?.experience_years || 0,
+        city: photographer?.city || "",
+        state: photographer?.state || "",
+        camera_model: photographer?.camera_model?.join(', ') || "",
+        social_links: {
+            instagram: photographer?.social_links?.instagram || "",
+            website: photographer?.social_links?.website || ""
+        },
+        profile_pic: photographer?.profile_pic || photographer?.img || ""
+    });
+
+    // Sync local state when photographer prop updates (e.g., after DB load)
+    useEffect(() => {
+        if (photographer) {
+            setFormData({
+                name: photographer.name || "",
+                phone: photographer.phone || "",
+                category: photographer.category || "Wedding",
+                bio: photographer.bio || "",
+                price: photographer.price || 0,
+                experience_years: photographer.experience_years || 0,
+                city: photographer.city || "",
+                state: photographer.state || "",
+                camera_model: photographer.camera_model?.join(', ') || "",
+                social_links: {
+                    instagram: photographer.social_links?.instagram || "",
+                    website: photographer.social_links?.website || ""
+                },
+                profile_pic: photographer.profile_pic || photographer.img || ""
+            });
+        }
+    }, [photographer]);
+
+    const [saving, setSaving] = useState(false);
+    const avatarInput = useRef();
+
+    const updateAvatar = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const url = await onUpload(file);
+        if (url) {
+            console.log("Updating Avatar with URL:", url);
+            await API.put("/photographers/profile", { profile_pic: url });
+            alert("Avatar updated and saved to Cloudinary!");
+            refreshProfile();
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name.includes('.')) {
+            const [parent, child] = name.split('.');
+            setFormData(prev => ({
+                ...prev,
+                [parent]: { ...prev[parent], [child]: value }
+            }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+    };
+
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setSaving(true);
+        try {
+            const data = { 
+                ...formData, 
+                camera_model: formData.camera_model.split(',').map(m => m.trim()).filter(x => x)
+            };
+            await API.put("/photographers/profile", data);
+            alert("Profile updated successfully in database!");
+            refreshProfile();
+            // Update local storage
+            const userStr = localStorage.getItem("user");
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                localStorage.setItem("user", JSON.stringify({ ...user, ...data }));
+            }
+        } catch (err) {
+            alert("Update failed: " + (err.response?.data?.message || err.message));
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    return (
+        <div className="ph-view-container fadeIn">
+             <div className="ph-row-middle" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
                 <div className="ph-content-card">
-                    <div className="card-header">
-                        <h3 className="card-title">Professional Information</h3>
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '10px' }}>
-                        <div className="ph-input-field">
-                            <label style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Studio Display Name</label>
-                            <input type="text" style={{ width: '100%', padding: '14px', border: '1px solid var(--border)', background: 'var(--bg-alt)', fontSize: '14px' }} defaultValue="Evelyn Harper Studio" />
+                    <h3 className="card-title">Professional Profile Details</h3>
+                    <form onSubmit={handleSave} style={{ marginTop: '20px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                            <div className="ph-input-field"><label className="ph-label">Display Name</label><input className="ph-input" name="name" value={formData.name} onChange={handleChange} /></div>
+                            <div className="ph-input-field"><label className="ph-label">Phone Number</label><input className="ph-input" name="phone" value={formData.phone} onChange={handleChange} /></div>
+                            
+                            <div className="ph-input-field">
+                                <label className="ph-label">Specialty</label>
+                                <select className="ph-input" name="category" value={formData.category} onChange={handleChange}>
+                                    <option>Wedding</option>
+                                    <option>Portrait</option>
+                                    <option>Fashion</option>
+                                    <option>Commercial</option>
+                                    <option>Event</option>
+                                </select>
+                            </div>
+                            
+                            <div className="ph-input-field"><label className="ph-label">Starting Price (₹)</label><input className="ph-input" type="number" name="price" value={formData.price} onChange={handleChange} /></div>
+                            
+                            <div className="ph-input-field"><label className="ph-label">Experience (Years)</label><input className="ph-input" type="number" name="experience_years" value={formData.experience_years} onChange={handleChange} /></div>
+                            <div className="ph-input-field"><label className="ph-label">City</label><input className="ph-input" name="city" value={formData.city} onChange={handleChange} /></div>
+                            <div className="ph-input-field"><label className="ph-label">Email (Read-only)</label><input className="ph-input" style={{ opacity: 0.6 }} value={photographer?.email} readOnly /></div>
+                            <div className="ph-input-field"><label className="ph-label">Website</label><input className="ph-input" name="social_links.website" value={formData.social_links.website} onChange={handleChange} /></div>
                         </div>
-                        <div className="ph-input-field">
-                            <label style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Primary Specialty</label>
-                            <input type="text" style={{ width: '100%', padding: '14px', border: '1px solid var(--border)', background: 'var(--bg-alt)', fontSize: '14px' }} defaultValue="Editorial Weddings" />
+
+                        <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Instagram Profile URL</label><input className="ph-input" name="social_links.instagram" value={formData.social_links.instagram} onChange={handleChange} placeholder="https://instagram.com/yourprofile" /></div>
+                        
+                        <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Camera Equipment & Models</label><input className="ph-input" name="camera_model" value={formData.camera_model} onChange={handleChange} placeholder="Sony A7IV, Canon EOS R5..." /></div>
+                        <div className="ph-input-field" style={{ marginTop: '20px' }}><label className="ph-label">Studio Bio / Description</label><textarea className="ph-input" style={{ height: '100px', resize: 'none' }} name="bio" value={formData.bio} onChange={handleChange} /></div>
+                        
+                        <button type="submit" className="ph-save-btn" style={{ marginTop: '30px', width: '200px' }} disabled={saving}>
+                            {saving ? "Saving to DB..." : "Update All Details"}
+                        </button>
+                    </form>
+                </div>
+                <div className="ph-content-card" style={{ textAlign: 'center' }}>
+                    <div className="ph-avatar-large" onClick={() => avatarInput.current.click()}>
+                        <img src={photographer?.profile_pic || "https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg"} alt="" />
+                        <div className="avatar-edit-overlay"><CameraAltIcon fontSize="small" /></div>
+                        <input type="file" ref={avatarInput} hidden onChange={updateAvatar} accept="image/*" />
+                    </div>
+                    <h3 style={{ marginBottom: '5px' }}>{photographer?.name}</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>{photographer?.email}</p>
+                    <div className="ph-section-divider" style={{ margin: '20px 0' }}></div>
+                    <button className="ph-logout-btn" onClick={onLogout} style={{ width: '100%' }}>Logout Session</button>
+                    
+                    <div style={{ marginTop: '30px', textAlign: 'left' }}>
+                        <h4 style={{ fontSize: '13px', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Quick Tips</h4>
+                        <ul style={{ fontSize: '12px', paddingLeft: '15px', color: 'var(--text-muted)', lineHeight: '1.8' }}>
+                            <li>Complete your bio to attract more clients.</li>
+                            <li>List your high-end gear to show professionalism.</li>
+                            <li>Upload at least 5 photos to your portfolio.</li>
+                        </ul>
+                    </div>
+                </div>
+             </div>
+        </div>
+    );
+};
+
+const AvailabilityView = ({ photographer, refreshProfile }) => {
+    const blockedDates = photographer?.unavailable_dates || [];
+    const [viewDate, setViewDate] = useState(new Date(2026, 3, 1)); // Start at April 2026 for demo consistency
+    const [syncing, setSyncing] = useState(false);
+
+    // Dynamic Month Data
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const monthName = viewDate.toLocaleString('default', { month: 'long' });
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    
+    const DAYS = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    const PADS = Array.from({ length: firstDayIndex }, (_, i) => i);
+
+    const toggleDate = async (day) => {
+        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        let updated;
+        if (blockedDates.includes(dateStr)) {
+            updated = blockedDates.filter(d => d !== dateStr);
+        } else {
+            updated = [...blockedDates, dateStr];
+        }
+
+        setSyncing(true);
+        try {
+            await API.put("/photographers/profile", { unavailable_dates: updated });
+            refreshProfile();
+        } catch (err) {
+            alert("Failed to update availability");
+        } finally {
+            setSyncing(false);
+        }
+    };
+
+    const handleMonthChange = (offset) => {
+        setViewDate(new Date(year, month + offset, 1));
+    };
+
+    return (
+        <div className="ph-view-container fadeIn">
+            <div className="planner-layout">
+                <div className="planner-main">
+                    <div className="ph-page-header">
+                        <div>
+                            <h2 className="ph-page-title">Studio Planner</h2>
+                            <p className="ph-page-subtitle">Your photography schedule for {monthName} {year}</p>
+                        </div>
+                        <div className="ph-badge-status" style={{ background: syncing ? '#fff7ed' : '#f0fdf4', color: syncing ? '#ea580c' : '#16a34a' }}>
+                            {syncing ? "Syncing Workspace..." : "Planner Active"}
                         </div>
                     </div>
-                    <div style={{ marginTop: '25px' }}>
-                        <label style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Professional Bio</label>
-                        <textarea style={{ width: '100%', padding: '14px', border: '1px solid var(--border)', background: 'var(--bg-alt)', fontSize: '14px', minHeight: '120px', lineHeight: '1.6' }} defaultValue="Specializing in editorial-style portraiture and luxury events, Evelyn brings over a decade of experience to capturing life's most precious moments. Every frame is treated as a fine art piece, meticulously composed and edited to ensure timeless elegance." />
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '25px' }}>
-                        <div className="ph-input-field">
-                            <label style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Email Address</label>
-                            <input type="email" style={{ width: '100%', padding: '14px', border: '1px solid var(--border)', background: 'var(--bg-alt)', fontSize: '14px' }} defaultValue="evelyn@lensoria.com" />
+
+                    <div className="ph-content-card planner-card">
+                        <div className="ph-calendar-header">
+                            <button className="cal-nav-btn" onClick={() => handleMonthChange(-1)}>
+                                <ArrowBackIosIcon style={{ fontSize: 16 }} />
+                            </button>
+                            <h3>{monthName.toUpperCase()} {year}</h3>
+                            <button className="cal-nav-btn" onClick={() => handleMonthChange(1)}>
+                                <ArrowForwardIosIcon style={{ fontSize: 16 }} />
+                            </button>
                         </div>
-                        <div className="ph-input-field">
-                            <label style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>Phone Number</label>
-                            <input type="tel" style={{ width: '100%', padding: '14px', border: '1px solid var(--border)', background: 'var(--bg-alt)', fontSize: '14px' }} defaultValue="+91 91234 56789" />
+                        
+                        <div className="ph-calendar-grid premium">
+                            {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(h => (
+                                <div key={h} className="ph-day-label">{h}</div>
+                            ))}
+                            {PADS.map(p => <div key={`pad-${p}`} className="ph-day-cell empty"></div>)}
+                            {DAYS.map(d => {
+                                const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
+                                const isBlocked = blockedDates.includes(dateStr);
+                                const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
+                                return (
+                                    <div 
+                                        key={d} 
+                                        className={`ph-day-cell premium ${isBlocked ? 'blocked' : 'available'} ${isToday ? 'today' : ''}`}
+                                        onClick={() => !syncing && toggleDate(d)}
+                                    >
+                                        <span className="day-num">{d}</span>
+                                        {isBlocked && <div className="day-indicator">Session</div>}
+                                    </div>
+                                );
+                            })}
                         </div>
-                    </div>
-                    <div style={{ marginTop: '40px' }}>
-                        <button className="ph-nav-link" style={{ background: 'var(--accent)', color: 'white', border: 'none', padding: '15px 40px', fontWeight: '600' }}>Save All Changes</button>
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-                    <div className="ph-content-card">
-                        <h3 className="card-title">Gallery & Branding</h3>
-                        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                            <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'var(--bg-alt)', margin: '0 auto 20px', overflow: 'hidden', border: '2px solid var(--border)', position: 'relative' }}>
-                                <img src="https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg" alt="Evelyn" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="planner-sidebar">
+                    <div className="ph-content-card sidebar-card">
+                        <h3>Schedule Status</h3>
+                        <div className="status-legend">
+                            <div className="legend-item-v2">
+                                <div className="swatch available"></div>
+                                <div>
+                                    <p className="l-title">Available</p>
+                                    <p className="l-desc">Open for bookings</p>
+                                </div>
                             </div>
-                            <button className="btn-icon-action" style={{ width: 'auto', padding: '8px 20px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <CameraAltIcon fontSize="small" /> Update Photo
-                            </button>
+                            <div className="legend-item-v2">
+                                <div className="swatch booked"></div>
+                                <div>
+                                    <p className="l-title">Booked / Blocked</p>
+                                    <p className="l-desc">Session scheduled or personal block</p>
+                                </div>
+                            </div>
                         </div>
-                        <div style={{ marginTop: '30px' }}>
-                            <label style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', marginBottom: '10px', textTransform: 'uppercase' }}>Portfolio Highlights</label>
-                            <div className="portfolio-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-                                {[...Array(6)].map((_, i) => (
-                                    <div key={i} className="portfolio-img" style={{ aspectRatio: '1/1', background: 'var(--bg-alt)' }}>
-                                        <img src={`https://images.pexels.com/photos/${1036622 + (i*10)}/pexels-photo-${1036622 + (i*10)}.jpeg`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    </div>
-                                ))}
-                            </div>
+
+                        <div className="planner-tip">
+                            <TrendingUpIcon fontSize="small" />
+                            <p>Tip: Weekends are currently seeing 3x more bookings. Keep your Sunday slots open!</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     );
-}
+};
+const MessagesView = () => <div style={{ padding: '50px', textAlign: 'center' }}><h3>Messages Coming Soon</h3></div>;
 
 export default PhotographerDashboard;

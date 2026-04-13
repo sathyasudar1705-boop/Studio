@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API from '../../services/api';
 import './DashboardLayout.css';
 
 // Importing all the sections (scaffolded)
@@ -25,24 +26,64 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 const UserDashboard = () => {
     const [activeTab, setActiveTab] = useState('home');
     const [selectedPhotographer, setSelectedPhotographer] = useState(null);
+    const [selectedPackage, setSelectedPackage] = useState(null);
     const [selectedBooking, setSelectedBooking] = useState(null);
+    const [user, setUser] = useState(null);
+    const [bookings, setBookings] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    const loadUserData = async () => {
+        try {
+            const userStr = localStorage.getItem("user");
+            if (!userStr) {
+                navigate("/user-login");
+                return;
+            }
+            const localData = JSON.parse(userStr);
+            const userId = localData.id || localData._id;
+
+            // Fetch fresh user data from server
+            const userRes = await API.get(`/users/profile/${userId}`);
+            const freshUser = userRes.data;
+            
+            setUser(freshUser);
+            // Sync local storage with fresh data
+            localStorage.setItem("user", JSON.stringify(freshUser));
+
+            const bookRes = await API.get(`/bookings/user/${userId}`);
+            setBookings(Array.isArray(bookRes.data) ? bookRes.data : []);
+        } catch (err) {
+            console.error("Dashboard load error:", err);
+            // Fallback to local storage if API fails
+            const userStr = localStorage.getItem("user");
+            if (userStr) setUser(JSON.parse(userStr));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadUserData();
+    }, [navigate]);
+
     const renderContent = () => {
+        if (loading) return <div style={{ padding: '100px', textAlign: 'center' }}>Loading Portal...</div>;
+
         switch (activeTab) {
-            case 'home': return <HomeDashboard onNavigate={setActiveTab} />;
+            case 'home': return <HomeDashboard user={user} bookings={bookings} onNavigate={setActiveTab} />;
             case 'browse': return <BrowsePhotographers onSelectPhotographer={(pg) => { setSelectedPhotographer(pg); setActiveTab('photographer_details'); }} />;
-            case 'photographer_details': return <PhotographerDetails photographer={selectedPhotographer} onBook={() => setActiveTab('booking_flow')} onBack={() => setActiveTab('browse')} />;
-            case 'booking_flow': return <BookingFlow photographer={selectedPhotographer} onComplete={() => setActiveTab('bookings')} onBack={() => setActiveTab('photographer_details')} />;
-            case 'bookings': return <MyBookings onSelectBooking={(b) => { setSelectedBooking(b); setActiveTab('booking_details'); }} />;
+            case 'photographer_details': return <PhotographerDetails photographer={selectedPhotographer} onBook={(pkg) => { setSelectedPackage(pkg); setActiveTab('booking_flow'); }} onBack={() => setActiveTab('browse')} />;
+            case 'booking_flow': return <BookingFlow photographer={selectedPhotographer} selectedPackage={selectedPackage} onComplete={() => { loadUserData(); setActiveTab('bookings'); setSelectedPackage(null); }} onBack={() => setActiveTab('photographer_details')} />;
+            case 'bookings': return <MyBookings bookings={bookings} onSelectBooking={(b) => { setSelectedBooking(b); setActiveTab('booking_details'); }} />;
             case 'booking_details': return <BookingDetails booking={selectedBooking} onBack={() => setActiveTab('bookings')} />;
             case 'messages': return <Messages />;
             case 'favorites': return <Favorites onSelectPhotographer={(pg) => { setSelectedPhotographer(pg); setActiveTab('photographer_details'); }} />;
             case 'payments': return <Payments />;
             case 'reviews': return <Reviews />;
-            case 'profile': return <Profile />;
-            case 'settings': return <Settings onLogout={() => navigate('/')} />;
-            default: return <HomeDashboard onNavigate={setActiveTab} />;
+            case 'profile': return <Profile user={user} onUpdate={loadUserData} />;
+            case 'settings': return <Settings onLogout={() => { localStorage.clear(); navigate('/'); }} />;
+            default: return <HomeDashboard user={user} bookings={bookings} onNavigate={setActiveTab} />;
         }
     };
 

@@ -12,7 +12,7 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/1205033/pexels-photo-1205033.jpeg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll; /* Changed from fixed to scroll for performance */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,6 +39,7 @@
     color: var(--accent-warm);
     margin-bottom: 25px;
     font-weight: 500;
+    animation: eyebrowExpand 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .landing-title {
@@ -49,10 +50,14 @@
     font-weight: 700;
     color: var(--color-white);
     letter-spacing: -1.5px;
+    overflow: hidden; /* For the reveal effect */
 }
 
 .landing-title span {
-    color: var(--accent); /* In dark mode this would be gold/white, in light mode maybe a highlight */
+    display: inline-block;
+    color: var(--accent); 
+    animation: textReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.3s;
 }
 
 /* Special highlight for Hero */
@@ -71,12 +76,58 @@
     font-weight: 300;
     line-height: 1.7;
     letter-spacing: 0.3px;
+    animation: heroFadeScale 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.6s;
+}
+
+/* ── Futuristic Keyframes ── */
+@keyframes eyebrowExpand {
+    0% {
+        opacity: 0;
+        letter-spacing: 20px;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        letter-spacing: 6px;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textReveal {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes heroFadeScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.98) translateY(20px);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes glowPulse {
+    0% { text-shadow: 0 0 0px transparent; }
+    50% { text-shadow: 0 0 15px rgba(196, 149, 106, 0.4); }
+    100% { text-shadow: 0 0 0px transparent; }
 }
 
 /* ── Search Bar UI (Image Style) ── */
 .hero-search-wrapper {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.08); /* Slightly more opaque background */
+    backdrop-filter: blur(8px); /* Reduced from 20px */
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 10px;
     display: flex;
@@ -129,7 +180,7 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    transition: var(--transition);
+    transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
     font-family: var(--font-sans);
     white-space: nowrap;
 }
@@ -266,6 +317,8 @@
     height: 350px;
     overflow: hidden;
     cursor: pointer;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .specialty-card img {
@@ -273,6 +326,7 @@
     height: 100%;
     object-fit: cover;
     transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
 }
 
 .specialty-overlay {
@@ -310,8 +364,9 @@
 .artisan-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    transition: var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition);
     overflow: hidden;
+    will-change: transform;
 }
 
 .artisan-img-wrapper {

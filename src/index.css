@@ -31,7 +31,8 @@
   --radius: 0px; 
   --radius-lg: 0px;
   --blur: blur(10px);
-  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Removed 'all' from variable */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ── Typography ── */
   --font-serif: 'Playfair Display', serif;
@@ -102,6 +103,17 @@ button {
 
 .accent-text {
   color: var(--accent);
+}
+
+.ub-gpu-accelerate {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.ub-content-lazy {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
 }
 
 
@@ -191,6 +203,7 @@ button {
     z-index: 100;
     color: var(--accent);
     box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    transition: transform var(--transition), background-color var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .ub-carousel-btn:hover {
@@ -233,9 +246,11 @@ button {
     cursor: pointer;
     overflow: hidden;
     background: #000;
-    transition: var(--transition);
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
     border: 1px solid rgba(0,0,0,0.1);
     z-index: 1;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .ub-package-card img {

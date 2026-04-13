@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Footer from "../components/Footer";
-import SearchIcon from "@mui/icons-material/Search";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { PHOTOGRAPHERS, PACKAGES } from "../data/mockData";
+import { PACKAGES } from "../data/mockData";
+import MainImg from "../assets/main.jpg";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -21,41 +19,12 @@ const LandingPage = () => {
                 <div className="landing-hero-overlay">
                     <span className="hero-eyebrow">ESTABLISHED 2026</span>
                     <h1 className="landing-title">
-                        Memories Defined by <em>Precision</em>
+                        <span>Memories Defined by <em>Precision</em></span>
                     </h1>
                     <p className="landing-subtitle">
                         Curated photography experiences designed to capture your story with sophisticated cinematic elegance.
                     </p>
 
-                    {/* Image-Style Search Bar */}
-                    <div className="hero-search-wrapper">
-                        <div className="search-input-group">
-                            <SearchIcon className="search-icon-small" />
-                            <input type="text" placeholder="Search for a photographer..." />
-                        </div>
-                        <div className="search-input-group">
-                            <LocationOnIcon className="search-icon-small" />
-                            <input type="text" placeholder="Location..." defaultValue="Chennai, India" />
-                        </div>
-                        <button className="hero-search-btn" onClick={() => navigate("/login")}>
-                            Find a Photographer
-                        </button>
-                    </div>
-
-                    <div className="landing-stats">
-                        <div className="stat-item">
-                            <span className="stat-num">500+</span>
-                            <span className="stat-label">Satisfied Clients</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-num">50+</span>
-                            <span className="stat-label">Handpicked Artists</span>
-                        </div>
-                        <div className="stat-item">
-                            <span className="stat-num">1.2K</span>
-                            <span className="stat-label">Stories Captured</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -74,52 +43,9 @@ const LandingPage = () => {
                 <div className="specialty-grid">
                     {PACKAGES.map((pkg) => (
                         <div key={pkg.id} className="specialty-card" onClick={() => navigate("/login")}>
-                            <img src={pkg.img} alt={pkg.label} />
+                            <img src={pkg.img} alt={pkg.label} loading="lazy" />
                             <div className="specialty-overlay">
                                 <h4 className="specialty-name">{pkg.label}</h4>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* ── Featured Artisans ── */}
-            <section className="landing-section" style={{ background: 'var(--bg-alt)' }}>
-                <div className="section-header">
-                    <div className="section-titles">
-                        <span className="section-eyebrow">EXPERT CURATION</span>
-                        <h2 className="section-main-title">Featured Artisans</h2>
-                    </div>
-                    <a href="#" className="view-all-link" onClick={(e) => { e.preventDefault(); navigate("/login"); }}>
-                        Meet more artists
-                    </a>
-                </div>
-
-                <div className="artisan-grid">
-                    {PHOTOGRAPHERS.slice(0, 3).map((artisan) => (
-                        <div key={artisan.id} className="artisan-card">
-                            <div className="artisan-img-wrapper">
-                                <img src={artisan.img} alt={artisan.name} />
-                                <div className="artisan-badge">PREMIUM ARTIST</div>
-                            </div>
-                            <div className="artisan-content">
-                                <div className="artisan-header">
-                                    <h3 className="artisan-name">{artisan.name}</h3>
-                                    <div className="artisan-rating">
-                                        <StarIcon className="rating-star" />
-                                        <span>{artisan.rating}</span>
-                                    </div>
-                                </div>
-                                <p className="artisan-role">{artisan.role}</p>
-                                <div className="artisan-footer">
-                                    <div className="artisan-price">
-                                        <span>Starts from</span>
-                                        <b>{artisan.price}</b>
-                                    </div>
-                                    <button className="book-btn-small" onClick={() => navigate("/login")}>
-                                        Book Now
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     ))}
@@ -129,7 +55,7 @@ const LandingPage = () => {
             {/* ── Your Journey Section ── */}
             <section className="journey-section">
                 <div className="journey-image">
-                    <img src="https://images.pexels.com/photos/1580274/pexels-photo-1580274.jpeg" alt="Photography session" />
+                    <img src={MainImg} alt="Photography session" loading="lazy" />
                 </div>
                 <div className="journey-steps">
                     <div className="section-titles">

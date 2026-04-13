@@ -5,25 +5,38 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { PACKAGES } from '../../../data/mockData';
 
-const HomeDashboard = ({ onNavigate }) => {
+const HomeDashboard = ({ user, bookings, onNavigate }) => {
     const scrollRef = useRef(null);
     const [focusedId, setFocusedId] = useState('wedding');
 
-    const scrollCarousel = (direction) => {
-        if (scrollRef.current) {
-            const scrollAmount = direction === 'next' ? 300 : -300;
-            scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
+    const stats = [
+        { label: "Bookings", count: bookings.length },
+        { label: "Upcoming", count: bookings.filter(b => b.status === 'accepted' || b.status === 'confirmed').length },
+        { label: "Messages", count: 0 }
+    ];
+
+    const scrollCarousel = (dir) => {
+        if (!scrollRef.current) return;
+        const width = 300;
+        scrollRef.current.scrollBy({ left: dir === 'next' ? width : -width, behavior: 'smooth' });
     };
 
     return (
         <div className="ub-home-dashboard">
             {/* Header Area */}
             <div className="ub-welcome-banner">
-                <span className="ub-eyebrow">Welcome back, Aura</span>
+                <span className="ub-eyebrow">Welcome back, {user?.name || 'Client'}</span>
                 <h1 className="ub-hero-title">Elevate your moments with exceptional photography</h1>
-                <p className="ub-hero-subtitle">Seamless booking. Timeless memories.</p>
-                <button className="ub-btn-primary" onClick={() => onNavigate('browse')}>
+                <p className="ub-hero-subtitle">You have {stats[1].count} upcoming sessions scheduled.</p>
+                <div className="ub-home-stats-mini">
+                    {stats.map(s => (
+                        <div key={s.label} className="ub-h-stat">
+                            <span className="h-stat-val">{s.count}</span>
+                            <span className="h-stat-label">{s.label}</span>
+                        </div>
+                    ))}
+                </div>
+                <button className="ub-btn-primary" style={{ marginTop: '20px' }} onClick={() => onNavigate('browse')}>
                     Book Photographer
                 </button>
             </div>
@@ -75,7 +88,7 @@ const HomeDashboard = ({ onNavigate }) => {
                                 className={`ub-package-card ${focusedId === pkg.id ? 'focus' : ''}`}
                                 onClick={() => setFocusedId(pkg.id)}
                             >
-                                <img src={pkg.img} alt={pkg.label} />
+                                <img src={pkg.img} alt={pkg.label} loading="lazy" />
                                 <div className="ub-package-info">
                                     <span className="ub-package-tag">Session</span>
                                     <span className="ub-package-label">{pkg.label}</span>

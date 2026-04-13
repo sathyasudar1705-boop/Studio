@@ -1,9 +1,9 @@
 /* ── Footer Specialized Styles (Editorial) ── */
 
 .footer {
-  background: var(--accent);
+  background: #0a0a0a;
   color: var(--color-cream);
-  border-top: 1px solid var(--border-bright);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
   padding: 100px 5% 60px;
 }
 
@@ -38,7 +38,7 @@
   font-size: 28px;
   letter-spacing: 1px;
   text-transform: none;
-  color: var(--color-white);
+  color: #d4af37;
   font-weight: 400;
 }
 
