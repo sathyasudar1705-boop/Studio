@@ -9,11 +9,6 @@ const HomeDashboard = ({ user, bookings, onNavigate }) => {
     const scrollRef = useRef(null);
     const [focusedId, setFocusedId] = useState('wedding');
 
-    const stats = [
-        { label: "Bookings", count: bookings.length },
-        { label: "Upcoming", count: bookings.filter(b => b.status === 'accepted' || b.status === 'confirmed').length },
-        { label: "Messages", count: 0 }
-    ];
 
     const scrollCarousel = (dir) => {
         if (!scrollRef.current) return;
@@ -27,15 +22,6 @@ const HomeDashboard = ({ user, bookings, onNavigate }) => {
             <div className="ub-welcome-banner">
                 <span className="ub-eyebrow">Welcome back, {user?.name || 'Client'}</span>
                 <h1 className="ub-hero-title">Elevate your moments with exceptional photography</h1>
-                <p className="ub-hero-subtitle">You have {stats[1].count} upcoming sessions scheduled.</p>
-                <div className="ub-home-stats-mini">
-                    {stats.map(s => (
-                        <div key={s.label} className="ub-h-stat">
-                            <span className="h-stat-val">{s.count}</span>
-                            <span className="h-stat-label">{s.label}</span>
-                        </div>
-                    ))}
-                </div>
                 <button className="ub-btn-primary" style={{ marginTop: '20px' }} onClick={() => onNavigate('browse')}>
                     Book Photographer
                 </button>

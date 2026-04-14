@@ -111,15 +111,9 @@ const Profile = ({ user, onUpdate }) => {
                 </div>
                 
                 <div className="ub-details-info">
-                    <div className="ub-badge-premium">Premium Member</div>
                     <h1>{user?.name || "Lensoria User"}</h1>
                     <p className="ub-details-role">Creative Photography Enthusiast</p>
                     
-                    <div className="ub-details-meta">
-                        <span><StarIcon fontSize="extra-small" /> Member Grade: Elite</span>
-                        <span><PublicIcon fontSize="extra-small" /> {user?.city || "Chennai, IN"}</span>
-                        <span><EventAvailableIcon fontSize="extra-small" /> Since 2024</span>
-                    </div>
                     
                     <div className="ub-details-actions">
                         <button className="ub-btn-primary" onClick={() => { localStorage.clear(); window.location.href='/'; }}>
@@ -132,9 +126,6 @@ const Profile = ({ user, onUpdate }) => {
             <div className="ub-section-divider"></div>
 
             <div className="ub-details-body">
-                <div className="ub-details-about">
-                    <h2>Personal Narrative</h2>
-                    <p>{user?.bio || "Every click tells a story. I'm here to find the perfect artist for my next chapter."}</p>
                     
                     <div className="ub-profile-edit-form" style={{ marginTop: '40px' }}>
                         <h3 className="ub-section-sub">Identity Workspace</h3>
@@ -178,15 +169,8 @@ const Profile = ({ user, onUpdate }) => {
                             Update Profile
                         </button>
                     </div>
-                </div>
-
+                
                 <div className="ub-details-sidebar">
-                    <div className="ub-stats-sidebar-card">
-                        <h3>Identity Verified</h3>
-                        <p style={{ fontSize: '13px', color: 'var(--text-dim)', lineHeight: '1.6' }}>
-                            Your account is fully verified. You can book photographers and process payments securely.
-                        </p>
-                    </div>
 
                     <div className="ub-danger-zone-v2" style={{ marginTop: '30px' }}>
                         <p>Account Management</p>

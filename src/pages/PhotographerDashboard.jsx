@@ -6,7 +6,6 @@ import "./PhotographerDashboard.css";
 // Icons
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -15,7 +14,8 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -68,8 +68,6 @@ const PhotographerDashboard = () => {
     const navLinks = [
         { id: "dashboard", label: "Dashboard" },
         { id: "portfolio", label: "Portfolio" },
-        { id: "calendar", label: "Availability" },
-        { id: "messages", label: "Messages" },
         { id: "packages", label: "Packages" },
         { id: "profile", label: "Profile & Settings" },
     ];
@@ -80,8 +78,6 @@ const PhotographerDashboard = () => {
         switch (activeTab) {
             case "dashboard": return <DashboardView photographer={photographer} bookings={bookings} refreshProfile={loadDashboardData} />;
             case "portfolio": return <PortfolioView photographer={photographer} onUpload={handleFileUpload} refreshProfile={loadDashboardData} />;
-            case "calendar": return <AvailabilityView photographer={photographer} refreshProfile={loadDashboardData} />;
-            case "messages": return <MessagesView />;
             case "packages": return <PackagesView photographer={photographer} refreshProfile={loadDashboardData} />;
             case "profile": return <ProfileSettingsView photographer={photographer} onLogout={() => { localStorage.clear(); navigate("/"); }} onUpload={handleFileUpload} refreshProfile={loadDashboardData} />;
             default: return <DashboardView photographer={photographer} bookings={bookings} />;
@@ -93,7 +89,7 @@ const PhotographerDashboard = () => {
             {/* Branding Header */}
             <header className="ph-branding-header">
                 <div className="ph-brand-left">
-                    <CameraAltIcon />
+                    <CenterFocusStrongIcon style={{ fontSize: '28px', color: 'var(--accent)', marginRight: '10px' }} />
                     <h1 className="ph-brand-title">LENSORIA</h1>
                 </div>
             </header>
@@ -127,10 +123,10 @@ const DashboardView = ({ photographer, bookings, refreshProfile }) => {
     const [selectedBooking, setSelectedBooking] = useState(null);
 
     const stats = [
-        { label: "Active Jobs", val: bookings.filter(b => b.status === 'accepted').length, trend: "+12%", isUp: true },
-        { label: "New Requests", val: bookings.filter(b => b.status === 'pending').length, trend: "+5%", isUp: true },
-        { label: "Profile Views", val: "1.2k", trend: "+18%", isUp: true },
-        { label: "Total Earnings", val: `₹${bookings.filter(b => b.status === 'completed').reduce((acc, b) => acc + (b.amount || 0), 0).toLocaleString()}`, trend: "+10%", isUp: true },
+        { label: "Confirmed Shoots", val: bookings.filter(b => b.status === 'accepted' || b.status === 'editing').length, trend: "+15%", isUp: true },
+        { label: "Pending Inquiries", val: bookings.filter(b => b.status === 'pending').length, trend: "New", isUp: true },
+        { label: "Audience Reach", val: "2.4k", trend: "+28%", isUp: true },
+        { label: "Total Revenue", val: `₹${bookings.filter(b => b.status === 'completed').reduce((acc, b) => acc + (b.amount || 0), 0).toLocaleString()}`, trend: "+12%", isUp: true },
     ];
 
     const handleBookingAction = async (id, status) => {
@@ -334,7 +330,7 @@ const PortfolioView = ({ photographer, onUpload, refreshProfile }) => {
                 {images.map((img, i) => (
                     <div key={i} className="ph-portfolio-item">
                         <img src={img} alt="" />
-                        <div className="ph-portfolio-overlay" onClick={() => removeImg(i)}><DeleteOutlineIcon style={{ color: 'white' }} /></div>
+                        <div className="ph-portfolio-overlay" onClick={() => removeImg(i)}><DeleteOutlineIcon style={{ color: 'var(--text-on-accent)' }} /></div>
                     </div>
                 ))}
             </div>
@@ -344,8 +340,8 @@ const PortfolioView = ({ photographer, onUpload, refreshProfile }) => {
 
 const QUICK_TEMPLATES = [
     { title: "Essential Starter", duration: "2 Hours", deliverables: "15 Edited Photos", price: 8000, features: "Single Outfit, Digital Gallery, Studio/Outdoor" },
-    { title: "Elite Professional", duration: "4 Hours", deliverables: "40 Edited Photos", price: 18000, features: "3 Outfit Changes, High-End Retouching, Print Credit" },
-    { title: "Grand Premiere", duration: "Full Day", deliverables: "Unlimited Photos (80+ Edited)", price: 35000, features: "Cinematic Reel, Luxury Photo Album, Multi-location" }
+    { title: "Premium Cinema", duration: "4 Hours", deliverables: "40 Edited Photos", price: 18000, features: "3 Outfit Changes, High-End Retouching, Print Credit" },
+    { title: "Elite Studio", duration: "Full Day", deliverables: "Unlimited Photos (80+ Edited)", price: 35000, features: "Cinematic Reel, Luxury Photo Album, Multi-location" }
 ];
 
 const PackagesView = ({ photographer, refreshProfile }) => {
@@ -554,7 +550,7 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
 
     return (
         <div className="ph-view-container fadeIn">
-            <div className="ph-row-middle" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
+            <div className="ph-row-middle">
                 <div className="ph-content-card">
                     <h3 className="card-title">Professional Profile Details</h3>
                     <form onSubmit={handleSave} style={{ marginTop: '20px' }}>
@@ -594,7 +590,7 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
                 <div className="ph-content-card" style={{ textAlign: 'center' }}>
                     <div className="ph-avatar-large" onClick={() => avatarInput.current.click()}>
                         <img src={photographer?.profile_pic || "https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg"} alt="" />
-                        <div className="avatar-edit-overlay"><CameraAltIcon fontSize="small" /></div>
+                        <div className="avatar-edit-overlay"><CenterFocusStrongIcon fontSize="small" /></div>
                         <input type="file" ref={avatarInput} hidden onChange={updateAvatar} accept="image/*" />
                     </div>
                     <h3 style={{ marginBottom: '5px' }}>{photographer?.name}</h3>
@@ -616,10 +612,13 @@ const ProfileSettingsView = ({ photographer, onLogout, onUpload, refreshProfile 
     );
 };
 
-const AvailabilityView = ({ photographer, refreshProfile }) => {
-    const blockedDates = photographer?.unavailable_dates || [];
-    const [viewDate, setViewDate] = useState(new Date(2026, 3, 1)); // Start at April 2026 for demo consistency
-    const [syncing, setSyncing] = useState(false);
+const AvailabilityView = ({ photographer, bookings = [] }) => {
+    const [viewDate, setViewDate] = useState(new Date()); 
+    
+    // Extract dates of accepted/confirmed bookings
+    const bookedDates = bookings
+        .filter(b => ['accepted', 'confirmed', 'completed', 'editing', 'delivered'].includes(b.status))
+        .map(b => new Date(b.bookingDate).toISOString().split('T')[0]);
 
     // Dynamic Month Data
     const year = viewDate.getFullYear();
@@ -631,25 +630,7 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
     const DAYS = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const PADS = Array.from({ length: firstDayIndex }, (_, i) => i);
 
-    const toggleDate = async (day) => {
-        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        let updated;
-        if (blockedDates.includes(dateStr)) {
-            updated = blockedDates.filter(d => d !== dateStr);
-        } else {
-            updated = [...blockedDates, dateStr];
-        }
-
-        setSyncing(true);
-        try {
-            await API.put("/photographers/profile", { unavailable_dates: updated });
-            refreshProfile();
-        } catch (err) {
-            alert("Failed to update availability");
-        } finally {
-            setSyncing(false);
-        }
-    };
+    const isDateBooked = (dateStr) => bookedDates.includes(dateStr);
 
     const handleMonthChange = (offset) => {
         setViewDate(new Date(year, month + offset, 1));
@@ -664,8 +645,8 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
                             <h2 className="ph-page-title">Studio Planner</h2>
                             <p className="ph-page-subtitle">Your photography schedule for {monthName} {year}</p>
                         </div>
-                        <div className="ph-badge-status" style={{ background: syncing ? '#fff7ed' : '#f0fdf4', color: syncing ? '#ea580c' : '#16a34a' }}>
-                            {syncing ? "Syncing Workspace..." : "Planner Active"}
+                        <div className="ph-badge-status" style={{ background: 'var(--border-bright)', color: 'var(--accent-info)' }}>
+                             Planner Active
                         </div>
                     </div>
 
@@ -687,16 +668,15 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
                             {PADS.map(p => <div key={`pad-${p}`} className="ph-day-cell empty"></div>)}
                             {DAYS.map(d => {
                                 const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
-                                const isBlocked = blockedDates.includes(dateStr);
+                                const isBooked = isDateBooked(dateStr);
                                 const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
                                 return (
                                     <div
                                         key={d}
-                                        className={`ph-day-cell premium ${isBlocked ? 'blocked' : 'available'} ${isToday ? 'today' : ''}`}
-                                        onClick={() => !syncing && toggleDate(d)}
+                                        className={`ph-day-cell premium ${isBooked ? 'blocked' : 'available'} ${isToday ? 'today' : ''}`}
                                     >
                                         <span className="day-num">{d}</span>
-                                        {isBlocked && <div className="day-indicator">Session</div>}
+                                        {isBooked && <div className="day-indicator">Session</div>}
                                     </div>
                                 );
                             })}
@@ -734,6 +714,5 @@ const AvailabilityView = ({ photographer, refreshProfile }) => {
         </div>
     );
 };
-const MessagesView = () => <div style={{ padding: '50px', textAlign: 'center' }}><h3>Messages Coming Soon</h3></div>;
 
 export default PhotographerDashboard;

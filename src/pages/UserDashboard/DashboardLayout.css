@@ -1,49 +1,112 @@
-/* ── Dashboard Base Styles (Editorial Minimal) ── */
+/* ── Dashboard Base Styles (Luxe Noir Minimal) ── */
 
 .ub-dashboard-root {
     min-height: 100vh;
     background-color: var(--bg-deep);
     display: flex;
     flex-direction: column;
-    padding-top: 100px; /* Branding Header height on mobile */
+    padding-top: 80px;
 }
 
 /* ── Top Header & Branding ── */
 .ub-branding-header {
-    height: 100px;
+    height: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--accent);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    padding: 0 30px;
+}
+
+.ub-header-left {
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+}
+
+.ub-header-right {
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.ub-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(54, 6, 77, 0.03);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm, 4px);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+.ub-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.ub-logout-btn svg {
+    color: var(--accent);
 }
 
 .ub-brand-title {
     font-family: var(--font-brand);
-    font-size: 36px;
-    letter-spacing: 6px;
+    font-size: 32px;
+    letter-spacing: 5px;
     text-transform: uppercase;
     color: var(--text-main);
     margin: 0;
-    font-weight: 500;
+    font-weight: 400;
+    flex-grow: 1;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .ub-logout-btn span {
+        display: none;
+    }
+    .ub-logout-btn {
+        padding: 10px;
+        min-width: unset;
+    }
+    .ub-header-left, .ub-header-right {
+        min-width: 40px;
+    }
+    .ub-brand-title {
+        font-size: 20px;
+        letter-spacing: 3px;
+    }
 }
 
 /* ── Top Navigation (Desktop) ── */
 .ub-top-nav {
     position: fixed;
-    top: 100px;
+    top: 80px;
     left: 0;
     right: 0;
     z-index: 999;
-    background-color: var(--bg-card);
+    background-color: var(--bg-alt);
     border-bottom: 1px solid var(--border);
     padding: 0 5%;
-    display: none; /* Hidden on mobile by default */
+    display: none;
 }
 
 @media (min-width: 769px) {
@@ -51,7 +114,7 @@
         display: block;
     }
     .ub-dashboard-root {
-        padding-top: 160px; /* Space for Header (100) + Nav (60) */
+        padding-top: 140px; 
     }
 }
 
@@ -88,34 +151,33 @@
 
 .ub-nav-item.active {
     color: var(--text-main);
-    font-weight: 600;
 }
 
 .ub-nav-item.active::after {
     content: '';
     position: absolute;
-    bottom: -1px;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background-color: var(--text-main);
+    height: 2px;
+    background-color: var(--accent);
 }
 
 /* ── Main Content Area ── */
 .ub-main-content {
     flex: 1;
-    padding: 60px 5%;
-    padding-bottom: 100px; 
+    padding: 40px 5%;
+    padding-bottom: 110px; 
 }
 
 .ub-content-container {
     max-width: 1200px;
     margin: 0 auto;
-    animation: fadeInFade 0.4s ease forwards;
+    animation: fadeInFade 0.5s ease forwards;
 }
 
 @keyframes fadeInFade {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -125,14 +187,15 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70px;
+    height: 75px;
     background-color: var(--bg-card);
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 100;
+    z-index: 1000;
     padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: var(--shadow-lg);
 }
 
 @media (min-width: 769px) {
@@ -153,69 +216,87 @@
     cursor: pointer;
     transition: var(--transition);
     font-family: var(--font-sans);
+    width: 20%;
 }
 
 .ub-mobile-nav-item span {
-    font-size: 10px;
+    font-size: 9px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
 .ub-mobile-nav-item.active {
-    color: var(--text-main);
+    color: var(--accent);
+}
+
+.ub-mobile-nav-item.active svg {
+    transform: scale(1.2);
 }
 
 /* ── Common Utilities for Dashboard Components ── */
 .ub-section-title {
-    font-family: var(--font-serif);
-    font-size: 32px;
+    font-family: var(--font-display);
+    font-size: 28px;
     color: var(--text-main);
-    margin-bottom: 30px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    margin-bottom: 35px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 .ub-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     padding: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
 }
 
 .ub-btn-primary {
-    background: var(--text-main);
-    color: var(--color-white);
-    padding: 14px 30px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    padding: 14px 35px;
     font-family: var(--font-sans);
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    font-weight: 500;
-    border: 1px solid var(--text-main);
+    font-weight: 700;
+    border: 1px solid var(--accent);
     transition: var(--transition);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
 }
 
 .ub-btn-primary:hover {
     background: transparent;
-    color: var(--text-main);
+    color: var(--accent);
 }
 
 .ub-btn-outline {
     background: transparent;
-    color: var(--text-main);
-    padding: 14px 30px;
+    color: var(--accent);
+    padding: 14px 35px;
     font-family: var(--font-sans);
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    font-weight: 500;
-    border: 1px solid var(--border);
+    font-weight: 700;
+    border: 1px solid var(--accent);
     transition: var(--transition);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
 }
 
 .ub-btn-outline:hover {
-    border-color: var(--text-main);
+    background: var(--accent);
+    color: var(--text-on-accent);
+}
+
+@media (max-width: 600px) {
+    .ub-section-title {
+        font-size: 24px;
+        text-align: center;
+    }
+    .ub-card {
+        padding: 20px;
+    }
 }

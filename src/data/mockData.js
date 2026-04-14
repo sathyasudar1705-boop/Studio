@@ -66,6 +66,5 @@ export const NAV_LINKS = [
     { id: 'home', label: 'Dashboard' },
     { id: 'browse', label: 'Photographers' },
     { id: 'bookings', label: 'Bookings' },
-    { id: 'messages', label: 'Messages' },
     { id: 'profile', label: 'Profile' },
 ];

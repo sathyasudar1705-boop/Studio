@@ -1,63 +1,108 @@
-/* ── Home Page Specialized Styles ── */
+/* ── Home Page (Premium Luxe Noir Style) ── */
+
+.home-page {
+  background: var(--bg-deep);
+}
 
 .hero {
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('../assets/pexels-jibarofoto-1787220.jpg');
+  background-image: linear-gradient(rgba(247, 246, 229, 0.5), rgba(247, 246, 229, 0.8)), url('../assets/pexels-jibarofoto-1787220.jpg');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0 5%;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, var(--bg-deep), transparent);
 }
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(40px, 10vw, 90px);
-  margin-bottom: 25px;
-  background: linear-gradient(to right, var(--color-mustard), var(--color-cream), var(--color-mustard));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: clamp(50px, 12vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  color: var(--text-main);
+  text-transform: uppercase;
   font-weight: 700;
+  animation: heroFadeScale 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-subtitle {
-  font-size: 16px;
-  letter-spacing: 4px;
-  color: var(--text-dim);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: 6px;
+  color: var(--accent);
   text-transform: uppercase;
-  margin-top: 10px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  animation: eyebrowExpand 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Gallery Alignment */
+/* ── Section Title Area ── */
+.section-title-area {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.section-header {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 48px);
+  color: var(--text-main);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* ── Gallery Alignment ── */
 .gallery-wrapper {
-  padding: 120px 5%;
+  padding: 140px 5%;
   background: var(--bg-deep);
 }
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 40px;
-  max-width: 1300px;
+  grid-template-columns: 1fr 450px;
+  gap: 30px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .left-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  gap: 30px;
 }
 
 .card-container {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 4px;
   overflow: hidden;
   aspect-ratio: 1/1;
+  transition: var(--transition);
 }
 
 .card-container.portrait {
@@ -68,38 +113,78 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
-  transition: var(--transition);
+  opacity: 0.6;
+  filter: grayscale(30%);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
 }
 
-.card-container:hover .bg-image {
-  transform: scale(1.05);
+.overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(247, 246, 229, 0.9), transparent);
+  z-index: 2;
   opacity: 0.9;
 }
 
-/* Photographer Cards Alignment */
+.card-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.card-container:hover .bg-image {
+  transform: scale(1.1);
+  opacity: 0.4;
+  filter: grayscale(0%);
+}
+
+/* ── Photographer Cards Alignment ── */
 .photographers-wrapper {
-  padding: 120px 5%;
-  background: var(--bg-card);
+  padding: 140px 5%;
+  background: var(--bg-alt);
   border-top: 1px solid var(--border);
 }
 
 .photographers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
+.photographer-card {
+  text-align: center;
+  padding: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.photographer-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent);
+}
+
 .ph-img-container {
-  width: 220px;
-  height: 220px;
-  margin: 0 auto 25px;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 30px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--accent);
-  padding: 8px;
+  border: 4px solid var(--accent);
+  padding: 10px;
+  background: var(--bg-deep);
 }
 
 .ph-image {
@@ -110,18 +195,23 @@
 }
 
 .ph-name {
-  font-size: 20px;
-  margin-bottom: 8px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--text-main);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
 }
 
 .ph-role {
-  font-size: 13px;
+  font-family: var(--font-sans);
+  font-size: 11px;
   color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
+  font-weight: 600;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .gallery-grid {
     grid-template-columns: 1fr;
   }
@@ -131,4 +221,7 @@
   .left-grid {
     grid-template-columns: 1fr;
   }
-}
+  .photographer-card {
+    padding: 30px 20px;
+  }
+}

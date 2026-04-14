@@ -1,4 +1,4 @@
-/* ── Authentication Specialized Styles ── */
+/* ── Authentication Specialized Styles (Luxe Noir Refinement) ── */
 
 .auth-bg {
     min-height: 100vh;
@@ -7,101 +7,173 @@
     justify-content: center;
     background: var(--bg-deep);
     padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Ornament */
+.auth-bg::before {
+    content: 'L';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    font-size: 40vw;
+    font-family: var(--font-display);
+    color: var(--accent);
+    opacity: 0.03;
+    pointer-events: none;
+    line-height: 1;
 }
 
 .auth-card {
     width: 100%;
-    max-width: 440px;
-    padding: 60px 45px;
+    max-width: 460px;
+    padding: 70px 50px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-top: 4px solid var(--accent);
-    border-radius: 12px;
-    box-shadow: 0 40px 80px rgba(26, 18, 61, 0.08);
-    text-align: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.4);
+    transition: var(--transition);
 }
 
-.auth-title {
-    font-size: 28px;
-    color: var(--text-main);
-    margin-bottom: 35px;
-    letter-spacing: 2px;
-    font-weight: 700;
+.auth-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
 }
 
 .auth-brand {
-    font-family: 'Kola', sans-serif;
-    font-size: 11px;
-    letter-spacing: 6px;
-    color: var(--accent);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    font-weight: 600;
+    font-family: var(--font-display) !important;
+    font-size: 13px !important;
+    letter-spacing: 5px !important;
+    color: var(--accent) !important;
+    margin-bottom: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* MUI Customization (simplified) */
+.auth-title {
+    font-family: var(--font-serif) !important;
+    font-size: 32px !important;
+    color: var(--text-main) !important;
+    margin-bottom: 40px !important;
+    letter-spacing: 1px !important;
+    font-weight: 500 !important;
+}
+
+/* MUI Customization (Premium Dark Theme) */
+.auth-card .MuiTextField-root {
+    margin-bottom: 20px !important;
+}
+
 .auth-card .MuiOutlinedInput-root {
     color: var(--text-main) !important;
+    font-family: var(--font-sans) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
 }
 
 .auth-card .MuiInputLabel-root {
     color: var(--text-dim) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
 }
 
 .auth-card .MuiOutlinedInput-notchedOutline {
     border-color: var(--border) !important;
+    border-width: 1px !important;
+    transition: var(--transition) !important;
 }
 
 .auth-card .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: var(--accent) !important;
+    border-color: var(--accent-warm) !important;
 }
 
 .auth-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
     border-color: var(--accent) !important;
+    border-width: 1.5px !important;
 }
 
 /* Action Button */
 .auth-btn {
     width: 100% !important;
-    padding: 15px !important;
+    padding: 18px !important;
     background: var(--accent) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
+    color: var(--text-on-accent) !important;
+    font-family: var(--font-sans) !important;
+    font-weight: 800 !important;
     text-transform: uppercase !important;
-    letter-spacing: 2px !important;
-    border-radius: 6px !important;
-    margin-top: 30px !important;
+    letter-spacing: 3px !important;
+    font-size: 12px !important;
+    margin-top: 20px !important;
     transition: var(--transition) !important;
-    box-shadow: 0 4px 15px var(--accent-glow) !important;
+    border-radius: 0px !important; /* Editorial look */
 }
 
 .auth-btn:hover {
-    background: var(--accent-light) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--accent-glow) !important;
+    background: var(--text-main) !important;
+    color: var(--bg-deep) !important;
+    letter-spacing: 5px !important;
 }
 
 .auth-switch {
-    margin-top: 25px;
-    font-size: 14px;
+    margin-top: 40px;
+    font-family: var(--font-sans);
+    font-size: 13px;
     color: var(--text-dim);
+    letter-spacing: 0.5px;
 }
 
 .auth-switch span {
     color: var(--accent);
     cursor: pointer;
-    margin-left: 8px;
-    font-weight: 600;
+    margin-left: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.auth-switch span:hover {
+    color: var(--text-main);
+    text-decoration: underline;
 }
 
 .auth-back {
-    margin-top: 20px;
-    font-size: 12px;
+    margin-top: 30px;
+    font-family: var(--font-sans);
+    font-size: 11px;
     color: var(--text-muted);
     cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     transition: var(--transition);
+    display: block;
 }
 
 .auth-back:hover {
     color: var(--accent);
+    transform: translateX(-5px);
+}
+
+@media (max-width: 600px) {
+    .auth-card {
+        padding: 50px 30px;
+        margin: 20px;
+    }
+    .auth-title {
+        font-size: 26px !important;
+    }
 }

@@ -1,117 +1,150 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600&display=swap');
+/* ── Auth/Role Selection (Premium Luxe Noir Style) ── */
 
-/* ── Role Selector Full Page ─────────────────── */
 .role-page {
     min-height: 100vh;
     background: var(--bg-deep);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.role-page::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: var(--accent);
+    filter: blur(150px);
+    opacity: 0.05;
+    top: -100px;
+    right: -100px;
 }
 
 .role-page-content {
     text-align: center;
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
+    z-index: 2;
 }
 
 .role-page-tag {
-    font-family: 'Kola', sans-serif;
+    font-family: var(--font-sans);
     font-size: 11px;
     letter-spacing: 7px;
     color: var(--accent);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .role-page-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(28px, 5vw, 52px);
+    font-family: var(--font-display);
+    font-size: clamp(32px, 6vw, 64px);
     color: var(--text-main);
     letter-spacing: 5px;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 .role-page-desc {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     color: var(--text-dim);
-    font-size: 14px;
-    margin-bottom: 50px;
-    letter-spacing: 2px;
+    font-size: 16px;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
 }
 
-/* ── Cards ────────────────────────────────────── */
+/* ── Role Cards ── */
 .role-cards {
     display: flex;
-    gap: 24px;
+    gap: 30px;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .role-choice-card {
     flex: 1;
-    min-width: 260px;
-    max-width: 320px;
-    padding: 40px 30px;
+    min-width: 300px;
+    max-width: 380px;
+    padding: 60px 40px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: var(--transition);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.role-choice-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--accent);
+    opacity: 0.1;
+    transition: var(--transition);
 }
 
 .role-choice-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-15px);
     border-color: var(--accent);
-    background: var(--accent-soft);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
 }
 
-.role-choice-card.photographer:hover {
-    border-color: var(--accent);
-    background: var(--accent-soft);
+.role-choice-card:hover::after {
+    height: 100%;
 }
 
 .role-choice-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
+    font-size: 48px;
+    margin-bottom: 30px;
     color: var(--accent);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60px;
 }
 
 .role-choice-card h3 {
-    font-family: 'Cinzel', serif;
-    font-size: 17px;
+    font-family: var(--font-display);
+    font-size: 20px;
     color: var(--text-main);
     letter-spacing: 3px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
 .role-choice-card p {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-muted);
-    font-size: 13px;
-    line-height: 1.7;
-    margin-bottom: 24px;
+    font-family: var(--font-sans);
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 30px;
 }
 
 .role-choice-btn {
     background: transparent;
     border: 1px solid var(--accent);
     color: var(--accent);
-    padding: 10px 24px;
-    font-family: 'Outfit', sans-serif;
+    padding: 12px 35px;
+    font-family: var(--font-sans);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 4px;
+    transition: var(--transition);
 }
 
 .role-choice-card:hover .role-choice-btn {
@@ -119,25 +152,43 @@
     color: var(--text-on-accent);
 }
 
-.role-choice-card.photographer .role-choice-btn {
-    border-color: var(--accent);
-    color: var(--accent);
+/* ── Auth Forms Polish ── */
+.auth-container {
+    background: var(--bg-card);
+    padding: 50px;
+    border: 1px solid var(--border);
+    max-width: 450px;
+    width: 100%;
+    margin: 100px auto;
+    box-shadow: var(--shadow-sm);
 }
 
-.role-choice-card.photographer:hover .role-choice-btn {
-    background: var(--accent);
-    color: var(--text-on-accent);
+.auth-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 /* ── Switch Link ──────────────────────────────── */
 .role-page-switch {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-muted);
+    font-family: var(--font-sans);
+    color: var(--text-dim);
     font-size: 14px;
 }
 
 .role-page-switch span {
     color: var(--accent);
     cursor: pointer;
-    font-weight: 600;
-}
+    font-weight: 700;
+    margin-left: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .role-page { padding: 80px 20px; }
+    .role-choice-card { padding: 40px 20px; }
+}

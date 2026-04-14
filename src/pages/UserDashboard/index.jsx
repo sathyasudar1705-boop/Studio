@@ -11,7 +11,6 @@ import BookingFlow from './components/BookingFlow';
 import MyBookings from './components/MyBookings';
 import BookingDetails from './components/BookingDetails';
 import Favorites from './components/Favorites';
-import Messages from './components/Messages';
 import Reviews from './components/Reviews';
 import Payments from './components/Payments';
 import Profile from './components/Profile';
@@ -20,8 +19,10 @@ import Settings from './components/Settings';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+
 
 const UserDashboard = () => {
     const [activeTab, setActiveTab] = useState('home');
@@ -63,9 +64,15 @@ const UserDashboard = () => {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
     useEffect(() => {
         loadUserData();
     }, [navigate]);
+
 
     const renderContent = () => {
         if (loading) return <div style={{ padding: '100px', textAlign: 'center' }}>Loading Portal...</div>;
@@ -73,11 +80,12 @@ const UserDashboard = () => {
         switch (activeTab) {
             case 'home': return <HomeDashboard user={user} bookings={bookings} onNavigate={setActiveTab} />;
             case 'browse': return <BrowsePhotographers onSelectPhotographer={(pg) => { setSelectedPhotographer(pg); setActiveTab('photographer_details'); }} />;
-            case 'photographer_details': return <PhotographerDetails photographer={selectedPhotographer} onBook={(pkg) => { setSelectedPackage(pkg); setActiveTab('booking_flow'); }} onBack={() => setActiveTab('browse')} />;
+            case 'photographer_details': 
+                if (!selectedPhotographer) { setActiveTab('browse'); return null; }
+                return <PhotographerDetails photographer={selectedPhotographer} onBook={(pkg) => { setSelectedPackage(pkg); setActiveTab('booking_flow'); }} onBack={() => setActiveTab('browse')} />;
             case 'booking_flow': return <BookingFlow photographer={selectedPhotographer} selectedPackage={selectedPackage} onComplete={() => { loadUserData(); setActiveTab('bookings'); setSelectedPackage(null); }} onBack={() => setActiveTab('photographer_details')} />;
             case 'bookings': return <MyBookings bookings={bookings} onSelectBooking={(b) => { setSelectedBooking(b); setActiveTab('booking_details'); }} />;
             case 'booking_details': return <BookingDetails booking={selectedBooking} onBack={() => setActiveTab('bookings')} />;
-            case 'messages': return <Messages />;
             case 'favorites': return <Favorites onSelectPhotographer={(pg) => { setSelectedPhotographer(pg); setActiveTab('photographer_details'); }} />;
             case 'payments': return <Payments />;
             case 'reviews': return <Reviews />;
@@ -91,7 +99,6 @@ const UserDashboard = () => {
         { id: 'home', label: 'Home', icon: <HomeOutlinedIcon /> },
         { id: 'browse', label: 'Photographers', icon: <SearchOutlinedIcon /> },
         { id: 'bookings', label: 'Bookings', icon: <CalendarTodayOutlinedIcon /> },
-        { id: 'messages', label: 'Messages', icon: <ChatBubbleOutlineOutlinedIcon /> },
         { id: 'profile', label: 'Profile', icon: <PersonOutlineOutlinedIcon /> },
     ];
 
@@ -99,8 +106,21 @@ const UserDashboard = () => {
         <div className="ub-dashboard-root">
             {/* Branding Header */}
             <header className="ub-branding-header">
-                <h1 className="ub-brand-title">LENSORIA</h1>
+                <div className="ub-header-left">
+                    {/* Spacer to keep title centered */}
+                </div>
+                <h1 className="ub-brand-title">
+                    <CenterFocusStrongIcon sx={{ fontSize: 24, verticalAlign: 'middle', marginRight: '10px', color: 'var(--accent)' }} />
+                    LENSORIA
+                </h1>
+                <div className="ub-header-right">
+                    <button className="ub-logout-btn" onClick={handleLogout}>
+                        <LogoutOutlinedIcon sx={{ fontSize: 18 }} />
+                        <span>Logout</span>
+                    </button>
+                </div>
             </header>
+
 
             {/* Desktop Top Navigation */}
             <nav className="ub-top-nav">

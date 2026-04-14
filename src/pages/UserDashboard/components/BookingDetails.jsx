@@ -112,43 +112,44 @@ const BookingDetails = ({ booking, onBack }) => {
                     <div className="ub-bd-main-info">
                         {renderLifecycleContent()}
                         <div className="ub-section-divider"></div>
-                        <div className="ub-bd-info-item">
-                            <label>Professional</label>
-                            <p>{photographer?.name || 'Studio Artist'}</p>
-                        </div>
-                        <div className="ub-bd-info-item">
-                            <label>Appointment Date</label>
-                            <p>{dateObj.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                        </div>
-                        <div className="ub-bd-info-item">
-                            <label>Venue / Location</label>
-                            <p>{booking.location || 'Studio Location'}</p>
-                        </div>
-                        {booking.requirements && (
-                            <div className="ub-bd-info-item">
-                                <label>Special Requirements</label>
-                                <p style={{ fontSize: '13px', fontStyle: 'italic', background: 'var(--bg-alt)', padding: '10px', borderRadius: '4px' }}>
-                                    {booking.requirements}
-                                </p>
+                        <div className="ub-bd-brief-grid">
+                            <div className="ub-bd-brief-item">
+                                <label>Artist</label>
+                                <span>{photographer?.name || 'Studio Artist'}</span>
                             </div>
-                        )}
+                            <div className="ub-bd-brief-item">
+                                <label>Schedule</label>
+                                <span>{dateObj.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                            </div>
+                            <div className="ub-bd-brief-item">
+                                <label>Location</label>
+                                <span>{booking.location || 'Studio Location'}</span>
+                            </div>
+                        </div>
+
+                        <div className="ub-section-divider"></div>
+
                         <div className="ub-bd-info-item">
-                            <label>Notes / Package Info</label>
-                            <p style={{ fontSize: '13px', color: 'var(--text-dim)' }}>{booking.notes}</p>
+                            <label>Session Intent & Instructions</label>
+                            <p style={{ fontSize: '14px', color: 'var(--text-main)', margin: '10px 0' }}>{booking.notes}</p>
+                            {booking.requirements && (
+                                <p className="ub-special-note">
+                                    <strong>Client Request:</strong> {booking.requirements}
+                                </p>
+                            )}
                         </div>
                     </div>
 
                     <div className="ub-bd-summary-sidebar">
                         <div className="ub-bd-info-item">
-                            <label>Service Price</label>
-                            <p style={{ fontSize: '24px', fontWeight: '600' }}>₹{booking.amount?.toLocaleString()}</p>
+                            <label>Service Total</label>
+                            <p style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-main)' }}>₹{booking.amount?.toLocaleString()}</p>
                         </div>
-                        <div className="ub-summary-vrow"><label>Status:</label><span>{booking.status}</span></div>
-                        <div className="ub-summary-vrow"><label>Method:</label><span>Advance Payment</span></div>
-                        <div className="ub-summary-vrow"><label>Balance Due:</label><span>₹{(booking.amount ? booking.amount * 0.8 : 0).toLocaleString()}</span></div>
+                        <div className="ub-summary-vrow"><label>Payment Method</label><span>Advance Secure</span></div>
+                        <div className="ub-summary-vrow"><label>Balance Due</label><span style={{ color: 'var(--accent)', fontWeight: '700' }}>₹{(booking.amount ? booking.amount * 0.8 : 0).toLocaleString()}</span></div>
                         
                         <div className="ub-bd-actions-stack">
-                            <button className="ub-btn-primary full-width">Message Studio</button>
+                            <button className="ub-btn-primary full-width">Help / Support</button>
                             {booking.status?.toLowerCase() === 'pending' && <button className="ub-btn-outline danger full-width">Cancel Request</button>}
                         </div>
                     </div>

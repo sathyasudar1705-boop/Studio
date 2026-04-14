@@ -67,7 +67,7 @@ const LandingPage = () => {
                         <span className="step-number">01</span>
                         <div className="step-details">
                             <h4>Discover & Consult</h4>
-                            <p>Explore our elite roster and find the artistic style that resonates with your vision. Discuss your ideas directly with the creator.</p>
+                            <p>Explore our elite roster and find the artistic style that resonates with your vision. Consult on the best experience for your needs.</p>
                         </div>
                     </div>
 

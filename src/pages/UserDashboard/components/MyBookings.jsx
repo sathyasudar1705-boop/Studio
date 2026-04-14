@@ -3,7 +3,8 @@ import API from '../../../services/api';
 
 const MyBookings = ({ bookings = [], onSelectBooking }) => {
     // Component now receives pre-fetched bookings from parent for consistency
-    const sortedBookings = [...bookings].sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
+    const safeBookings = Array.isArray(bookings) ? bookings : [];
+    const sortedBookings = [...safeBookings].sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
 
     return (
         <div className="ub-bookings-view fadeIn">
@@ -19,17 +20,24 @@ const MyBookings = ({ bookings = [], onSelectBooking }) => {
                     sortedBookings.map(b => (
                         <div key={b._id || b.id} className="ub-booking-list-card" onClick={() => onSelectBooking(b)}>
                             <div className="ub-bk-main">
-                                <h3>{b.notes?.split('.')[0] || "Session"}</h3>
-                                <p>Booking ID: {(b._id || b.id).substring(0, 8)}</p>
+                                <label className="ub-bk-id-tag">ID: {(b._id || b.id).substring(0, 8).toUpperCase()}</label>
+                                <h3>{b.notes?.split('.')[0] || "Creative Session"}</h3>
+                                <p>Requested on {new Date(b.createdAt || Date.now()).toLocaleDateString()}</p>
                             </div>
-                            <div className="ub-bk-meta">
-                                <span className="ub-bk-date">
-                                    {new Date(b.bookingDate).toLocaleDateString()}
-                                </span>
-                                <span className={`ub-status-pill ${b.status?.toLowerCase()}`}>{b.status}</span>
+                            
+                            <div className="ub-bk-info-row">
+                                <div className="ub-bk-i-item">
+                                    <label>Schedule</label>
+                                    <span>{new Date(b.bookingDate).toLocaleDateString()}</span>
+                                </div>
+                                <div className="ub-bk-i-item">
+                                    <label>Status</label>
+                                    <span className={`ub-status-pill ${b.status?.toLowerCase()}`}>{b.status}</span>
+                                </div>
                             </div>
+
                             <div className="ub-bk-action">
-                                <button className="ub-btn-outline" style={{ padding: '8px 20px', fontSize: '10px' }}>View Details</button>
+                                <button className="ub-btn-view-minimal">Details</button>
                             </div>
                         </div>
                     ))

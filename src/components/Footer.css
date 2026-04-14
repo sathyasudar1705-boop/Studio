@@ -1,10 +1,10 @@
 /* ── Footer Specialized Styles (Editorial) ── */
 
 .footer {
-  background: #0a0a0a;
+  background: #1A042B; /* Dark Imperial Purple grounding */
   color: var(--color-cream);
-  border-top: 1px solid rgba(212, 175, 55, 0.2);
-  padding: 100px 5% 60px;
+  border-top: 1px solid var(--border);
+  padding: 60px 10% 40px;
 }
 
 .footer-inner {
@@ -20,7 +20,7 @@
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
 }
 
 .footer-logo {
@@ -38,7 +38,7 @@
   font-size: 28px;
   letter-spacing: 1px;
   text-transform: none;
-  color: #d4af37;
+  color: var(--color-cream);
   font-weight: 400;
 }
 
@@ -70,7 +70,7 @@
 .footer-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   min-width: 180px;
 }
 
@@ -98,8 +98,8 @@
 }
 
 .footer-bottom {
-  margin-top: 80px;
-  padding-top: 30px;
+  margin-top: 40px;
+  padding-top: 25px;
   border-top: 1px solid rgba(253, 251, 250, 0.05);
   text-align: center;
   font-size: 12px;
